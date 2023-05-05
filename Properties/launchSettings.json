@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AstraDb-Custom-Actions": {
+      "commandName": "Project",
+      "commandLineArgs": "-t AstraCS:YUcvhOZphdOHoJqtaEOMCOuX:d0263cb5f3ebe85a2b58b4cc591ab4a932055b2828461e742cf2e68bd12c955d -d cicd_database"
+    }
+  }
+}
