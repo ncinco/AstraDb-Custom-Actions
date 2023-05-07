@@ -26,21 +26,26 @@ jobs:
     - uses: hashicorp/setup-terraform@v2
     
     # Checkout the repository to the GitHub Actions runner
-    - name: Checkout
+    - id: Checkout
       uses: actions/checkout@v3
  
     - name: 'Terraform Format'
+      id: format
       run: terraform fmt
          
     - name: 'Terraform Init'
-    - run: terraform init
+      id: init
+      run: terraform init
  
     - name: 'Terraform Validate'
-    - run: terraform validate
+      id: validate
+      run: terraform validate
          
     - name: 'Terraform Plan'
-    - run: terraform plan
+      id: plan
+      run: terraform plan
  
     - name: Terraform Apply
+      id: apply
       if: github.ref == 'refs/heads/main'
-    - run: terraform apply
+      run: terraform apply
