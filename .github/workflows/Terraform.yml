@@ -23,27 +23,24 @@ jobs:
         shell: bash
  
     steps:
+    - uses: hashicorp/setup-terraform@v2
+    
     # Checkout the repository to the GitHub Actions runner
     - name: Checkout
-    - uses: actions/checkout@v3
+      uses: actions/checkout@v3
  
     - name: 'Terraform Format'
-    - uses: hashicorp/setup-terraform@v2
-    - run: terraform fmt
+      run: terraform fmt
          
     - name: 'Terraform Init'
-    - uses: hashicorp/setup-terraform@v2
     - run: terraform init
  
     - name: 'Terraform Validate'
-    - uses: hashicorp/setup-terraform@v2
     - run: terraform validate
          
     - name: 'Terraform Plan'
-    - uses: hashicorp/setup-terraform@v2
     - run: terraform plan
  
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main'
-    - uses: hashicorp/setup-terraform@v2
     - run: terraform apply
