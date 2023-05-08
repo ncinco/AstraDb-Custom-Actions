@@ -27,8 +27,3 @@ provider "astra" {
 provider "azurerm" {
   features {}
 }
-
-resource "azurerm_resource_group" "state-demo-secure" {
-  name     = "Terraform_State"
-  location = "australiaeast"
-}
