@@ -4,18 +4,6 @@ terraform {
       source  = "datastax/astra"
       version = ">=1.0.0"
     }
-  }
-}
-
-variable "token" {}
-
-provider "astra" {
-  // This can also be set via ASTRA_API_TOKEN environment variable.
-  token = var.token
-}
-
-terraform {
-  required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "=2.46.0"
@@ -27,6 +15,13 @@ terraform {
       container_name       = "development"
       key                  = "astradb_terraform.tfstate"
   }
+}
+
+variable "token" {}
+
+provider "astra" {
+  // This can also be set via ASTRA_API_TOKEN environment variable.
+  token = var.token
 }
 
 provider "azurerm" {
