@@ -2,11 +2,11 @@ terraform {
   required_providers {
     astra = {
       source  = "datastax/astra"
-      version = ">=1.0.0"
+      version = ">=2.1.15"
     }
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "=2.46.0"
+      version = "=3.55.0"
     }
   }
   backend "azurerm" {
