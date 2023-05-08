@@ -14,6 +14,7 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_AD_TENANT_ID }}
+      ASTRA_API_TOKEN: ${{ secrets.ASTRA_API_TOKEN }}
     runs-on: ubuntu-latest
     environment: dev
  
@@ -46,12 +47,8 @@ jobs:
     - name: 'Terraform Plan'
       id: plan
       run: terraform plan
-      env:
-       ASTRA_API_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
  
     - name: Terraform Apply
       id: apply
       if: github.ref == 'refs/heads/main'
       run: terraform apply
-      env:
-       ASTRA_API_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
