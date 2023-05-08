@@ -27,7 +27,8 @@ jobs:
     - uses: hashicorp/setup-terraform@v2
     
     # Checkout the repository to the GitHub Actions runner
-    - id: Checkout
+    - name: 'Checkout'
+      id: checkout
       uses: actions/checkout@v3
  
     - name: 'Terraform Format'
