@@ -14,7 +14,6 @@ terraform {
       storage_account_name = "astradbstate"
       container_name       = "development"
       key                  = "astradb_terraform.tfstate"
-      access_key           = "pyY0jQ4FE4C3EzjOFSwDGnlXta1rtIuRRtZFO7RHE6GEfheiZgXsXe9EPbIqjBfDrr2vHoJ5VxNt+AStE4KIqg=="
   }
 }
 
