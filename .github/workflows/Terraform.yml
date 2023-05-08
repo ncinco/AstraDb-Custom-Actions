@@ -45,9 +45,7 @@ jobs:
          
     - name: 'Terraform Plan'
       id: plan
-      run: |
-        echo ${{ secrets.ASTRA_API_TOKEN }}
-        terraform plan -var token=${{ secrets.ASTRA_API_TOKEN }}
+      run: terraform plan -var token=${{ secrets.ASTRA_API_TOKEN }}
  
     - name: Terraform Apply
       id: apply
