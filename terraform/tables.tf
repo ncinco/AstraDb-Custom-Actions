@@ -82,7 +82,7 @@ resource "astra_table" "transactions_by_account" {
       TypeDefinition: "text"
     },
     {
-      Name: "transactiondate"
+      Name: "transaction_date"
       TypeDefinition: "timestamp"
     },
     {
