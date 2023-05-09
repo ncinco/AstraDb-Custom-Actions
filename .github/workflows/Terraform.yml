@@ -7,6 +7,10 @@ on:
         description: "Environment you're targetting for deployment."
         required: true
         default: dev
+        options:
+        - dev
+        - uat
+        - prod
  
 jobs:
   terraform:
