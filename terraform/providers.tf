@@ -25,8 +25,3 @@ provider "astra" {
 provider "azurerm" {
   features {}
 }
-
-// modules for tables
-module "tables" {
-  source = "./tables"
-}
