@@ -28,8 +28,7 @@ provider "azurerm" {
   features {}
 }
 
-
-// modules
+// modules for tables
 module "tables" {
   source = "./tables"
 }
