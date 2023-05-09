@@ -30,5 +30,5 @@ provider "azurerm" {
 
 // modules for tables
 module "tables" {
-  source = "./tables"
+  source = "tables"
 }
