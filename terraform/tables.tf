@@ -64,3 +64,62 @@ resource "astra_table" "bank_accounts_by_cif_with_relationship_map" {
     }
   ]
 }
+
+resource "astra_table" "transactions_by_account;" {
+  table              = "transactions_by_account;"
+  keyspace           = "transactions"
+  database_id        = astra_database.accounts_terraform.id
+  region             = "australiaeast"
+  partition_keys     = "account_number:transaction_id"
+  clustering_columns = "account_type"
+  column_definitions= [
+    {
+      Name: "account_number"
+      TypeDefinition: "text"
+    },
+    {
+      Name: "transaction_id"
+      TypeDefinition: "text"
+    },
+    {
+      Name: "transactiondate"
+      TypeDefinition: "timestamp"
+    },
+    {
+      Name: "amount"
+      TypeDefinition: "decimal"
+    },
+    {
+      Name: "category"
+      TypeDefinition: "text"
+    },
+    {
+      Name: "code"
+      TypeDefinition: "text"
+    },
+    {
+      Name: "description"
+      TypeDefinition: "text"
+    },
+    {
+      Name: "particular"
+      TypeDefinition: "text"
+    },
+    {
+      Name: "proccessed_date"
+      TypeDefinition: "timestamp"
+    },
+    {
+      Name: "reference"
+      TypeDefinition: "text"
+    },
+    {
+      Name: "status"
+      TypeDefinition: "text"
+    },
+    {
+      Name: "product_name"
+      TypeDefinition: "text"
+    }
+  ]
+}
