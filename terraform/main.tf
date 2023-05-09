@@ -13,7 +13,7 @@ terraform {
       resource_group_name  = "Terraform_State"
       storage_account_name = "astradbstate"
       container_name       = "development"
-      key                  = "astradb_terraform.tfstate"
+      key                  = "terraform.tfstate"
   }
 }
 
