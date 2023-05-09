@@ -1,3 +1,0 @@
-module "tables" {
-  source = "./tables"
-}
