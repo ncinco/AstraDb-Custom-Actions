@@ -365,7 +365,7 @@ ASALocalRun/
 .vshistory/
 
 # Terraform files
-./terraform/.terraform/
+.terraform/.terraform/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
