@@ -2,6 +2,11 @@ name: 'Terraform'
  
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment you're targetting for deployment."
+        required: true
+        default: dev
  
 jobs:
   terraform:
