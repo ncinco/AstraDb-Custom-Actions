@@ -5,6 +5,7 @@ on:
     inputs:
       environment:
         description: "Environment you're targetting for deployment."
+        type: choice
         required: true
         default: dev
         options:
