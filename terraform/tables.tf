@@ -65,8 +65,8 @@ resource "astra_table" "bank_accounts_by_cif_with_relationship_map" {
   ]
 }
 
-resource "astra_table" "transactions_by_account;" {
-  table              = "transactions_by_account;"
+resource "astra_table" "transactions_by_account" {
+  table              = "transactions_by_account"
   keyspace           = "transactions"
   database_id        = astra_database.accounts_terraform.id
   region             = "australiaeast"
