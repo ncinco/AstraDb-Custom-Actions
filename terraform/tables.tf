@@ -5,7 +5,7 @@ resource "astra_table" "bank_accounts_by_cif_with_relationship_map" {
   region             = "australiaeast"
   partition_keys     = "account_number:account_type"
   clustering_columns = "account_type"
-  column_definitions= [
+  column_definitions = [
     {
       Name: "account_number"
       TypeDefinition: "text"
@@ -72,7 +72,7 @@ resource "astra_table" "transactions_by_account" {
   region             = "australiaeast"
   partition_keys     = "account_number:transaction_id"
   clustering_columns = "account_type"
-  column_definitions= [
+  column_definitions = [
     {
       Name: "account_number"
       TypeDefinition: "text"
