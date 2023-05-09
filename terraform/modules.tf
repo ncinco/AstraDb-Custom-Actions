@@ -1,0 +1,3 @@
+module "tables" {
+  source = "./tables"
+}
