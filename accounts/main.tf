@@ -10,12 +10,7 @@ terraform {
     }
   }
 
-  backend "azurerm" {
-      resource_group_name  = "Terraform_State"
-      storage_account_name = "astradbstate"
-      container_name       = "${var.environment}"
-      key                  = "accounts_prototype.tfstate"
-  }
+  backend "azurerm" { }
 }
 
 provider "astra" {
