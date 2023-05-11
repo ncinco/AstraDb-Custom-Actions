@@ -1,6 +1,6 @@
-resource "astra_database" "accounts_terraform" {
-  name           = "accounts_terraform"
-  keyspace       = "accounts"
+resource "astra_database" "loans_terraform" {
+  name           = "loans_terraform"
+  keyspace       = "loans"
   cloud_provider = "azure"
   regions        = ["australiaeast", "westeurope"]
 }

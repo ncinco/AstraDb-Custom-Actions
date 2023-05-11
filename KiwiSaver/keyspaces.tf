@@ -1,4 +1,4 @@
-resource "astra_keyspace" "transactions" {
-  name        = "transactions"
-  database_id = astra_database.accounts_terraform.id
+resource "astra_keyspace" "kiwisaver" {
+  name        = "kiwisaver"
+  database_id = astra_database.kiwisaver_terraform.id
 }

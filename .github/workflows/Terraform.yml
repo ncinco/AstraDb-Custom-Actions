@@ -12,6 +12,14 @@ on:
         - dev
         - uat
         - prod
+      domain:
+        description: "Domain you're targetting for deployment."
+        type: choice
+        required: true
+        options:
+        - accounts
+        - kiwisaver
+        - loans
  
 jobs:
   terraform:
