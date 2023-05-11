@@ -1,9 +1,3 @@
-variable "token" {
-  type : string
-  description : "DataStax token to be used by agent."
-}
+variable "token" {}
 
-variable "environment" {
-  type : string
-  description : "The target environment you want to deploy."
-}
+variable "environment" {}
