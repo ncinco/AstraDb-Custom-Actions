@@ -67,7 +67,7 @@ resource "astra_table" "bank_accounts_by_cif_with_relationship_map" {
 
 resource "astra_table" "transactions_by_account" {
   table              = "transactions_by_account"
-  keyspace           = "transactions"
+  keyspace           = "accounts"
   database_id        = astra_database.accounts_prototype.id
   region             = "australiaeast"
   partition_keys     = "account_number:transaction_id"
