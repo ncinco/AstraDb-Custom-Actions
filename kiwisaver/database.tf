@@ -1,5 +1,5 @@
-resource "astra_database" "kiwisaver_terraform" {
-  name           = "kiwisaver_terraform"
+resource "astra_database" "kiwisaver_prototype" {
+  name           = "kiwisaver_prototype"
   keyspace       = "kiwisaver"
   cloud_provider = "azure"
   regions        = ["australiaeast", "westeurope"]
