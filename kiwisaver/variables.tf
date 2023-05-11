@@ -1,1 +1,3 @@
 variable "token" {}
+
+variable "environment" {}
