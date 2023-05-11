@@ -1,4 +1,4 @@
-name: 'Terraform'
+name: 'Database Deployment'
  
 on:
   workflow_dispatch:
