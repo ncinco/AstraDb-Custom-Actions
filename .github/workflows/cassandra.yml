@@ -24,9 +24,11 @@ jobs:
         image: cassandra
         ports:
         - 9042:9042
+        options: --health-cmd "cqlsh --debug" --health-interval 5s --health-retries 10
+    steps:
+      - run: docker ps
+      - run: docker exec ${{ job.services.cassandra.id }} cqlsh --debug localhost:9042 --execute="use somekeyspace;"
 
-
-        options: --health-cmd 'cqlsh -e "USE system"' --health-interval 10s --health-timeout 5s --health-retries 5
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
