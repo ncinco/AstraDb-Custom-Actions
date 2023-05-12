@@ -25,13 +25,13 @@ jobs:
         ports:
         - 9042:9042
         options: --health-cmd "cqlsh --debug" --health-interval 5s --health-retries 10
-    steps:
-      - run: docker ps
-      - run: docker exec ${{ job.services.cassandra.id }} cqlsh --debug localhost:9042 --execute="use somekeyspace;"
 
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - run: docker ps
+      - run: docker exec ${{ job.services.cassandra.id }} cqlsh --debug localhost:9042 --execute="use somekeyspace;"
+
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
