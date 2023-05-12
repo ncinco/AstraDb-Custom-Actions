@@ -108,10 +108,6 @@ resource "astra_table" "transactions_by_account" {
     {
       Name: "proccessed_date"
       TypeDefinition: "timestamp"
-    },
-    {
-      Name: "reference"
-      TypeDefinition: "text"
     }
   ]
 }
