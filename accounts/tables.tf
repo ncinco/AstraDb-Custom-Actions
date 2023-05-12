@@ -112,10 +112,6 @@ resource "astra_table" "transactions_by_account" {
     {
       Name: "reference"
       TypeDefinition: "text"
-    },
-    {
-      Name: "status"
-      TypeDefinition: "text"
     }
   ]
 }
