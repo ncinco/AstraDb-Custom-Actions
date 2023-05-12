@@ -116,10 +116,6 @@ resource "astra_table" "transactions_by_account" {
     {
       Name: "status"
       TypeDefinition: "text"
-    },
-    {
-      Name: "product_name"
-      TypeDefinition: "text"
     }
   ]
 }
