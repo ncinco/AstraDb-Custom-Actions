@@ -118,7 +118,7 @@ resource "astra_table" "transactions_by_account" {
       TypeDefinition: "text"
     },
     {
-      Name: "product_name"
+      Name: "product_name_ex"
       TypeDefinition: "text"
     }
   ]
