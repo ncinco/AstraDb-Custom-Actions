@@ -1,4 +1,4 @@
-name: Astra CLI
+name: Astra CLI - Data Plane
 
 on: push
 
@@ -6,6 +6,8 @@ jobs:
   Astra-CLI:
     env:
       ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
+      ASTRA_DB_NAME: nino-astra-cli
+      ASTRA_DB_KEYSPACE: somekeyspace
       TERM: linux
     runs-on: ubuntu-latest
 
@@ -15,3 +17,8 @@ jobs:
       
       - name: Install Astra CLI
         run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
+
+      - name: Create DB
+        run: |
+          echo $ASTRA_DB_NAME
+          /home/runner/.astra/cli/astra db create $ASTRA_DB_NAME -k $ASTRA_DB_KEYSPACE --token $ASTRA_DB_APPLICATION_TOKEN --if-not-exist
