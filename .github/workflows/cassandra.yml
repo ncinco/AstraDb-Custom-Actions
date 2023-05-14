@@ -2,9 +2,6 @@ name: CasDB
 
 on: push
 
-env:
-  CARGO_TERM_COLOR: always
-
 jobs:
   test:
     runs-on: ubuntu-latest
