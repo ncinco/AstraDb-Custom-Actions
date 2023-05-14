@@ -1,6 +1,7 @@
 name: AstraDB - Data Plane
 
-on: push
+on:
+  workflow_dispatch:
 
 jobs:
   Astra-CLI:
