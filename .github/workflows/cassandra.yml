@@ -11,10 +11,7 @@ jobs:
 
     steps:
       - name: Checkout
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
       
       - name: Install Astra CLI
-        run: |
-          curl -Ls "https://dtsx.io/get-astra-cli" | bash
-          astra setup
-          astra db list
+        run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
