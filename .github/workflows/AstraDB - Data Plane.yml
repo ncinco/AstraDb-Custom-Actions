@@ -7,7 +7,7 @@ jobs:
   Astra-CLI:
     env:
       ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
-      ASTRA_DB_NAME: nino-astra-cli
+      ASTRA_DB_NAME: ninoastracli
       ASTRA_DB_KEYSPACE: somekeyspace
       TERM: linux
     runs-on: ubuntu-latest
@@ -21,4 +21,4 @@ jobs:
 
       - name: Create DB
         if: always()
-        run: /home/runner/.astra/cli/astra create $ASTRA_DB_NAME -k $ASTRA_DB_KEYSPACE --token $ASTRA_DB_APPLICATION_TOKEN --if-not-exist
+        run: /home/runner/.astra/cli/astra db create $ASTRA_DB_NAME -k $ASTRA_DB_KEYSPACE --token $ASTRA_DB_APPLICATION_TOKEN --if-not-exist
