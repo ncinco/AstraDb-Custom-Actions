@@ -1,4 +1,4 @@
-name: 'Database Deployment'
+name: 'AstraDB - Control Plane'
  
 on:
   workflow_dispatch:
