@@ -16,6 +16,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       
+      - name: TPUT INIT
+        run: tput init
+      
       - name: Install Astra CLI
         run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
 
