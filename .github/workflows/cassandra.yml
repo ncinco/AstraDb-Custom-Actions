@@ -1,15 +1,19 @@
-name: CasDB
+name: Astra CLI
 
 on: push
 
 jobs:
-  test:
+  Astra-CLI:
+    env:
+      ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
+      TERM: linux
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
       - uses: actions/checkout@v2
-      - run: sudo apt install zip
-      - run: export TERM=xterm
+      
+      - name: Install Astra CLI
       - run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
       - run: astra setup
       - run: astra db list
