@@ -16,13 +16,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       
-      - name: TPUT INIT
-        run: tput init
-      
       - name: Install Astra CLI
         run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
 
       - name: Create DB
+        if: always()
         run: |
           echo $ASTRA_DB_NAME
           /home/runner/.astra/cli/astra db create $ASTRA_DB_NAME -k $ASTRA_DB_KEYSPACE --token $ASTRA_DB_APPLICATION_TOKEN --if-not-exist
