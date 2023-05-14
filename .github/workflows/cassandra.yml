@@ -11,5 +11,4 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: docker exec -i ${{ job.services.cassandra.id }} cqlsh -f /workspace/setup.cql
       - run: pip install -U cqlsh
