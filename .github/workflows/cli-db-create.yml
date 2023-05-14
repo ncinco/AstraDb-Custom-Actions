@@ -1,0 +1,28 @@
+name: Astra Cli Sample
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - README.MD
+      - '.github/workflows/cli-db-create.yml'  
+jobs:
+  cli-create-db:
+    env:
+      ASTRA_DB_APPLICATION_TOKEN: ${{ secrets.ASTRA_API_TOKEN }}
+      ASTRA_DB_NAME: demo
+      ASTRA_DB_KEYSPACE: demo
+      TERM: linux
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: Checkout
+        uses: actions/checkout@v3
+      
+      - name: Install Astra CLI
+        run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
+        
+      - name: Create DB
+        run: |
+          echo $ASTRA_DB_NAME
+          /home/runner/.astra/cli/astra db create $ASTRA_DB_NAME -k $ASTRA_DB_KEYSPACE --token $ASTRA_DB_APPLICATION_TOKEN --if-not-exists 
