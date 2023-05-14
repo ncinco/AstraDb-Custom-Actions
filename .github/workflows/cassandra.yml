@@ -9,6 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: sudo apt install zip
+      - run: export TERM=xterm
       - run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
       - run: astra setup
       - run: astra db list
