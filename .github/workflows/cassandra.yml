@@ -11,7 +11,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - run: pip install -U cqlsh
-      - run: docker pull cassandra
-      - run: docker run --rm -p 9042:9042 cassandra
-      - run: cqlsh
+      - run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
+      - run: astra setup
+      - run: astra db list
