@@ -1,4 +1,4 @@
-name: Astra CLI - Data Plane
+name: AstraDB - Data Plane
 
 on: push
 
