@@ -14,3 +14,4 @@ jobs:
       - run: pip install -U cqlsh
       - run: docker pull cassandra
       - run: docker run --rm -p 9042:9042 cassandra
+      - run: cqlsh
