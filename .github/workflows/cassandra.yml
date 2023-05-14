@@ -12,3 +12,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: pip install -U cqlsh
+      - run: cqlsh --help
+      - run: docker pull cassandra
+      - run: docker run -it --rm -p 9042:9042 cassandra
