@@ -46,14 +46,8 @@ jobs:
         if: always()
         run: |
           /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
-
-      - name: Run Schema Scripts
-        if: always()
-        run: |
-          cd 01_schema
-          /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f 0001_script.cql --debug
           
-      - name: Run Schema Scripts (loop)
+      - name: Run Schema Scripts
         if: always()
         run: |
           cd 01_schema
