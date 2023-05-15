@@ -39,6 +39,7 @@ jobs:
         run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
         
       - name: Astra CLI - Setup
+        if: always()
         run: |
           echo "astra setup --token  $ASTRA_DB_APPLICATION_TOKEN"
           /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
