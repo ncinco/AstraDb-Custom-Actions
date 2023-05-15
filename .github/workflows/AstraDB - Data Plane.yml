@@ -57,7 +57,8 @@ jobs:
         if: always()
         run: |
           cd 01_schema
-          for f in *.sql; do echo ${f}; done;
+          for f in *.sql; /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug; done;
+          #for f in *.sql; do echo ${f}; done;
           
       - name: Run Data Scripts
         if: always()
