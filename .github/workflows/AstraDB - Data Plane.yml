@@ -53,9 +53,11 @@ jobs:
       - name: Alter Schema
         if: always()
         run: |
+          dir
           /home/runner/.astra/cli/astra db cqlsh integrated_prototype -f /01_schema/0001_script.sql
           
       - name: Alter Data
         if: always()
         run: |
+          dir
           /home/runner/.astra/cli/astra db cqlsh integrated_prototype -f /01_schema/0001_script.sql
