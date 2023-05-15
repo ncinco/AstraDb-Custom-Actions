@@ -56,8 +56,8 @@ jobs:
       - name: Run Schema Scripts (loop)
         if: always()
         run: |
-          cd /home/runner/.astra/cli
-          for f in /homes/runner/${{ github.event.inputs.domain }}/01_schema/*.cql; astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug; done;
+          cd 01_schema
+          for f in *.cql; do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug; done;
           #for f in *.cql; do echo ${f}; done;
           
       - name: Run Data Scripts
