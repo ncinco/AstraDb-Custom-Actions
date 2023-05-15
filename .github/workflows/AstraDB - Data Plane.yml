@@ -50,14 +50,8 @@ jobs:
           /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
           /home/runner/.astra/cli/astra config list
 
-      - name: Alter Schema
+      - name: Run alter schema scripts
         if: always()
         run: |
-          ls
-          /home/runner/.astra/cli/astra db cqlsh integrated_prototype -f /01_schema/0001_script.sql
-          
-      - name: Alter Data
-        if: always()
-        run: |
-          ls
-          /home/runner/.astra/cli/astra db cqlsh integrated_prototype -f /01_schema/0001_script.sql
+          cd 01_schema
+          /home/runner/.astra/cli/astra db cqlsh integrated_prototype -f 0001_script.sql
