@@ -46,6 +46,7 @@ jobs:
         if: always()
         run: |
           export PATH=$PATH:/home/runner/.astra/cli
+          echo $PATH
           astra setup --token $ASTRA_DB_APPLICATION_TOKEN
 
       - name: Run Schema Scripts
