@@ -46,7 +46,6 @@ jobs:
         if: always()
         run: |
           /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
-          /home/runner/.astra/cli/astra config list
 
       - name: Run alter schema scripts
         if: always()
