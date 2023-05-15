@@ -21,6 +21,4 @@ jobs:
 
       - name: Create DB
         if: always()
-        run: |
-          cd /home/runner/.astra/cli/
-          .astra db create $ASTRA_DB_NAME -k $ASTRA_DB_KEYSPACE --token $ASTRA_DB_APPLICATION_TOKEN
+        run: cd /home/runner/.astra/cli/astra db create $ASTRA_DB_NAME -k $ASTRA_DB_KEYSPACE --token $ASTRA_DB_APPLICATION_TOKEN
