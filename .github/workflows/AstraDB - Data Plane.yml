@@ -40,7 +40,7 @@ jobs:
         
       - name: Astra CLI - Setup
         run: |
-          echo "astra setup --token  ${{ASTRA_DB_APPLICATION_TOKEN}}"
+          echo "astra setup --token  $ASTRA_DB_APPLICATION_TOKEN"
           /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
 
       - name: Create DB
