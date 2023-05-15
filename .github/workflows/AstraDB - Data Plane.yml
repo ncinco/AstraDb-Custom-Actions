@@ -30,6 +30,12 @@ jobs:
       TERM: linux
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
+    
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ github.event.inputs.domain }}
 
     steps:
       - name: Checkout
@@ -40,8 +46,16 @@ jobs:
         
       - name: Astra CLI - Setup
         if: always()
-        run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
+        run: |
+          /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
+          /home/runner/.astra/cli/astra config list
 
-      - name: Create DB
+      - name: Alter Schema
         if: always()
-        run: /home/runner/.astra/cli/astra db create $ASTRA_DB_NAME -k $ASTRA_DB_KEYSPACE --if-not-exists
+        run: |
+          /home/runner/.astra/cli/astra db cqlsh integrated_prototype -f /01_schema/0001_script.sql
+          
+      - name: Alter Data
+        if: always()
+        run: |
+          /home/runner/.astra/cli/astra db cqlsh integrated_prototype -f /01_schema/0001_script.sql
