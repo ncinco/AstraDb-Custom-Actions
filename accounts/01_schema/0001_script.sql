@@ -1,24 +1,17 @@
-CREATE TABLE accounts.ninotable
+CREATE TABLE IF NOT EXISTS accounts.ninotable
 (
   id UUID PRIMARY KEY,
   last_name TEXT,
   first_name TEXT
 );
 
-CREATE TABLE accounts.ninotable
-(
-  id UUID PRIMARY KEY,
-  last_name TEXT,
-  first_name TEXT
-);
-
-CREATE TYPE accounts.relationship_info (
+CREATE TYPE IF NOT EXISTS accounts.relationship_info (
     tokenised_cif uuid,
     cif_number text,
     link_type text
 );
 
-CREATE TABLE accounts.bank_accounts_by_cif_with_relationship_map (
+CREATE TABLE IF NOT EXISTS accounts.bank_accounts_by_cif_with_relationship_map (
     account_number text,
     account_type text,
     account_balance decimal,
@@ -50,4 +43,6 @@ CREATE TABLE accounts.bank_accounts_by_cif_with_relationship_map (
     AND read_repair = 'BLOCKING'
     AND speculative_retry = '99PERCENTILE';
 
-CREATE CUSTOM INDEX relationships_idx ON accounts.bank_accounts_by_cif_with_relationship_map (keys(relationships)) USING 'StorageAttachedIndex';
+CREATE CUSTOM INDEX IF NOT EXISTS relationships_idx
+ON accounts.bank_accounts_by_cif_with_relationship_map (keys(relationships))
+USING 'StorageAttachedIndex';
