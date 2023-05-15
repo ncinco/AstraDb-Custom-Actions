@@ -58,10 +58,9 @@ jobs:
         run: |
           cd 01_schema
           for f in *.cql; do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug; done;
-          #for f in *.cql; do echo ${f}; done;
           
       - name: Run Data Scripts
         if: always()
         run: |
           cd 02_data
-          /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f 0001_script.cql --debug
+          for f in *.cql; do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug; done;
