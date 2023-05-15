@@ -35,15 +35,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       
-      - name: Install Astra CLI
+      - name: Astra CLI - Install
         run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
         
       - name: Astra CLI - Setup
         if: always()
-        run: |
-          echo "astra setup --token  $ASTRA_DB_APPLICATION_TOKEN"
-          /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
+        run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
 
       - name: Create DB
         if: always()
-        run: /home/runner/.astra/cli/astra db create $ASTRA_DB_NAME -k $ASTRA_DB_KEYSPACE --token $ASTRA_DB_APPLICATION_TOKEN --if-not-exists
+        run: /home/runner/.astra/cli/astra db create $ASTRA_DB_NAME -k $ASTRA_DB_KEYSPACE --if-not-exists
