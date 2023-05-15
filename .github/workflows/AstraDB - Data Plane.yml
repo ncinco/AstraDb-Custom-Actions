@@ -45,25 +45,23 @@ jobs:
       - name: Setup
         if: always()
         run: |
-          export PATH=$PATH:/home/runner/.astra/cli
-          echo $PATH
-          astra setup --token $ASTRA_DB_APPLICATION_TOKEN
+          /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
 
       - name: Run Schema Scripts
         if: always()
         run: |
           cd 01_schema
-          astra db cqlsh ${{ github.event.inputs.domain }} -f 0001_script.sql --debug
+          /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f 0001_script.cql --debug
           
       - name: Run Schema Scripts (loop)
         if: always()
         run: |
           cd 01_schema
-          for f in *.sql; astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug; done;
-          #for f in *.sql; do echo ${f}; done;
+          for f in *.cql; /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug; done;
+          #for f in *.cql; do echo ${f}; done;
           
       - name: Run Data Scripts
         if: always()
         run: |
           cd 02_data
-          astra db cqlsh ${{ github.event.inputs.domain }} -f 0001_script.sql --debug
+          /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f 0001_script.cql --debug
