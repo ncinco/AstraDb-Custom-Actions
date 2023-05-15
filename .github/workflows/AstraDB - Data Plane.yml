@@ -39,21 +39,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       
-      - name: Astra CLI - Install
+      - name: Install
         run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
         
-      - name: Astra CLI - Setup
+      - name: Setup
         if: always()
         run: |
           /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
 
-      - name: Run alter schema scripts
+      - name: Run Schema Scripts
         if: always()
         run: |
           cd 01_schema
           /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f 0001_script.sql --debug
           
-      - name: Run data scripts
+      - name: Run Data Scripts
         if: always()
         run: |
           cd 02_data
