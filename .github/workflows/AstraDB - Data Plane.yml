@@ -59,7 +59,7 @@ jobs:
       ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
       TERM: linux
     runs-on: ubuntu-latest
-    environment: dev
+    environment: uat
     
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
