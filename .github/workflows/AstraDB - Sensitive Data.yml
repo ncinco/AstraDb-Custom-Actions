@@ -19,8 +19,8 @@ jobs:
   Dev:
     name: "Dev"
     env:
-      ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
-      AZURE_STORAGE_ACCOUNT_KEY: ${{ github.event.inputs.domain }}
+      ASTRA_DB_APPLICATION_TOKEN: ${{ secrets.ASTRA_API_TOKEN }}
+      AZURE_STORAGE_ACCOUNT_KEY: ${{ github.event.inputs.access_key }}
       TERM: linux
     runs-on: ubuntu-latest
     environment: dev
@@ -39,7 +39,7 @@ jobs:
         run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
         
       - name: Run Data Scripts
-        run: echo "Storage accounts access key $AZURE_STORAGE_ACCOUNT_KEY"
+        run: echo ${{ github.event.inputs.access_key }}
 
   UAT:
     name: "UAT"
@@ -64,7 +64,7 @@ jobs:
         run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
         
       - name: Run Data Scripts
-        run: echo "Storage accounts access key $AZURE_STORAGE_ACCOUNT_KEY"
+        run: echo ${{ github.event.inputs.access_key }}
 
   Prod:
     name: "Prod"
@@ -89,4 +89,4 @@ jobs:
         run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
         
       - name: Run Data Scripts
-        run: echo "Storage accounts access key $AZURE_STORAGE_ACCOUNT_KEY"
+        run: echo ${{ github.event.inputs.access_key }}
