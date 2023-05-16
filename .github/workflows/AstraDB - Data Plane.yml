@@ -3,15 +3,6 @@ name: AstraDB - Data Plane
 on:
   workflow_dispatch:
     inputs:
-      environment:
-        description: "Environment you're targeting for deployment."
-        type: choice
-        required: true
-        default: dev
-        options:
-        - dev
-        - uat
-        - prod
       domain:
         description: "Domain you're targeting for deployment."
         type: choice
@@ -22,12 +13,91 @@ on:
         - loans
 
 jobs:
-  Astra-CLI:
+  Dev:
+    name: "Dev"
     env:
       ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
       TERM: linux
     runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment }}
+    environment: dev
+    
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ github.event.inputs.domain }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Install
+        run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
+        
+      - name: Setup
+        if: always()
+        run: |
+          /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
+          
+      - name: Run Schema Scripts
+        if: always()
+        run: |
+          cd 01_schema
+          for f in *.cql; do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug; done;
+          
+      - name: Run Data Scripts
+        if: always()
+        run: |
+          cd 02_data
+          for f in *.cql; do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug; done;
+
+  UAT:
+    name: "UAT"
+    needs: Dev
+    env:
+      ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
+      TERM: linux
+    runs-on: ubuntu-latest
+    environment: dev
+    
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ github.event.inputs.domain }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Install
+        run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
+        
+      - name: Setup
+        if: always()
+        run: |
+          /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
+          
+      - name: Run Schema Scripts
+        if: always()
+        run: |
+          cd 01_schema
+          for f in *.cql; do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug; done;
+          
+      - name: Run Data Scripts
+        if: always()
+        run: |
+          cd 02_data
+          for f in *.cql; do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug; done;
+
+  Prod:
+    name: "Prod"
+    needs: UAT
+    env:
+      ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
+      TERM: linux
+    runs-on: ubuntu-latest
+    environment: prod
     
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
