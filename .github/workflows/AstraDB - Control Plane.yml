@@ -2,16 +2,6 @@ name: 'AstraDB - Control Plane'
  
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: "Environment you're targeting for deployment."
-        type: choice
-        required: true
-        default: dev
-        options:
-        - dev
-        - uat
-        - prod
       domain:
         description: "Domain you're targeting for deployment."
         type: choice
