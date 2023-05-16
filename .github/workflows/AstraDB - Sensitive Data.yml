@@ -47,7 +47,7 @@ jobs:
         run: |
           mkdir blob
           cd blob
-          az storage file download --account-name ${{ github.event.inputs.account_name }} --container-name ${{ github.event.inputs.container_name }}  --account-key ${{ github.event.inputs.access_key }} --file thefile.csv --auth-mode key
+          az storage file download --account-name ${{ github.event.inputs.account_name }} --container-name ${{ github.event.inputs.container_name }} --account-key ${{ github.event.inputs.access_key }} --file thefile.csv --auth-mode key
       
       - name: Run Data Scripts
         run: echo ${{ github.event.inputs.access_key }}
