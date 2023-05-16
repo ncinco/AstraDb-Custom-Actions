@@ -43,61 +43,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       
-      - name: Install
+      - name: Install Azure CLI
         run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
       
-      - name: Download script from blob storage
-        run: az storage blob download --account-name ${{ github.event.inputs.account_name }} --container-name ${{ github.event.inputs.container_name }} --name ${{ github.event.inputs.path_name }} --file ${{ github.event.inputs.path_name }} --account-key ${{ github.event.inputs.access_key }} --auth-mode key
+      - name: Download from blob storage
+        run: az storage blob download \
+          --account-name ${{ github.event.inputs.account_name }} \
+          --container-name ${{ github.event.inputs.container_name }} \
+          --name ${{ github.event.inputs.path_name }} \
+          --file ${{ github.event.inputs.path_name }} \
+          --account-key ${{ github.event.inputs.access_key }} \
+          --auth-mode key
       
-      - name: Run Data Scripts
-        run: echo ${{ github.event.inputs.access_key }}
-
-  UAT:
-    name: "UAT"
-    needs: Dev
-    env:
-      ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
-      TERM: linux
-    runs-on: ubuntu-latest
-    environment: uat
-    
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: ${{ github.event.inputs.domain }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - name: Install DSBulk
+        run: |
+          curl -OL https://downloads.datastax.com/dsbulk/dsbulk-1.10.tar.gz
+          tar -xzvf dsbulk-1.10.tar.gz
       
-      - name: Install
-        run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-        
-      - name: Run Data Scripts
-        run: echo ${{ github.event.inputs.access_key }}
-
-  Prod:
-    name: "Prod"
-    needs: UAT
-    env:
-      ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
-      TERM: linux
-    runs-on: ubuntu-latest
-    environment: prod
-    
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
-    defaults:
-      run:
-        shell: bash
-        working-directory: ${{ github.event.inputs.domain }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      
-      - name: Install
-        run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-        
       - name: Run Data Scripts
         run: echo ${{ github.event.inputs.access_key }}
