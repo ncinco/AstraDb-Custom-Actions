@@ -55,10 +55,9 @@ jobs:
           --account-key ${{ github.event.inputs.access_key }} \
           --auth-mode key
       
-      - name: Install DSBulk
-        run: |
-          curl -OL https://downloads.datastax.com/dsbulk/dsbulk-1.10.tar.gz
-          tar -xzvf dsbulk-1.10.tar.gz
+      - name: Install Astra CLI
+        continue-on-error: true
+        run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
       
       - name: Run Data Scripts
         run: echo ${{ github.event.inputs.access_key }}
