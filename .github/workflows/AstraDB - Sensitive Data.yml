@@ -11,6 +11,12 @@ on:
         - accounts
         - kiwisaver
         - loans
+      account_name:
+        description: "Account name of the storage account."
+        required: true
+      container_name:
+        description: "Container name on storage account where the file is located."
+        required: true
       access_key:
         description: "Access key of the storage account."
         required: true
@@ -20,7 +26,6 @@ jobs:
     name: "Dev"
     env:
       ASTRA_DB_APPLICATION_TOKEN: ${{ secrets.ASTRA_API_TOKEN }}
-      AZURE_STORAGE_ACCOUNT_KEY: ${{ github.event.inputs.access_key }}
       TERM: linux
     runs-on: ubuntu-latest
     environment: dev
@@ -37,7 +42,13 @@ jobs:
       
       - name: Install
         run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-        
+      
+      - name: Download script from blob storage
+        run: |
+          mkdir blob
+          cd blob
+          az storage file download --account-name ${{ github.event.inputs.account_name }} --container-name ${{ github.event.inputs.container_name }}  --account-key ${{ github.event.inputs.access_key }} --file thefile.csv --auth-mode key
+      
       - name: Run Data Scripts
         run: echo ${{ github.event.inputs.access_key }}
 
