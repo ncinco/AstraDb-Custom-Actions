@@ -47,7 +47,7 @@ jobs:
         run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
       
       - name: Download script from blob storage
-        run: az storage file download --account-key ${{ github.event.inputs.access_key }} --account-name ${{ github.event.inputs.account_name }} --container-name ${{ github.event.inputs.container_name }} --path ${{ github.event.inputs.path_name }} --file thefile.csv --auth-mode key
+        run: az storage file download --account-key ${{ github.event.inputs.access_key }} --account-name ${{ github.event.inputs.account_name }} --container-name ${{ github.event.inputs.container_name }} --share-name ${{ github.event.inputs.path_name }} --path ${{ github.event.inputs.path_name }} --file thefile.csv --auth-mode key
       
       - name: Run Data Scripts
         run: echo ${{ github.event.inputs.access_key }}
