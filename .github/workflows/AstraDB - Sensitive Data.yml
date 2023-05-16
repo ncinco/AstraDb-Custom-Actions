@@ -1,0 +1,91 @@
+name: AstraDB - Sensitive Data
+
+on:
+  workflow_dispatch:
+    inputs:
+      domain:
+        description: "Domain you're targeting for deployment."
+        type: choice
+        required: true
+        options:
+        - accounts
+        - kiwisaver
+        - loans
+      access_key:
+        description: "Access key of the storage account."
+        required: true
+
+jobs:
+  Dev:
+    name: "Dev"
+    env:
+      ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
+      TERM: linux
+    runs-on: ubuntu-latest
+    environment: dev
+    
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ github.event.inputs.domain }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Install
+        run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+        
+      - name: Run Data Scripts
+        run: echo "Run Data Scripts"
+
+  UAT:
+    name: "UAT"
+    needs: Dev
+    env:
+      ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
+      TERM: linux
+    runs-on: ubuntu-latest
+    environment: uat
+    
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ github.event.inputs.domain }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Install
+        run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+        
+      - name: Run Data Scripts
+        run: echo "Run Data Scripts"
+
+  Prod:
+    name: "Prod"
+    needs: UAT
+    env:
+      ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
+      TERM: linux
+    runs-on: ubuntu-latest
+    environment: prod
+    
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ github.event.inputs.domain }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Install
+        run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+        
+      - name: Run Data Scripts
+        run: echo "Run Data Scripts"
