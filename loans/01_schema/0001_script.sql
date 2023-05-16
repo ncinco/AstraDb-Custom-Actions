@@ -1,4 +1,4 @@
-CREATE TABLE accounts.ninotable
+CREATE TABLE loans.ninotable
 (
   id UUID PRIMARY KEY,
   last_name TEXT,
