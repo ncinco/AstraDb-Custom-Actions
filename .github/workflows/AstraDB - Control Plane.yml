@@ -2,6 +2,7 @@ name: 'AstraDB - Control Plane'
  
 on:
   workflow_dispatch:
+    inputs:
       domain:
         description: "Domain you're targeting for deployment."
         type: choice
