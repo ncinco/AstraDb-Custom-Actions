@@ -11,12 +11,6 @@ on:
         - accounts
         - kiwisaver
         - loans
-      account_name:
-        description: "Account name of the storage account."
-        required: true
-      container_name:
-        description: "Container name on storage account where the file is located."
-        required: true
       path_name:
         description: "Path name on container."
         required: true
@@ -29,6 +23,9 @@ jobs:
     name: "Dev"
     env:
       ASTRA_DB_APPLICATION_TOKEN: ${{ secrets.ASTRA_API_TOKEN }}
+      AZURE_STORAGE_NAME: astradbdata
+      AZURE_STORAGE_CONTAINER: astradb
+      AZURE_STORAGE_ACCESS_KEY: ${{ secrets.AZURE_BLOB_STORAGE_SENSITIVE_DATA_ACCESS_KEY }}
       TERM: linux
     runs-on: ubuntu-latest
     environment: dev
@@ -47,7 +44,7 @@ jobs:
         run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
       
       - name: Download from blob storage
-        run: az storage blob download --account-name ${{ github.event.inputs.account_name }} --container-name ${{ github.event.inputs.container_name }} --name ${{ github.event.inputs.path_name }} --file ${{ github.event.inputs.path_name }} --account-key ${{ github.event.inputs.access_key }} --auth-mode key
+        run: az storage blob download --account-name $AZURE_STORAGE_NAME --container-name $AZURE_STORAGE_CONTAINER --name ${{ github.event.inputs.path_name }} --file ${{ github.event.inputs.path_name }} --account-key $AZURE_STORAGE_ACCESS_KEY --auth-mode key
       
       - name: Install Astra CLI
         continue-on-error: true
