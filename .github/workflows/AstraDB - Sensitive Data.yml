@@ -14,9 +14,6 @@ on:
       path_name:
         description: "Path name on container."
         required: true
-      access_key:
-        description: "Access key of the storage account."
-        required: true
 
 jobs:
   Dev:
