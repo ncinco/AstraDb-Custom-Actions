@@ -47,17 +47,16 @@ jobs:
         run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
       
       - name: Download from blob storage
-        run: az storage blob download \
-          --account-name ${{ github.event.inputs.account_name }} \
-          --container-name ${{ github.event.inputs.container_name }} \
-          --name ${{ github.event.inputs.path_name }} \
-          --file ${{ github.event.inputs.path_name }} \
-          --account-key ${{ github.event.inputs.access_key }} \
-          --auth-mode key
+        run: az storage blob download --account-name ${{ github.event.inputs.account_name }} --container-name ${{ github.event.inputs.container_name }} --name ${{ github.event.inputs.path_name }} --file ${{ github.event.inputs.path_name }} --account-key ${{ github.event.inputs.access_key }} --auth-mode key
       
       - name: Install Astra CLI
         continue-on-error: true
         run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
+        
+      - name: Setup Astra CLI
+        if: always()
+        run: |
+          /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
       
       - name: Run Data Scripts
-        run: echo ${{ github.event.inputs.access_key }}
+        run: /home/runner/.astra/cli/astra db load accounts -url ${{ github.event.inputs.path_name }} -k accounts -t bank_accounts_by_cif_with_relationship_map -header true --schema.allowMissingFields true
