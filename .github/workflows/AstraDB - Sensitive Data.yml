@@ -54,3 +54,83 @@ jobs:
       
       - name: Run Data Scripts
         run: /home/runner/.astra/cli/astra db load accounts -url ${{ github.event.inputs.path_name }} -k accounts -t bank_accounts_by_cif_with_relationship_map -header true --schema.allowMissingFields true
+
+  UAT:
+    name: "UAT"
+    needs: Dev
+    env:
+      ASTRA_DB_APPLICATION_TOKEN: ${{ secrets.ASTRA_API_TOKEN }}
+      AZURE_STORAGE_NAME: astradbdata
+      AZURE_STORAGE_CONTAINER: astradb
+      AZURE_STORAGE_ACCESS_KEY: ${{ secrets.AZURE_BLOB_STORAGE_SENSITIVE_DATA_ACCESS_KEY }}
+      TERM: linux
+    runs-on: ubuntu-latest
+    environment: uat
+    
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ github.event.inputs.domain }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Install Azure CLI
+        run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+      
+      - name: Download from blob storage
+        run: az storage blob download --account-name $AZURE_STORAGE_NAME --container-name $AZURE_STORAGE_CONTAINER --name ${{ github.event.inputs.path_name }} --file ${{ github.event.inputs.path_name }} --account-key $AZURE_STORAGE_ACCESS_KEY --auth-mode key
+      
+      - name: Install Astra CLI
+        continue-on-error: true
+        run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
+        
+      - name: Setup Astra CLI
+        if: always()
+        run: |
+          /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
+      
+      - name: Run Data Scripts
+        run: /home/runner/.astra/cli/astra db load accounts -url ${{ github.event.inputs.path_name }} -k accounts -t bank_accounts_by_cif_with_relationship_map -header true --schema.allowMissingFields true
+
+  Prod:
+    name: "Prod"
+    needs: UAT
+    env:
+      ASTRA_DB_APPLICATION_TOKEN: ${{ secrets.ASTRA_API_TOKEN }}
+      AZURE_STORAGE_NAME: astradbdata
+      AZURE_STORAGE_CONTAINER: astradb
+      AZURE_STORAGE_ACCESS_KEY: ${{ secrets.AZURE_BLOB_STORAGE_SENSITIVE_DATA_ACCESS_KEY }}
+      TERM: linux
+    runs-on: ubuntu-latest
+    environment: Prod
+    
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ github.event.inputs.domain }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Install Azure CLI
+        run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+      
+      - name: Download from blob storage
+        run: az storage blob download --account-name $AZURE_STORAGE_NAME --container-name $AZURE_STORAGE_CONTAINER --name ${{ github.event.inputs.path_name }} --file ${{ github.event.inputs.path_name }} --account-key $AZURE_STORAGE_ACCESS_KEY --auth-mode key
+      
+      - name: Install Astra CLI
+        continue-on-error: true
+        run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
+        
+      - name: Setup Astra CLI
+        if: always()
+        run: |
+          /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
+      
+      - name: Run Data Scripts
+        run: /home/runner/.astra/cli/astra db load accounts -url ${{ github.event.inputs.path_name }} -k accounts -t bank_accounts_by_cif_with_relationship_map -header true --schema.allowMissingFields true
