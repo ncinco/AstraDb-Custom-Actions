@@ -55,9 +55,7 @@ jobs:
         run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
         
       - name: Setup Astra CLI
-        if: always()
-        run: |
-          /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
+        run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
       
       - name: Run DSBulk (csv)
         if: ${{ github.event.inputs.domain }} == "csv"
