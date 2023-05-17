@@ -11,9 +11,16 @@ on:
         - accounts
         - kiwisaver
         - loans
-      path_name:
-        description: "Path name on container."
+      file_name:
+        description: "File name on container."
         required: true
+      data_type:
+        description: "Data type to be executed. CSV files to use DSBulk. CQL files will run script."
+        type: choice
+        default: cql
+        options:
+          - cql
+          - csv
 
 jobs:
   Dev:
@@ -41,7 +48,7 @@ jobs:
         run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
       
       - name: Download from blob storage
-        run: az storage blob download --account-name $AZURE_STORAGE_NAME --container-name $AZURE_STORAGE_CONTAINER --name ${{ github.event.inputs.path_name }} --file ${{ github.event.inputs.path_name }} --account-key $AZURE_STORAGE_ACCESS_KEY --auth-mode key
+        run: az storage blob download --account-name $AZURE_STORAGE_NAME --container-name $AZURE_STORAGE_CONTAINER --name ${{ github.event.inputs.file_name }} --file ${{ github.event.inputs.file_name }} --account-key $AZURE_STORAGE_ACCESS_KEY --auth-mode key
       
       - name: Install Astra CLI
         continue-on-error: true
@@ -52,8 +59,13 @@ jobs:
         run: |
           /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
       
-      - name: Run Data Scripts
-        run: /home/runner/.astra/cli/astra db load accounts -url ${{ github.event.inputs.path_name }} -k accounts -t bank_accounts_by_cif_with_relationship_map -header true --schema.allowMissingFields true
+      - name: Run DSBulk (csv)
+        if: ${{ github.event.inputs.domain }} == "csv"
+        run: /home/runner/.astra/cli/astra db load accounts -url ${{ github.event.inputs.file_name }} -k accounts -t bank_accounts_by_cif_with_relationship_map -header true --schema.allowMissingFields true
+        
+      - name: Run cql script
+        if: ${{ github.event.inputs.domain }} == "cql"
+        run: /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${{ github.event.inputs.file_name }}
 
   UAT:
     name: "UAT"
@@ -93,7 +105,7 @@ jobs:
           /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
       
       - name: Run Data Scripts
-        run: /home/runner/.astra/cli/astra db load accounts -url ${{ github.event.inputs.path_name }} -k accounts -t bank_accounts_by_cif_with_relationship_map -header true --schema.allowMissingFields true
+        run: /home/runner/.astra/cli/astra db load ${{ github.event.inputs.domain }} -url ${{ github.event.inputs.path_name }} -k accounts -t bank_accounts_by_cif_with_relationship_map -header true --schema.allowMissingFields true
 
   Prod:
     name: "Prod"
