@@ -92,19 +92,22 @@ jobs:
         run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
       
       - name: Download from blob storage
-        run: az storage blob download --account-name $AZURE_STORAGE_NAME --container-name $AZURE_STORAGE_CONTAINER --name ${{ github.event.inputs.path_name }} --file ${{ github.event.inputs.path_name }} --account-key $AZURE_STORAGE_ACCESS_KEY --auth-mode key
+        run: az storage blob download --account-name $AZURE_STORAGE_NAME --container-name $AZURE_STORAGE_CONTAINER --name ${{ github.event.inputs.file_name }} --file ${{ github.event.inputs.file_name }} --account-key $AZURE_STORAGE_ACCESS_KEY --auth-mode key
       
       - name: Install Astra CLI
         continue-on-error: true
         run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
         
       - name: Setup Astra CLI
-        if: always()
-        run: |
-          /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
+        run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
       
-      - name: Run Data Scripts
-        run: /home/runner/.astra/cli/astra db load ${{ github.event.inputs.domain }} -url ${{ github.event.inputs.path_name }} -k accounts -t bank_accounts_by_cif_with_relationship_map -header true --schema.allowMissingFields true
+      - name: Run DSBulk (csv)
+        if: "${{ github.event.inputs.data_type }} == 'csv'"
+        run: /home/runner/.astra/cli/astra db load accounts -url ${{ github.event.inputs.file_name }} -k accounts -t bank_accounts_by_cif_with_relationship_map -header true --schema.allowMissingFields true
+        
+      - name: Run cql script
+        if: "${{ github.event.inputs.data_type }} == 'cql'"
+        run: /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${{ github.event.inputs.file_name }}
 
   Prod:
     name: "Prod"
@@ -132,16 +135,19 @@ jobs:
         run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
       
       - name: Download from blob storage
-        run: az storage blob download --account-name $AZURE_STORAGE_NAME --container-name $AZURE_STORAGE_CONTAINER --name ${{ github.event.inputs.path_name }} --file ${{ github.event.inputs.path_name }} --account-key $AZURE_STORAGE_ACCESS_KEY --auth-mode key
+        run: az storage blob download --account-name $AZURE_STORAGE_NAME --container-name $AZURE_STORAGE_CONTAINER --name ${{ github.event.inputs.file_name }} --file ${{ github.event.inputs.file_name }} --account-key $AZURE_STORAGE_ACCESS_KEY --auth-mode key
       
       - name: Install Astra CLI
         continue-on-error: true
         run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
         
       - name: Setup Astra CLI
-        if: always()
-        run: |
-          /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
+        run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
       
-      - name: Run Data Scripts
-        run: /home/runner/.astra/cli/astra db load accounts -url ${{ github.event.inputs.path_name }} -k accounts -t bank_accounts_by_cif_with_relationship_map -header true --schema.allowMissingFields true
+      - name: Run DSBulk (csv)
+        if: "${{ github.event.inputs.data_type }} == 'csv'"
+        run: /home/runner/.astra/cli/astra db load accounts -url ${{ github.event.inputs.file_name }} -k accounts -t bank_accounts_by_cif_with_relationship_map -header true --schema.allowMissingFields true
+        
+      - name: Run cql script
+        if: "${{ github.event.inputs.data_type }} == 'cql'"
+        run: /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${{ github.event.inputs.file_name }}
