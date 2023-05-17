@@ -15,7 +15,7 @@ on:
         description: "File name on container."
         required: true
       data_type:
-        description: "Data type to be executed.\n - CSV files to use DSBulk.\n - CQL files will run script."
+        description: "Data type to be executed. CSV files to use DSBulk. CQL files will run script."
         required: true
         type: choice
         default: cql
