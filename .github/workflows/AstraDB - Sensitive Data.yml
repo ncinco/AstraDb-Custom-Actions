@@ -59,11 +59,11 @@ jobs:
         run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
       
       - name: Run DSBulk (csv)
-        if: "${{ github.event.inputs.data_type }} == 'csv'"
+        if: $github.event.inputs.data_type == 'csv'
         run: /home/runner/.astra/cli/astra db load accounts -url ${{ github.event.inputs.file_name }} -k accounts -t bank_accounts_by_cif_with_relationship_map -header true --schema.allowMissingFields true
         
       - name: Run cql script
-        if: "${{ github.event.inputs.data_type }} == 'cql'"
+        if: $github.event.inputs.data_type == 'cql'
         run: /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${{ github.event.inputs.file_name }}
 
   UAT:
@@ -102,11 +102,11 @@ jobs:
         run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
       
       - name: Run DSBulk (csv)
-        if: "${{ github.event.inputs.data_type }} == 'csv'"
+        if: $github.event.inputs.data_type == 'csv'
         run: /home/runner/.astra/cli/astra db load accounts -url ${{ github.event.inputs.file_name }} -k accounts -t bank_accounts_by_cif_with_relationship_map -header true --schema.allowMissingFields true
         
       - name: Run cql script
-        if: "${{ github.event.inputs.data_type }} == 'cql'"
+        if: $github.event.inputs.data_type == 'cql'
         run: /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${{ github.event.inputs.file_name }}
 
   Prod:
@@ -145,9 +145,9 @@ jobs:
         run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
       
       - name: Run DSBulk (csv)
-        if: "${{ github.event.inputs.data_type }} == 'csv'"
+        if: $github.event.inputs.data_type == 'csv'
         run: /home/runner/.astra/cli/astra db load accounts -url ${{ github.event.inputs.file_name }} -k accounts -t bank_accounts_by_cif_with_relationship_map -header true --schema.allowMissingFields true
         
       - name: Run cql script
-        if: "${{ github.event.inputs.data_type }} == 'cql'"
+        if: $github.event.inputs.data_type == 'cql'
         run: /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${{ github.event.inputs.file_name }}
