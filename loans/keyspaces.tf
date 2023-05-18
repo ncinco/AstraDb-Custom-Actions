@@ -1,4 +1,4 @@
-resource "astra_keyspace" "loans_second" {
-  name        = "loans_second"
+resource "astra_keyspace" "sandbox" {
+  name        = "sandbox"
   database_id = astra_database.loans.id
 }
