@@ -1,3 +1,3 @@
 module "astradb" {
-	source = "../modules/astradb"
+  source = "../modules/astradb"
 }
