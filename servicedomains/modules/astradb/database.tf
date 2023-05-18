@@ -1,6 +1,6 @@
-resource "astra_database" "accounts" {
-  name           = "accounts"
-  keyspace       = "accounts"
+resource "astra_database" "astradb" {
+  name           = var.database
+  keyspace       = var.database
   cloud_provider = var.environment == "dev" ? "azure" : "gcp"
   regions        = var.environment == "dev" ? ["australiaeast", "westeurope"] : ["us-east1"]
 }

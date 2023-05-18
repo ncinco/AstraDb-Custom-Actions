@@ -21,7 +21,3 @@ provider "astra" {
 provider "azurerm" {
   features {}
 }
-
-module "astradb" {
-	source = "../modules/astradb"
-}
