@@ -4,9 +4,9 @@ resource "astra_role" "organisationsuperuser" {
   effect      = "allow"
   resources = [
     # The following 3 resources are needed and wildcarded to associate the role to all dbs
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:${astra_database.integration_dev.id}",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.integration_dev.id}:keyspace:*",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.integration_dev.id}:keyspace:*:table:*"
+    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:${astra_database.astradb.id}",
+    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.astradb.id}:keyspace:*",
+    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.astradb.id}:keyspace:*:table:*"
   ]
   policy = [
     # organisation permissions
@@ -41,9 +41,9 @@ resource "astra_role" "apiteamdev" {
   effect      = "allow"
   resources = [
     # The following 3 resources are needed and wildcarded to associate the role to all dbs
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:${astra_database.integration_dev.id}",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.integration_dev.id}:keyspace:*",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.integration_dev.id}:keyspace:*:table:*"
+    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:${astra_database.astradb.id}",
+    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.astradb.id}:keyspace:*",
+    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.astradb.id}:keyspace:*:table:*"
   ]
   policy = [
     # organisation permissions
@@ -70,9 +70,9 @@ resource "astra_role" "apiteamqa" {
   effect      = "allow"
   resources = [
     # The following 3 resources are needed and wildcarded to associate the role to all dbs
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:${astra_database.integration_qa.id}",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.integration_qa.id}:keyspace:*",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.integration_qa.id}:keyspace:*:table:*"
+    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:${astra_database.astradb.id}",
+    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.astradb.id}:keyspace:*",
+    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.astradb.id}:keyspace:*:table:*"
   ]
   policy = [
     # organisation permissions
@@ -133,34 +133,5 @@ resource "astra_role" "apireadwrite" {
 
     # api access permissions
     "db-rest"
-  ]
-}
-
-resource "astra_role" "pipelineagent" {
-  role_name   = "Pipeline Agent"
-  description = "Role used by pipeline agent to manage data and database objects."
-  effect      = "allow"
-  resources = [
-    # The following 3 resources are needed and wildcarded to associate the role to all dbs
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:*",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:*:keyspace:*",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:*:keyspace:*:table:*"
-  ]
-  policy = [
-    # organisation permissions
-    "org-db-view",
-
-    # keyspace permissions
-    "db-keyspace-alter", "db-keyspace-authorize", "db-keyspace-create",
-    "db-keyspace-describe", "db-keyspace-drop", "db-keyspace-grant",
-    "db-keyspace-modify",
-
-    # table permissions
-    "db-table-select", "db-table-grant", "db-table-modify",
-    "db-table-describe", "db-table-create", "db-table-authorize",
-    "db-table-alter", "db-table-drop",
-
-    # api access permissions
-    "db-rest", "db-cql"
   ]
 }
