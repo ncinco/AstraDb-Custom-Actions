@@ -4,9 +4,9 @@ resource "astra_role" "organisationsuperuser" {
   effect      = "allow"
   resources = [
     # The following 3 resources are needed and wildcarded to associate the role to all dbs
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:${astra_database.astradb.id}",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.astradb.id}:keyspace:*",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.astradb.id}:keyspace:*:table:*"
+    "drn:astra:org:*:db:${astra_database.astradb.id}",
+    "drn:astra:org:*:db:${astra_database.astradb.id}:keyspace:*",
+    "drn:astra:org:*:db:${astra_database.astradb.id}:keyspace:*:table:*"
   ]
   policy = [
     # organisation permissions
@@ -41,9 +41,9 @@ resource "astra_role" "apiteamdev" {
   effect      = "allow"
   resources = [
     # The following 3 resources are needed and wildcarded to associate the role to all dbs
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:${astra_database.astradb.id}",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.astradb.id}:keyspace:*",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.astradb.id}:keyspace:*:table:*"
+    "drn:astra:org:*:db:${astra_database.astradb.id}",
+    "drn:astra:org:*:db:${astra_database.astradb.id}:keyspace:*",
+    "drn:astra:org:*:db:${astra_database.astradb.id}:keyspace:*:table:*"
   ]
   policy = [
     # organisation permissions
@@ -70,9 +70,9 @@ resource "astra_role" "apiteamqa" {
   effect      = "allow"
   resources = [
     # The following 3 resources are needed and wildcarded to associate the role to all dbs
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:${astra_database.astradb.id}",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.astradb.id}:keyspace:*",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:{astra_database.astradb.id}:keyspace:*:table:*"
+    "drn:astra:org:*:db:${astra_database.astradb.id}",
+    "drn:astra:org:*:db:${astra_database.astradb.id}:keyspace:*",
+    "drn:astra:org:*:db:${astra_database.astradb.id}:keyspace:*:table:*"
   ]
   policy = [
     # organisation permissions
@@ -96,9 +96,9 @@ resource "astra_role" "apireadonly" {
   effect      = "allow"
   resources = [
     # The following 3 resources are needed and wildcarded to associate the role to all dbs
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:*",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:*:keyspace:*",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:*:keyspace:*:table:*"
+    "drn:astra:org:*:db:*",
+    "drn:astra:org:*:db:*:keyspace:*",
+    "drn:astra:org:*:db:*:keyspace:*:table:*"
   ]
   policy = [
     # organisation permissions
@@ -119,9 +119,9 @@ resource "astra_role" "apireadwrite" {
   effect      = "allow"
   resources = [
     # The following 3 resources are needed and wildcarded to associate the role to all dbs
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:*",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:*:keyspace:*",
-    "drn:astra:org:a7db17c3-dfe1-4567-bcce-eeeb0bb2c944:db:*:keyspace:*:table:*"
+    "drn:astra:org:*:db:*",
+    "drn:astra:org:*:db:*:keyspace:*",
+    "drn:astra:org:*:db:*:keyspace:*:table:*"
   ]
   policy = [
     # organisation permissions
