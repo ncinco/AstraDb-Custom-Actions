@@ -52,12 +52,12 @@ jobs:
 
     - name: 'Terraform Plan'
       id: plan
-      run: terraform plan -var token=${{ secrets.ASTRA_API_TOKEN }} -var environment=dev -var database=${{ github.event.inputs.domain }}
+      run: terraform plan -var token=${{ secrets.ASTRA_API_TOKEN }} -var environment=dev
  
     - name: Terraform Apply
       id: apply
       if: github.ref == 'refs/heads/main'
-      run: terraform apply -auto-approve -var token=${{ secrets.ASTRA_API_TOKEN }} -var environment=dev -var database=${{ github.event.inputs.domain }}
+      run: terraform apply -auto-approve -var token=${{ secrets.ASTRA_API_TOKEN }} -var environment=dev
 
   UAT:
     name: 'UAT'
@@ -99,12 +99,12 @@ jobs:
 
     - name: 'Terraform Plan'
       id: plan
-      run: terraform plan -var token=${{ secrets.ASTRA_API_TOKEN }} -var environment=uat -var database=${{ github.event.inputs.domain }}
+      run: terraform plan -var token=${{ secrets.ASTRA_API_TOKEN }} -var environment=uat
  
     - name: Terraform Apply
       id: apply
       if: github.ref == 'refs/heads/main'
-      run: terraform apply -auto-approve -var token=${{ secrets.ASTRA_API_TOKEN }} -var environment=uat -var database=${{ github.event.inputs.domain }}
+      run: terraform apply -auto-approve -var token=${{ secrets.ASTRA_API_TOKEN }} -var environment=uat
 
   Prod:
     name: 'Prod'
@@ -146,9 +146,9 @@ jobs:
 
     - name: 'Terraform Plan'
       id: plan
-      run: terraform plan -var token=${{ secrets.ASTRA_API_TOKEN }} -var environment=prod -var database=${{ github.event.inputs.domain }}
+      run: terraform plan -var token=${{ secrets.ASTRA_API_TOKEN }} -var environment=prod
  
     - name: Terraform Apply
       id: apply
       if: github.ref == 'refs/heads/main'
-      run: terraform apply -auto-approve -var token=${{ secrets.ASTRA_API_TOKEN }} -var environment=prod -var database=${{ github.event.inputs.domain }}
+      run: terraform apply -auto-approve -var token=${{ secrets.ASTRA_API_TOKEN }} -var environment=prod
