@@ -25,7 +25,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ${{ github.event.inputs.domain }}
+        working-directory: servicedomains/${{ github.event.inputs.domain }}
 
     steps:
       - name: Checkout
@@ -65,7 +65,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ${{ github.event.inputs.domain }}
+        working-directory: servicedomains/${{ github.event.inputs.domain }}
 
     steps:
       - name: Checkout
@@ -105,7 +105,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ${{ github.event.inputs.domain }}
+        working-directory: servicedomains/${{ github.event.inputs.domain }}
 
     steps:
       - name: Checkout
