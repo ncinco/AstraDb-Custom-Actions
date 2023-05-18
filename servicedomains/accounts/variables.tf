@@ -2,4 +2,6 @@ variable "token" {}
 
 variable "environment" {}
 
-variable "database" {}
+variable "database" {
+  default = "accounts"
+}
