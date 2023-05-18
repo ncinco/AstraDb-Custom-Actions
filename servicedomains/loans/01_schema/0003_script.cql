@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS loans.bank_accounts_by_cif_with_relationship_map (
+CREATE TABLE IF NOT EXISTS accounts.bank_accounts_by_cif_with_relationship_map (
     account_number text,
     account_type text,
     account_balance decimal,

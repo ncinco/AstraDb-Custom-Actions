@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS kiwisaver.ninotable
+CREATE TABLE IF NOT EXISTS accounts.ninotable
 (
   id UUID PRIMARY KEY,
   last_name TEXT,
