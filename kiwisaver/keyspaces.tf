@@ -1,4 +1,4 @@
-resource "astra_keyspace" "kiwisaver_second" {
-  name        = "kiwisaver_second"
+resource "astra_keyspace" "sandbox" {
+  name        = "sandbox"
   database_id = astra_database.kiwisaver.id
 }
