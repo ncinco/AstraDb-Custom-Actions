@@ -24,8 +24,8 @@ on:
           - csv
 
 jobs:
-  Dev:
-    name: "Dev"
+  dev:
+    name: "dev"
     env:
       ASTRA_DB_APPLICATION_TOKEN: ${{ secrets.ASTRA_API_TOKEN }}
       AZURE_STORAGE_NAME: astradbdata
@@ -66,9 +66,9 @@ jobs:
         if: github.event.inputs.data_type == 'cql'
         run: /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${{ github.event.inputs.file_name }}
 
-  UAT:
-    name: "UAT"
-    needs: Dev
+  uat:
+    name: "uat"
+    needs: dev
     env:
       ASTRA_DB_APPLICATION_TOKEN: ${{ secrets.ASTRA_API_TOKEN }}
       AZURE_STORAGE_NAME: astradbdata
@@ -109,9 +109,9 @@ jobs:
         if: github.event.inputs.data_type == 'cql'
         run: /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${{ github.event.inputs.file_name }}
 
-  Prod:
-    name: "Prod"
-    needs: UAT
+  prod:
+    name: "prod"
+    needs: uat
     env:
       ASTRA_DB_APPLICATION_TOKEN: ${{ secrets.ASTRA_API_TOKEN }}
       AZURE_STORAGE_NAME: astradbdata
