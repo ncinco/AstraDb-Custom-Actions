@@ -41,19 +41,6 @@ jobs:
           
       - name: Run Schema Scripts
         if: always()
-        run: >
-          cd 1000_schema;
-          for f in *.cql;
-            do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug &&
-            echo "executing : INSERT INTO accounts.executed_scripts (execution_id, script_name, triggered_by) VALUES (uuid(), '${f}', '${{github.actor}}')" &&
-            /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -e "INSERT INTO accounts.executed_scripts (execution_id, script_name, triggered_by) VALUES (uuid(), '${f}', '${{github.actor}}')" --debug;
-          done;
-          
-      - name: Run Data Scripts
-        if: always()
-        run: >
-          cd 2000_data;
-          for f in *.cql;
-            do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug &&
-            /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -e "INSERT INTO accounts.executed_scripts (execution_id, script_name, triggered_by) VALUES (uuid(), '${f}', '${{github.actor}}')" --debug;
-          done;
+        run: |
+          /home/runner/.astra/cli/astra db create ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -r australiaeast --if-not-exist --wait
+          /home/runner/.astra/cli/astra db create-keyspace ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -k sandbox --if-not-exist
