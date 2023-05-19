@@ -41,7 +41,7 @@ jobs:
     - name: 'Terraform Init'
       id: init
       run: >
-       terraform init -backend-config=backendev.conf \
+       terraform init -backend-config=backend.conf \
         -backend-config="container_name=${{ github.event.inputs.domain }}" \
         -backend-config="key=${environment}"
  
