@@ -4,3 +4,7 @@ module "astradb" {
   environment    = var.environment
   database       = var.database
 }
+  
+provider "azurerm" {
+  features {}
+}
