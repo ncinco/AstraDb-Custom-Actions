@@ -42,7 +42,7 @@ jobs:
       - name: Run Schema Scripts
         if: always()
         run: >
-          cd 1000_schema
+          cd 1000_schema;
           for f in *.cql;
             do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug;
           done;
@@ -50,7 +50,7 @@ jobs:
       - name: Run Data Scripts
         if: always()
         run: >
-          cd 2000_data
+          cd 2000_data;
           for f in *.cql;
             do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug;
           done;
