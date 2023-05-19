@@ -41,9 +41,11 @@ jobs:
     - name: 'Terraform Init'
       id: init
       run: >
-       terraform init -backend-config=backend.conf \
-        -backend-config="container_name=${{ github.event.inputs.domain }}" \
-        -backend-config="key=${environment}"
+       terraform init \
+         -backend-config="resource_group_name=Terraform_State" \
+         -backend-config="storage_account_name=astradbstate" \
+         -backend-config="container_name=${{ github.event.inputs.domain }}" \
+         -backend-config="key=${environment}"
  
     - name: 'Terraform Validate'
       id: validate
