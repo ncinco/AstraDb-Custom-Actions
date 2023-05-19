@@ -28,9 +28,6 @@ jobs:
         working-directory: terraform/servicedomains/${{ github.event.inputs.domain }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      
       - name: Install Astra CLI
         continue-on-error: true
         run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
