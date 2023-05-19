@@ -25,7 +25,6 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: terraform/servicedomains/${{ github.event.inputs.domain }}
 
     steps:
       - name: Install Astra CLI
