@@ -42,15 +42,19 @@ jobs:
           
       - name: Run Schema Scripts
         if: always()
-        run: |
+        run: >
           cd 01_schema
-          for f in *.cql; do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug; done;
+          for f in *.cql;
+            do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug;
+          done;
           
       - name: Run Data Scripts
         if: always()
-        run: |
+        run: >
           cd 02_data
-          for f in *.cql; do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug; done;
+          for f in *.cql;
+            do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug;
+          done;
 
   uat:
     name: "uat"
