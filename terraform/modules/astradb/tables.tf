@@ -4,7 +4,7 @@ resource "astra_table" "executed_scripts" {
   database_id         = astra_database.astradb.id
   region              = "australiaeast"
   partition_keys      = "execution_id:script_name"
-  clustering_columns  = "execution_datetime:triggered_by"
+  clustering_columns  = "execution_datetime"
   column_definitions= [
     {
       Name: "execution_id"
