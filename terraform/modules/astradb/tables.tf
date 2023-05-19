@@ -3,8 +3,8 @@ resource "astra_table" "executed_scripts" {
   keyspace            = var.database
   database_id         = astra_database.astradb.id
   region              = "australiaeast"
+  partition_keys      = "execution_id:script_name"
   clustering_columns  = "a:b"
-  partition_keys      = "c:d"
   column_definitions= [
     {
       Name: "execution_id"
