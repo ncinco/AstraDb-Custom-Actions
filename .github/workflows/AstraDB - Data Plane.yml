@@ -13,8 +13,8 @@ on:
         - loans
 
 jobs:
-  Dev:
-    name: "Dev"
+  dev:
+    name: "dev"
     env:
       ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
       TERM: linux
@@ -52,9 +52,9 @@ jobs:
           cd 02_data
           for f in *.cql; do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug; done;
 
-  UAT:
-    name: "UAT"
-    needs: Dev
+  uat:
+    name: "uat"
+    needs: dev
     env:
       ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
       TERM: linux
@@ -92,9 +92,9 @@ jobs:
           cd 02_data
           for f in *.cql; do /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug; done;
 
-  Prod:
-    name: "Prod"
-    needs: UAT
+  prod:
+    name: "prod"
+    needs: uat
     env:
       ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
       TERM: linux
