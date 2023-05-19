@@ -4,7 +4,6 @@ resource "astra_table" "executed_scripts" {
   database_id         = astra_database.astradb.id
   region              = "australiaeast"
   partition_keys      = "execution_id:script_name"
-  clustering_columns  = "a:b"
   column_definitions= [
     {
       Name: "execution_id"
@@ -19,7 +18,7 @@ resource "astra_table" "executed_scripts" {
       TypeDefinition: "text"
     },
     {
-      Name: "user"
+      Name: "triggered_by"
       TypeDefinition: "text"
     },
   ]
