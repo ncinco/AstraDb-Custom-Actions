@@ -45,6 +45,7 @@ jobs:
           cd 1000_schema;
           for f in *.cql;
           do
+            echo "executing : ${f}";
             /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug;
             /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -e "INSERT INTO ${{ github.event.inputs.domain }}.executed_scripts (execution_id, script_name, triggered_by) VALUES (uuid(), '${f}', '${{github.actor}}')" --debug;
           done;
@@ -55,6 +56,7 @@ jobs:
           cd 2000_data;
           for f in *.cql;
           do
+            echo "executing : ${f}";
             /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug;
             /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -e "INSERT INTO ${{ github.event.inputs.domain }}.executed_scripts (execution_id, script_name, triggered_by) VALUES (uuid(), '${f}', '${{github.actor}}')" --debug;
           done;
