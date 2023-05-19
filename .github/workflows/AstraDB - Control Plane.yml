@@ -24,7 +24,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: servicedomains/${{ github.event.inputs.domain }}
+        working-directory: terraform/servicedomains/${{ github.event.inputs.domain }}
  
     steps:
     - uses: hashicorp/setup-terraform@v2
@@ -71,7 +71,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: servicedomains/${{ github.event.inputs.domain }}
+        working-directory: terraform/servicedomains/${{ github.event.inputs.domain }}
  
     steps:
     - uses: hashicorp/setup-terraform@v2
@@ -118,7 +118,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: servicedomains/${{ github.event.inputs.domain }}
+        working-directory: terraform/servicedomains/${{ github.event.inputs.domain }}
  
     steps:
     - uses: hashicorp/setup-terraform@v2
