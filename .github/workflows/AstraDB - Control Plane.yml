@@ -13,8 +13,8 @@ on:
         - loans
  
 jobs:
-  Dev:
-    name: 'Dev'
+  dev:
+    name: 'dev'
     env:
       ARM_ACCESS_KEY: ${{ secrets.AZURE_BLOB_STORAGE_ACCESS_KEY }}
     runs-on: ubuntu-latest
@@ -59,9 +59,9 @@ jobs:
       if: github.ref == 'refs/heads/main'
       run: terraform apply -auto-approve -var token=${{ secrets.ASTRA_API_TOKEN }} -var environment=dev
 
-  UAT:
-    name: 'UAT'
-    needs: Dev
+  uat:
+    name: 'uat'
+    needs: dev
     env:
       ARM_ACCESS_KEY: ${{ secrets.AZURE_BLOB_STORAGE_ACCESS_KEY }}
     runs-on: ubuntu-latest
@@ -106,9 +106,9 @@ jobs:
       if: github.ref == 'refs/heads/main'
       run: terraform apply -auto-approve -var token=${{ secrets.ASTRA_API_TOKEN }} -var environment=uat
 
-  Prod:
-    name: 'Prod'
-    needs: UAT
+  prod:
+    name: 'prod'
+    needs: uat
     env:
       ARM_ACCESS_KEY: ${{ secrets.AZURE_BLOB_STORAGE_ACCESS_KEY }}
     runs-on: ubuntu-latest
