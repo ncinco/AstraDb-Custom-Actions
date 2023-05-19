@@ -40,3 +40,4 @@ jobs:
         run: |
           /home/runner/.astra/cli/astra db create ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -r australiaeast --if-not-exist --wait
           /home/runner/.astra/cli/astra db create-keyspace ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -k sandbox --if-not-exist
+          /home/runner/.astra/cli/astra db create-keyspace ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -k utilities --if-not-exist
