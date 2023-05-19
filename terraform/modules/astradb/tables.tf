@@ -18,5 +18,9 @@ resource "astra_table" "executed_scripts" {
       Name: "script_name"
       TypeDefinition: "text"
     },
+    {
+      Name: "user"
+      TypeDefinition: "text"
+    },
   ]
 }
