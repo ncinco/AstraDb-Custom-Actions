@@ -1,0 +1,20 @@
+{
+    "name": "AppTeam Dev accounts",
+    "policy": {
+        "description": "AppTeam Dev role for read and write operations to tables.",
+        "resources": [
+            "drn:astra:org:9ffa81f4-288b-49b0-b580-4c45e9155592:db:6bb2ad45-f726-49f3-b6ee-ee86cfd451b6:keyspace:accounts",
+            "drn:astra:org:9ffa81f4-288b-49b0-b580-4c45e9155592:db:6bb2ad45-f726-49f3-b6ee-ee86cfd451b6:keyspace:utilities"
+        ],
+        "actions": [
+            "db-table-create",
+            "db-table-drop",
+            "db-table-modify",
+            "db-table-select",
+            "db-table-describe",
+            "db-cql",
+            "db-rest"
+        ],
+        "effect": "allow"
+    }
+}
