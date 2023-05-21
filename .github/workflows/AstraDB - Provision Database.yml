@@ -53,22 +53,22 @@ jobs:
         if: always()
         run: |
           cd roles
-          curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @api-read.json
+          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @api-read.json
           
       - name: Create Api Write Role
         if: always()
         run: |
           cd roles
-          curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @api-write.json
+          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @api-write.json
           
       - name: Create ApiTeam Sandbox Role
         if: always()
         run: |
           cd roles
-          curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @apiteam-dev-sandbox.json
+          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @apiteam-dev-sandbox.json
           
       - name: Create ApiTeam Role
         if: always()
         run: |
           cd roles
-          curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @apiteam-dev.json
+          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @apiteam-dev.json
