@@ -8,8 +8,7 @@
         ],
         "actions": [
             "db-table-select",
-            "db-cql",
-            "db-rest"
+            "db-cql"
         ],
         "effect": "allow"
     },
