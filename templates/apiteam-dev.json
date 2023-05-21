@@ -8,9 +8,10 @@
         ],
         "actions": [
             "db-table-create",
+            "db-table-alter"
             "db-table-drop",
-            "db-table-modify",
             "db-table-select",
+            "db-table-modify",
             "db-table-describe",
             "db-cql",
             "db-rest"
