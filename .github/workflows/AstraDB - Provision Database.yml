@@ -54,3 +54,6 @@ jobs:
         run: |
           cd templates
           curl POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer AstraCS:JidKALteKigmDImudJcimeZP:5593ab3ad44fd6cdc20f4be849132fe4812a76a51433c1daa4d4f55958903635" -d @api-read.json
+          curl POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer AstraCS:JidKALteKigmDImudJcimeZP:5593ab3ad44fd6cdc20f4be849132fe4812a76a51433c1daa4d4f55958903635" -d @api-write.json
+          curl POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer AstraCS:JidKALteKigmDImudJcimeZP:5593ab3ad44fd6cdc20f4be849132fe4812a76a51433c1daa4d4f55958903635" -d @apiteam-dev-sandbox.json
+          curl POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer AstraCS:JidKALteKigmDImudJcimeZP:5593ab3ad44fd6cdc20f4be849132fe4812a76a51433c1daa4d4f55958903635" -d @apiteam-dev.json
