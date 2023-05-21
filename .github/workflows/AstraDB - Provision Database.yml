@@ -27,6 +27,10 @@ jobs:
         shell: bash
 
     steps:
+      - name: 'Checkout'
+        id: checkout
+        uses: actions/checkout@v3
+    
       - name: Install Astra CLI
         continue-on-error: true
         run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
@@ -35,9 +39,18 @@ jobs:
         if: always()
         run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
           
-      - name: Run Schema Scripts
+      - name: Create Database
+        if: always()
+        run: /home/runner/.astra/cli/astra db create ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -r australiaeast --if-not-exist --wait
+          
+      - name: Create Keyspaces (sandbox, utilities)
         if: always()
         run: |
-          /home/runner/.astra/cli/astra db create ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -r australiaeast --if-not-exist --wait
           /home/runner/.astra/cli/astra db create-keyspace ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -k sandbox --if-not-exist
           /home/runner/.astra/cli/astra db create-keyspace ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -k utilities --if-not-exist
+          
+      - name: Create Roles
+        if: always()
+        run: |
+          cd templates
+          curl POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer AstraCS:JidKALteKigmDImudJcimeZP:5593ab3ad44fd6cdc20f4be849132fe4812a76a51433c1daa4d4f55958903635" -d api-read.json
