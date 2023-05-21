@@ -1,6 +1,6 @@
 {
     "id": "59fd0336-d353-4073-a51b-5747627f648e",
-    "name": "API WRITE accounts-accounts",
+    "name": "Api Write accounts-accounts",
     "policy": {
         "description": "Role for read and write operations to tables.",
         "resources": [
