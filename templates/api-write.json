@@ -9,6 +9,7 @@
         "actions": [
             "db-table-select",
             "db-table-describe",
+            "db-table-modify"
             "db-cql",
             "db-rest"
         ],
