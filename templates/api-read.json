@@ -8,7 +8,6 @@
         ],
         "actions": [
             "db-table-select",
-            "db-table-describe",
             "db-cql",
             "db-rest"
         ],
