@@ -53,7 +53,7 @@ jobs:
         if: always()
         run: |
           cd templates
-          curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer ${{ ASTRA_DB_APPLICATION_TOKEN }}" -d @api-read.json
-          curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer ${{ ASTRA_DB_APPLICATION_TOKEN }}" -d @api-write.json
-          curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer ${{ ASTRA_DB_APPLICATION_TOKEN }}" -d @apiteam-dev-sandbox.json
-          curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer ${{ ASTRA_DB_APPLICATION_TOKEN }}" -d @apiteam-dev.json
+          curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @api-read.json
+          curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @api-write.json
+          curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @apiteam-dev-sandbox.json
+          curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @apiteam-dev.json
