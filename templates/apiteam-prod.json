@@ -1,0 +1,18 @@
+{
+    "id": "59fd0336-d353-4073-a51b-5747627f648e",
+    "name": "ApiTeam Prod accounts",
+    "policy": {
+        "description": "Role for read operations to tables.",
+        "resources": [
+            "drn:astra:org:9ffa81f4-288b-49b0-b580-4c45e9155592:db:6bb2ad45-f726-49f3-b6ee-ee86cfd451b6:keyspace:accounts"
+        ],
+        "actions": [
+            "db-table-select",
+            "db-cql",
+            "db-rest"
+        ],
+        "effect": "allow"
+    },
+    "last_update_date_time": "0001-01-01T00:00:00Z",
+    "last_update_user_id": ""
+}
