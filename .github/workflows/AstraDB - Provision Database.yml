@@ -48,7 +48,7 @@ jobs:
         run: |
           /home/runner/.astra/cli/astra db create-keyspace ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -k sandbox --if-not-exist
           /home/runner/.astra/cli/astra db create-keyspace ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -k utilities --if-not-exist
-          
+
       - name: Create Api Read Role
         if: always()
         run: |
@@ -57,12 +57,15 @@ jobs:
           
       - name: Create Api Write Role
         if: always()
-        run: curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @api-write.json
+        run: |
+          curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @api-write.json
           
       - name: Create ApiTeam Sandbox Role
         if: always()
-        run: curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @apiteam-dev-sandbox.json
+        run: |
+          curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @apiteam-dev-sandbox.json
           
       - name: Create ApiTeam Role
         if: always()
-        run: curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @apiteam-dev.json
+        run: |
+          curl -o POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @apiteam-dev.json
