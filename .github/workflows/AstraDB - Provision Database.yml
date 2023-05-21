@@ -45,13 +45,13 @@ jobs:
           
       - name: Create Keyspaces (sandbox, utilities)
         if: always()
-        run: >
+        run: |
           /home/runner/.astra/cli/astra db create-keyspace ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -k sandbox --if-not-exist
           /home/runner/.astra/cli/astra db create-keyspace ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -k utilities --if-not-exist
 
       - name: Create Custom Roles
         if: always()
-        run: >
+        run: |
           cd roles
           curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @api-read.json
           curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_DB_APPLICATION_TOKEN" -d @api-write.json
