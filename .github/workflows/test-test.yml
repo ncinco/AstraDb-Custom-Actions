@@ -1,0 +1,44 @@
+name: 'test test'
+ 
+on:
+  workflow_dispatch:
+    inputs:
+      domain:
+        description: "Domain you're targeting for deployment."
+        type: choice
+        required: true
+        options:
+        - accounts
+        - kiwisaver
+        - loans
+
+jobs:
+  dev:
+    name: "dev"
+    env:
+      ASTRA_DB_API_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
+      ASTRA_DB_ID: ""
+      ASTRA_ORG_API_TOKEN: ${{secrets.ASTRA_ORG_API_TOKEN}}
+      TERM: linux
+    runs-on: ubuntu-latest
+    environment: dev
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: Install Astra CLI
+        continue-on-error: true
+        run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
+        
+      - name: Setup
+        if: always()
+        run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_API_TOKEN
+
+      - name: Get Database Info
+        if: always()
+        run: |
+          ASTRA_DB_ID=$(/home/runner/.astra/cli/astra db get ${{ github.event.inputs.domain }} --key)
+          echo "astra db id: $ASTRA_DB_ID"
