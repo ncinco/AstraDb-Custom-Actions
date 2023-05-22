@@ -45,4 +45,5 @@ jobs:
         run: |
           cd roles
           VER=$(cat api-read.json)
+          VAR=${VER//[KEYSPACE]/${{ github.event.inputs.domain }}}
           echo "Version : $VER"
