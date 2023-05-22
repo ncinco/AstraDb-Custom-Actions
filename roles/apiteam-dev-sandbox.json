@@ -3,7 +3,7 @@
     "policy": {
         "description": "AppTeam Dev Sandbox role for read and write operations to tables.",
         "resources": [
-            "drn:astra:org:__ASTRA_ORG_API_TOKEN__:db:__ASTRA_DB_SANDBOX_ID__:keyspace:*"
+            "drn:astra:org:__ASTRA_ORG_ID__:db:__ASTRA_DB_SANDBOX_ID__:keyspace:*"
         ],
         "actions": [
             "db-table-create",
