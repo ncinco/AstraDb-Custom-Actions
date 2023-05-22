@@ -41,4 +41,4 @@ jobs:
         if: always()
         run: |
           ASTRA_DB_ID=$(/home/runner/.astra/cli/astra db get ${{ github.event.inputs.domain }} --key)
-          echo "astra db id: $ASTRA_DB_ID"
+          echo $ASTRA_DB_ID
