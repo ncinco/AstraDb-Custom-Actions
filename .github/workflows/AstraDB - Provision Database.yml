@@ -65,6 +65,8 @@ jobs:
           JSON=${JSON/__DOMAIN__/${{ github.event.inputs.domain }}}
           JSON=${JSON/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
           JSON=${JSON/__ASTRA_DB_ID__/$ASTRA_DB_ID}
+          echo $ASTRA_ORG_ID
+          echo $ASTRA_DB_ID
           echo $JSON
           curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
 
@@ -76,6 +78,9 @@ jobs:
           JSON=${JSON/__DOMAIN__/${{ github.event.inputs.domain }}}
           JSON=${JSON/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
           JSON=${JSON/__ASTRA_DB_ID__/$ASTRA_DB_ID}
+          echo ${{ github.event.inputs.domain }}
+          echo $ASTRA_ORG_ID
+          echo $ASTRA_DB_ID
           echo $JSON
           curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
 
@@ -86,6 +91,8 @@ jobs:
           JSON=$(cat apiteam-dev-sandbox.json)
           JSON=${JSON/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
           JSON=${JSON/__ASTRA_DB_SANDBOX_ID__/$ASTRA_DB_SANDBOX_ID}
+          echo $ASTRA_ORG_ID
+          echo $ASTRA_DB_SANDBOX_ID
           echo $JSON
           curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
 
@@ -97,5 +104,8 @@ jobs:
           JSON=${JSON/__DOMAIN__/${{ github.event.inputs.domain }}}
           JSON=${JSON/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
           JSON=${JSON/__ASTRA_DB_ID__/$ASTRA_DB_ID}
+          echo ${{ github.event.inputs.domain }}
+          echo $ASTRA_ORG_ID
+          echo $ASTRA_DB_ID
           echo $JSON
           curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
