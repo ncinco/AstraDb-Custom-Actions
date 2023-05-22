@@ -1,5 +1,5 @@
 {
-    "name": "AppTeam Dev accounts",
+    "name": "AppTeam Dev __KEYSPACE__",
     "policy": {
         "description": "AppTeam Dev role for read and write operations to tables.",
         "resources": [
