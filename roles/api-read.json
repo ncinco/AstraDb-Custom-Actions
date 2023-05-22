@@ -1,5 +1,5 @@
 {
-    "name": "Api Read __KEYSPACE__",
+    "name": "Api Read __DOMAIN__",
     "policy": {
         "description": "Role for read and write operations to tables.",
         "resources": [
