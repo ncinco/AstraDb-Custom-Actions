@@ -40,5 +40,5 @@ jobs:
       - name: Get Database Info
         if: always()
         run: |
-          ASTRA_DB_ID=$(/home/runner/.astra/cli/astra db get ${{ github.event.inputs.domain }} --key)
-          echo $ASTRA_DB_ID
+          JSON=$(/home/runner/.astra/cli/astra db get ${{ github.event.inputs.domain }} --key)
+          echo $JSON
