@@ -31,5 +31,5 @@ jobs:
       - name: Get Database Info
         if: always()
         run: |
-          JSON=$(/home/runner/.astra/cli/astra db get sandbox --key id)
-          echo $JSON
+          ASTRA_DB_ID=$(/home/runner/.astra/cli/astra db get sandbox --key id)
+          echo $ASTRA_DB_ID
