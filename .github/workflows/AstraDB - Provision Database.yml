@@ -18,6 +18,7 @@ jobs:
     env:
       ASTRA_DB_API_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
       ASTRA_ORG_API_TOKEN: ${{secrets.ASTRA_ORG_API_TOKEN}}
+      ASTRA_DB_ID: ""
       TERM: linux
     runs-on: ubuntu-latest
     environment: dev
@@ -32,17 +33,19 @@ jobs:
         id: checkout
         uses: actions/checkout@v3
     
-      - name: Install Astra CLI
+      - name: Astra CLI - Install
         continue-on-error: true
         run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
         
-      - name: Setup
+      - name: Astra CLI - Setup
         if: always()
         run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_API_TOKEN
           
       - name: Create Database
         if: always()
-        run: /home/runner/.astra/cli/astra db create ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -r australiaeast --if-not-exist --wait
+        run: |
+          /home/runner/.astra/cli/astra db create ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -r australiaeast --if-not-exist --wait
+          ASTRA_DB_ID=$(/home/runner/.astra/cli/astra db get sandbox --key id)
           
       - name: Create Keyspaces (sandbox, utilities)
         if: always()
@@ -56,10 +59,41 @@ jobs:
           cd schemas
           /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f tables.cql --debug;
 
-      - name: Create Custom Roles
+      - name: Create Api Read Role
+        if: always()
         run: |
           cd roles
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d @api-read.json
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d @api-write.json
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d @apiteam-dev-sandbox.json
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d @apiteam-dev.json
+          JSON=$(cat api-read.json)
+          JSON=${JSON/__DOMAIN__/${{ github.event.inputs.domain }}}
+          JSON=${JSON/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
+          JSON=${JSON/__ASTRA_DB_ID__/$ASTRA_DB_ID}
+          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
+
+      - name: Create Api Write Role
+        if: always()
+        run: |
+          cd roles
+          JSON=$(cat api-write.json)
+          JSON=${JSON/__DOMAIN__/${{ github.event.inputs.domain }}}
+          JSON=${JSON/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
+          JSON=${JSON/__ASTRA_DB_ID__/$ASTRA_DB_ID}
+          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
+
+      - name: Create ApiTeam Dev Sandbox Role
+        if: always()
+        run: |
+          cd roles
+          JSON=$(cat apiteam-dev-sandbox.json)
+          JSON=${JSON/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
+          JSON=${JSON/__ASTRA_DB_SANDBOX_ID__/$ASTRA_DB_SANDBOX_ID}
+          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
+
+      - name: Create ApiTeam Dev Role
+        if: always()
+        run: |
+          cd roles
+          JSON=$(cat apiteam-dev.json)
+          JSON=${JSON/__DOMAIN__/${{ github.event.inputs.domain }}}
+          JSON=${JSON/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
+          JSON=${JSON/__ASTRA_DB_ID__/$ASTRA_DB_ID}
+          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
