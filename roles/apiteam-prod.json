@@ -1,5 +1,5 @@
 {
-    "name": "ApiTeam Prod accounts",
+    "name": "ApiTeam Prod __KEYSPACE__",
     "policy": {
         "description": "Role for read operations to tables.",
         "resources": [
