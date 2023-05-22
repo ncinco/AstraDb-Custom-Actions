@@ -3,7 +3,7 @@
     "policy": {
         "description": "Role for read operations to tables.",
         "resources": [
-            "drn:astra:org:9ffa81f4-288b-49b0-b580-4c45e9155592:db:6bb2ad45-f726-49f3-b6ee-ee86cfd451b6:keyspace:*"
+            "drn:astra:org:__ASTRA_ORG_API_TOKEN__:db:6bb2ad45-f726-49f3-b6ee-ee86cfd451b6:keyspace:*"
         ],
         "actions": [
             "db-table-select",
