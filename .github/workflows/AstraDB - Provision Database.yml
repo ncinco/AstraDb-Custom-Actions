@@ -47,11 +47,9 @@ jobs:
           /home/runner/.astra/cli/astra db create ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -r australiaeast --if-not-exist --wait
           ASTRA_DB_ID=$(/home/runner/.astra/cli/astra db get sandbox --key id)
           
-      - name: Create Keyspaces (sandbox, utilities)
+      - name: Create Keyspace (utilities)
         if: always()
-        run: |
-          /home/runner/.astra/cli/astra db create-keyspace ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -k sandbox --if-not-exist --wait
-          /home/runner/.astra/cli/astra db create-keyspace ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -k utilities --if-not-exist --wait
+        run: /home/runner/.astra/cli/astra db create-keyspace ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -k utilities --if-not-exist --wait
       
       - name: Create Base Schema
         if: always()
