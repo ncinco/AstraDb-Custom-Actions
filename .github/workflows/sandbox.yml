@@ -40,7 +40,7 @@ jobs:
         if: always()
         run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_API_TOKEN
           
-      - name: Create Custom Roles
+      - name: Create Api Read Role
         if: always()
         run: |
           cd roles
@@ -48,3 +48,4 @@ jobs:
           echo "RAW: $VER"
           VER=${VER/__KEYSPACE__/${{ github.event.inputs.domain }}}
           echo "REPLACED: $VER"
+          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d $VER
