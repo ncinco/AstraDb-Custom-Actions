@@ -31,25 +31,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Dump GitHub context
-        id: github_context_step
-        run: echo '${{ toJSON(github) }}'
-        
-      - name: Dump job context
-        run: echo '${{ toJSON(job) }}'
-        
-      - name: Dump steps context
-        run: echo '${{ toJSON(steps) }}'
-        
-      - name: Dump runner context
-        run: echo '${{ toJSON(runner) }}'
-        
-      - name: Dump strategy context
-        run: echo '${{ toJSON(strategy) }}'
-        
-      - name: Dump matrix context
-        run: echo '${{ toJSON(matrix) }}'
-
       - name: Install Astra CLI
         continue-on-error: true
         run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
@@ -66,7 +47,7 @@ jobs:
           do
             echo "executing : ${f}";
             /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug;
-            /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, execution_timestamp) VALUES ('${f}', '${{github.actor}}', uuid(), execution_timestamp)" --debug;
+            /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), execution_timestamp)" --debug;
           done;
           
       - name: Run Data Scripts
@@ -77,7 +58,7 @@ jobs:
           do
             echo "executing : ${f}";
             /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug;
-            /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, execution_timestamp) VALUES ('${f}', '${{github.actor}}', uuid(), execution_timestamp)" --debug;
+            /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), execution_timestamp)" --debug;
           done;
 
   uat:
