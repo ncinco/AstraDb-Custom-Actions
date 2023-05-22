@@ -44,8 +44,8 @@ jobs:
         if: always()
         run: |
           cd roles
-          VER=$(cat api-read.json)
-          echo "RAW: $VER"
-          VER=${VER/__KEYSPACE__/${{ github.event.inputs.domain }}}
-          echo "REPLACED: $VER"
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d $VER
+          JSON=$(cat api-read.json)
+          echo "RAW: $JSON"
+          JSON=${JSON/__KEYSPACE__/${{ github.event.inputs.domain }}}
+          echo "REPLACED: $JSON"
+          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
