@@ -8,7 +8,7 @@
         ],
         "actions": [
             "db-table-create",
-            "db-table-alter"
+            "db-table-alter",
             "db-table-drop",
             "db-table-select",
             "db-table-modify",
