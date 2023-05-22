@@ -47,7 +47,7 @@ jobs:
           do
             echo "executing : ${f}";
             /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug;
-            /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), execution_timestamp)" --debug;
+            /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), $now)" --debug;
           done;
           
       - name: Run Data Scripts
@@ -58,7 +58,7 @@ jobs:
           do
             echo "executing : ${f}";
             /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f ${f} --debug;
-            /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), execution_timestamp)" --debug;
+            /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), $now)" --debug;
           done;
 
   uat:
