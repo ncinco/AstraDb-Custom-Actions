@@ -44,5 +44,5 @@ jobs:
         if: always()
         run: |
           cd roles
-          read json @api-read.json
+          read json api-read.json
           echo "$json"
