@@ -57,7 +57,6 @@ jobs:
           /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f tables.cql --debug;
 
       - name: Create Custom Roles
-        if: always()
         run: |
           cd roles
           curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d @api-read.json
