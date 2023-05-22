@@ -64,3 +64,9 @@ jobs:
           curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d @api-write.json
           curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d @apiteam-dev-sandbox.json
           curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d @apiteam-dev.json
+          
+      - name: test read text then print
+        run: |
+          cd roles
+          json = 'cat api-read.json'
+          echo "$json"
