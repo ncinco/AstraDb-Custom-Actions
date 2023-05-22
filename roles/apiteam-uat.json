@@ -1,5 +1,5 @@
 {
-    "name": "ApiTeam UAT accounts",
+    "name": "ApiTeam UAT __KEYSPACE__",
     "policy": {
         "description": "Role for read operations to tables.",
         "resources": [
