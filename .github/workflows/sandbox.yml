@@ -44,7 +44,5 @@ jobs:
         if: always()
         run: |
           cd roles
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d @api-read.json
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d @api-write.json
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d @apiteam-dev-sandbox.json
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d @apiteam-dev.json
+          read json @api-read.json
+          echo "$json"
