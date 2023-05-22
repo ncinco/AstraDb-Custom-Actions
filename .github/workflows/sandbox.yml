@@ -46,5 +46,5 @@ jobs:
           cd roles
           VER=$(cat api-read.json)
           echo "RAW: $VER"
-          VER=${VER/[KEYSPACE]/${{ github.event.inputs.domain }}}
+          VER=${VER/KEYSPACE/${{ github.event.inputs.domain }}}
           echo "REPLACED: $VER"
