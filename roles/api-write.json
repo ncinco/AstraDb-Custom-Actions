@@ -7,7 +7,7 @@
         ],
         "actions": [
             "db-table-select",
-            "db-table-modify"
+            "db-table-modify",
             "db-cql",
             "db-rest"
         ],
