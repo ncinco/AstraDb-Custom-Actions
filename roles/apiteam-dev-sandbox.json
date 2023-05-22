@@ -1,5 +1,5 @@
 {
-    "name": "AppTeam Dev accounts-sandbox",
+    "name": "AppTeam Dev __KEYSPACE__-sandbox",
     "policy": {
         "description": "AppTeam Dev Sandbox role for read and write operations to tables.",
         "resources": [
