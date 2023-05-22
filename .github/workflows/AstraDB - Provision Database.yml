@@ -53,8 +53,8 @@ jobs:
       - name: Create Base Schema
         if: always()
         run: |
-          cd schema
-          /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f schema.cql --debug;
+          cd schemas
+          /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f tables.cql --debug;
 
       - name: Create Custom Roles
         if: always()
