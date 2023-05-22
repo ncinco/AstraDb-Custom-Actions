@@ -46,6 +46,7 @@ jobs:
           cd roles
           JSON=$(cat api-read.json)
           JSON=${JSON/__KEYSPACE__/${{ github.event.inputs.domain }}}
+          echo "JSON: $JSON"
           curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
 
       - name: Create Api Write Role
@@ -54,6 +55,7 @@ jobs:
           cd roles
           JSON=$(cat api-write.json)
           JSON=${JSON/__KEYSPACE__/${{ github.event.inputs.domain }}}
+          echo "JSON: $JSON"
           curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
 
       - name: Create ApiTeam Dev Sandbox Role
@@ -62,6 +64,7 @@ jobs:
           cd roles
           JSON=$(cat apiteam-dev-sandbox.json)
           JSON=${JSON/__KEYSPACE__/${{ github.event.inputs.domain }}}
+          echo "JSON: $JSON"
           curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
 
       - name: Create ApiTeam Dev Role
@@ -70,4 +73,5 @@ jobs:
           cd roles
           JSON=$(cat apiteam-dev.json)
           JSON=${JSON/__KEYSPACE__/${{ github.event.inputs.domain }}}
+          echo "JSON: $JSON"
           curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
