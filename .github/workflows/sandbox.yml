@@ -44,5 +44,5 @@ jobs:
         if: always()
         run: |
           cd roles
-          VER=$(api-read.json)
+          VER=$(cat api-read.json)
           echo "Version : $VER"
