@@ -41,7 +41,7 @@ jobs:
       - name: List all changed files
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }};
-            directo="$(dirname $file)"
+            directo="$(dirname "${file}")"
             do echo "$file was changed. directory: $directo"
           done
        
