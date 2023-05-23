@@ -46,20 +46,20 @@ jobs:
           /home/runner/.astra/cli/astra db create ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -r australiaeast --if-not-exist --wait
           db_id=$(/home/runner/.astra/cli/astra db get sandbox --key id)
           echo "ASTRA_DB_ID=$db_id" >> "$GITHUB_ENV"
-          echo "Database Id: $env.ASTRA_DB_ID"
+          echo "Database Id: ${env.ASTRA_DB_ID}"
           
       - name: Create Keyspace (utilities)
         if: always()
         run: |
           /home/runner/.astra/cli/astra db create-keyspace ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -k utilities --if-not-exist --wait
-          echo "Database Id: $env.ASTRA_DB_ID"
+          echo "Database Id: ${env.ASTRA_DB_ID}"
       
       - name: Create Base Schema
         if: always()
         run: |
           cd schemas
           /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f tables.cql --debug;
-          echo "Database Id: $env.ASTRA_DB_ID"
+          echo "Database Id: ${env.ASTRA_DB_ID}"
 
       - name: Create Api Read Role
         if: always()
