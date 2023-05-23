@@ -59,7 +59,8 @@ jobs:
           somedomain=$ASTRA_DB_DOMAIN
           echo "$ASTRA_DB_DOMAIN/1000_schema"
           echo "$somedomain/1000_schema"
-          cd "$somedomain/1000_schema"
+          #cd "$somedomain/1000_schema"
+          cd "accounts/1000_schema"
           for f in *.cql;
           do
             echo "executing : ${f}";
@@ -73,7 +74,8 @@ jobs:
           somedomain=$ASTRA_DB_DOMAIN
           echo "$ASTRA_DB_DOMAIN/2000_data"
           echo "$somedomain/2000_data"
-          cd "$somedomain/2000_data"
+          #cd "$somedomain/2000_data"
+          cd "accounts/2000_data"
           for f in *.cql;
           do
             echo "executing : ${f}";
