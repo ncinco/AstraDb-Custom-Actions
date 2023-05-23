@@ -20,7 +20,9 @@
             "db-keyspace-modify",
             
             "db-cql",
-            "db-rest"
+            "db-rest",
+            
+            "org-db-view"
         ],
         "effect": "allow"
     }
