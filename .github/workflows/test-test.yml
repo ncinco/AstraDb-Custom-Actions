@@ -45,5 +45,7 @@ jobs:
           done
        
       - name: print step context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
-          echo fromJSON(steps)
+          echo "$GITHUB_CONTEXT"
