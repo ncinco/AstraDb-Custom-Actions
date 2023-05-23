@@ -2,6 +2,9 @@ name: 'test test'
  
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - 'servicedomains/**'
 
 jobs:
   dev:
@@ -20,16 +23,8 @@ jobs:
         shell: bash
 
     steps:
-      - name: Install Astra CLI
-        continue-on-error: true
-        run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
-        
-      - name: Setup
-        if: always()
-        run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_API_TOKEN
-
-      - name: Get Database Info
-        if: always()
+      - name: List all changed files
         run: |
-          ASTRA_DB_ID=$(/home/runner/.astra/cli/astra db get sandbox --key id)
-          echo $ASTRA_DB_ID
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "$file was changed"
+          done
