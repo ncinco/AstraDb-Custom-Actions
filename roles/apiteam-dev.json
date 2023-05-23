@@ -6,18 +6,11 @@
             "drn:astra:org:__ASTRA_ORG_ID__:db:__ASTRA_DB_ID__:keyspace:*"
         ],
         "actions": [
-            "db-table-create",
-            "db-table-alter",
-            "db-table-drop",
             "db-table-select",
             "db-table-modify",
             "db-table-describe",
-            
-            "db-keyspace-create",
-            "db-keyspace-alter",
+
             "db-keyspace-describe",
-            "db-keyspace-drop",
-            "db-keyspace-modify",
             
             "db-cql",
             "db-rest",
