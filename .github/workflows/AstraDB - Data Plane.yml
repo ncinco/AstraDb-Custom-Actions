@@ -56,8 +56,7 @@ jobs:
       - name: Run Schema Scripts
         if: always()
         run: >
-          cd $ASTRA_DB_DOMAIN
-          cd 1000_schema;
+          cd "$ASTRA_DB_DOMAIN/1000_schema"
           for f in *.cql;
           do
             echo "executing : ${f}";
@@ -68,8 +67,7 @@ jobs:
       - name: Run Data Scripts
         if: always()
         run: >
-          cd $ASTRA_DB_DOMAIN
-          cd 2000_data;
+          cd "$ASTRA_DB_DOMAIN/2000_data"
           for f in *.cql;
           do
             echo "executing : ${f}";
