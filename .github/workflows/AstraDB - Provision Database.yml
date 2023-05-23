@@ -94,6 +94,9 @@ jobs:
           payload=$(cat apiteam-dev.json)
           payload=${payload/__DOMAIN__/${{ github.event.inputs.domain }}}
           payload=${payload/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
+          payload=${payload/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
+          payload=${payload/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
+          payload=${payload/__ASTRA_DB_ID__/$ASTRA_DB_ID}
           payload=${payload/__ASTRA_DB_ID__/$ASTRA_DB_ID}
           echo "Domain: ${{ github.event.inputs.domain }}"
           echo "Organisation Id: $ASTRA_ORG_ID"
