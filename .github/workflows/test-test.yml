@@ -49,7 +49,3 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(steps) }}
         run: |
           echo "$GITHUB_CONTEXT"
-          
-      - name: print directory
-        run: |
-          echo: 
