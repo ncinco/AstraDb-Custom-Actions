@@ -41,8 +41,8 @@ jobs:
       - name: List all changed files
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "directory: $(dirname ${file})";
-            echo "file: $file";
+            currentdirectory=$"directory: $(dirname ${file})";
+            echo "file: $filem dir: $currentdirectory";
           done
        
       - name: print step context
