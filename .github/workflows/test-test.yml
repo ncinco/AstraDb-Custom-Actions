@@ -3,6 +3,13 @@ name: 'test test'
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
+    paths:
+      - 'servicedomains/**'
+  pull_request:
+    branches:
+      - main
     paths:
       - 'servicedomains/**'
 
@@ -33,6 +40,6 @@ jobs:
         
       - name: List all changed files
         run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "$file was changed"
+          for file in ${{ steps.changed-files.outputs.all_changed_files }};
+            do echo "$file was changed"
           done
