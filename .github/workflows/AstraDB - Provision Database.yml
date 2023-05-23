@@ -50,13 +50,16 @@ jobs:
           
       - name: Create Keyspace (utilities)
         if: always()
-        run: /home/runner/.astra/cli/astra db create-keyspace ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -k utilities --if-not-exist --wait
+        run: |
+          /home/runner/.astra/cli/astra db create-keyspace ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -k utilities --if-not-exist --wait
+          echo "Database Id: $ASTRA_DB_ID"
       
       - name: Create Base Schema
         if: always()
         run: |
           cd schemas
           /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -f tables.cql --debug;
+          echo "Database Id: $ASTRA_DB_ID"
 
       - name: Create Api Read Role
         if: always()
