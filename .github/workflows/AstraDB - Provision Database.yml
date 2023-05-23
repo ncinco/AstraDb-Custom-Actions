@@ -46,6 +46,7 @@ jobs:
         run: |
           /home/runner/.astra/cli/astra db create ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -r australiaeast --if-not-exist --wait
           ASTRA_DB_ID=$(/home/runner/.astra/cli/astra db get sandbox --key id)
+          export FOO=ASTRA_DB_ID
           echo "Database Id: $ASTRA_DB_ID"
           
       - name: Create Keyspace (utilities)
