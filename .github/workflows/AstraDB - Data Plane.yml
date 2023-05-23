@@ -52,13 +52,13 @@ jobs:
       - name: Get directory of changed file(s)
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "file: ${file})"
+            echo "file: ${file}"
             currentdirectory=$"directory: $(dirname ${file})";
             currentdirectory=${currentdirectory/"servicedomains/"/""}
             currentdirectory=${currentdirectory/"1000_schema"/""}
             currentdirectory=${currentdirectory/"/2000_data"/""}
-            echo "domain: $currentdirectory";
             echo "ASTRA_DB_DOMAIN=$currentdirectory" >> "$GITHUB_ENV"
+            echo "domain: $ASTRA_DB_DOMAIN";
           done
           
       - name: Run Schema Scripts
