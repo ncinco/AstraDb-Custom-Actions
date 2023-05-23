@@ -85,19 +85,6 @@ jobs:
           echo "Payload: $payload"
           curl -i POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$payload"
 
-      - name: Create ApiTeam Dev Sandbox Role
-        if: always()
-        run: |
-          cd roles
-          payload=$(cat apiteam-dev-sandbox.json)
-          payload=${payload/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
-          payload=${payload/__ASTRA_DB_SANDBOX_ID__/$ASTRA_DB_SANDBOX_ID}
-          echo "Domain: ${{ github.event.inputs.domain }}"
-          echo "Organisation Id: $ASTRA_ORG_ID"
-          echo "Sandbox Id: $ASTRA_DB_SANDBOX_ID"
-          echo "Payload: $payload"
-          curl -i POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$payload"
-
       - name: Create ApiTeam Dev Role
         if: always()
         run: |
