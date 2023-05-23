@@ -61,51 +61,53 @@ jobs:
         if: always()
         run: |
           cd roles
-          JSON=$(cat api-read.json)
-          JSON=${JSON/__DOMAIN__/${{ github.event.inputs.domain }}}
-          JSON=${JSON/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
-          JSON=${JSON/__ASTRA_DB_ID__/$ASTRA_DB_ID}
+          payload=$(cat api-read.json)
+          payload=${payload/__DOMAIN__/${{ github.event.inputs.domain }}}
+          payload=${payload/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
+          payload=${payload/__ASTRA_DB_ID__/$ASTRA_DB_ID}
+          echo ${{ github.event.inputs.domain }}
           echo $ASTRA_ORG_ID
           echo $ASTRA_DB_ID
-          echo $JSON
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
+          echo $payload
+          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$payload"
 
       - name: Create Api Write Role
         if: always()
         run: |
           cd roles
-          JSON=$(cat api-write.json)
-          JSON=${JSON/__DOMAIN__/${{ github.event.inputs.domain }}}
-          JSON=${JSON/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
-          JSON=${JSON/__ASTRA_DB_ID__/$ASTRA_DB_ID}
+          payload=$(cat api-write.json)
+          payload=${payload/__DOMAIN__/${{ github.event.inputs.domain }}}
+          payload=${payload/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
+          payload=${payload/__ASTRA_DB_ID__/$ASTRA_DB_ID}
           echo ${{ github.event.inputs.domain }}
           echo $ASTRA_ORG_ID
           echo $ASTRA_DB_ID
-          echo $JSON
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
+          echo $payload
+          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$payload"
 
       - name: Create ApiTeam Dev Sandbox Role
         if: always()
         run: |
           cd roles
-          JSON=$(cat apiteam-dev-sandbox.json)
-          JSON=${JSON/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
-          JSON=${JSON/__ASTRA_DB_SANDBOX_ID__/$ASTRA_DB_SANDBOX_ID}
+          payload=$(cat apiteam-dev-sandbox.json)
+          payload=${payload/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
+          payload=${payload/__ASTRA_DB_SANDBOX_ID__/$ASTRA_DB_SANDBOX_ID}
+          echo ${{ github.event.inputs.domain }}
           echo $ASTRA_ORG_ID
           echo $ASTRA_DB_SANDBOX_ID
-          echo $JSON
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
+          echo $payload
+          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$payload"
 
       - name: Create ApiTeam Dev Role
         if: always()
         run: |
           cd roles
-          JSON=$(cat apiteam-dev.json)
-          JSON=${JSON/__DOMAIN__/${{ github.event.inputs.domain }}}
-          JSON=${JSON/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
-          JSON=${JSON/__ASTRA_DB_ID__/$ASTRA_DB_ID}
+          payload=$(cat apiteam-dev.json)
+          payload=${payload/__DOMAIN__/${{ github.event.inputs.domain }}}
+          payload=${payload/__ASTRA_ORG_ID__/$ASTRA_ORG_ID}
+          payload=${payload/__ASTRA_DB_ID__/$ASTRA_DB_ID}
           echo ${{ github.event.inputs.domain }}
           echo $ASTRA_ORG_ID
           echo $ASTRA_DB_ID
-          echo $JSON
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$JSON"
+          echo $payload
+          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$payload"
