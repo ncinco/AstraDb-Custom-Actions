@@ -8,7 +8,8 @@
         "actions": [
             "db-table-select",
             "db-cql",
-            "db-rest"
+            "db-rest",
+            "org-db-view"
         ],
         "effect": "allow"
     }
