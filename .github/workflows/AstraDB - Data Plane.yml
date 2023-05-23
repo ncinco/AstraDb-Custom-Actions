@@ -11,6 +11,9 @@ on:
         - accounts
         - kiwisaver
         - loans
+  push:
+    paths:
+      - 'servicedomains/**'
 
 jobs:
   dev:
