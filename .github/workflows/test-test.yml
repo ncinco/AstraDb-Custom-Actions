@@ -44,7 +44,7 @@ jobs:
             currentdirectory=$"directory: $(dirname ${file})";
             currentdirectory=${currentdirectory/"servicedomains/"/""}
             currentdirectory=${currentdirectory/"1000_schema"/""}
-            currentdirectory=${currentdirectory/"2000_data"/""}
+            currentdirectory=${currentdirectory/"/2000_data"/""}
             echo "file: $file dir: $currentdirectory";
           done
        
