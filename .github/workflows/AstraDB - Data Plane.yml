@@ -55,7 +55,7 @@ jobs:
             echo "file: ${file}"
             currentdirectory=$"directory: $(dirname ${file})";
             currentdirectory=${currentdirectory/"servicedomains/"/""}
-            currentdirectory=${currentdirectory/"1000_schema"/""}
+            currentdirectory=${currentdirectory/"/1000_schema"/""}
             currentdirectory=${currentdirectory/"/2000_data"/""}
             echo "ASTRA_DB_DOMAIN=$currentdirectory" >> "$GITHUB_ENV"
             echo "domain: $currentdirectory";
