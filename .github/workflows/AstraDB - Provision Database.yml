@@ -54,7 +54,7 @@ jobs:
         if: always()
         run: |
           /home/runner/.astra/cli/astra db create-keyspace ${{ github.event.inputs.domain }} -k ${{ github.event.inputs.domain }} -k utilities --if-not-exist --wait
-          echo "Organisation Id: $var.ASTRA_ORG_ID"
+          echo "Organisation Id: $ASTRA_ORG_ID"
           echo "Database Id: $ASTRA_DB_ID"
       
       - name: Create Base Schema
