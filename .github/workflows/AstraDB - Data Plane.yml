@@ -44,6 +44,7 @@ jobs:
       - name: Get directory of changed file(s)
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo ${file})
             currentdirectory=$"directory: $(dirname ${file})";
             currentdirectory=${currentdirectory/"servicedomains/"/""}
             currentdirectory=${currentdirectory/"1000_schema"/""}
