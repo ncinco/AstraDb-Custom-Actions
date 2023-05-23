@@ -42,7 +42,10 @@ jobs:
         run: |
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             currentdirectory=$"directory: $(dirname ${file})";
-            echo "file: $filem dir: $currentdirectory";
+            currentdirectory=${currentdirectory/"servicedomains/"/""}
+            currentdirectory=${currentdirectory/"1000_schema"/""}
+            currentdirectory=${currentdirectory/"2000_data"/""}
+            echo "file: $file dir: $currentdirectory";
           done
        
       - name: print step context
