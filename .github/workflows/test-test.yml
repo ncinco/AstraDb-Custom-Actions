@@ -46,4 +46,4 @@ jobs:
        
       - name: print step context
         run: |
-          echo JSON(steps)
+          echo fromJSON(steps)
