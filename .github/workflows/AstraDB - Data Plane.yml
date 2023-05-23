@@ -67,7 +67,6 @@ jobs:
       - name: Run Schema Scripts
         if: always()
         run: >
-          echo "domain: $ASTRA_DB_DOMAIN"
           cd "accounts/1000_schema"
           for f in *.cql;
           do
@@ -75,11 +74,11 @@ jobs:
             /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug;
             /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), 'accounts/1000_schema', dateof(now()))" --debug;
           done;
+          echo "domain: $ASTRA_DB_DOMAIN"
           
       - name: Run Data Scripts
         if: always()
         run: >
-          echo "domain: $ASTRA_DB_DOMAIN"
           cd "accounts/2000_data"
           for f in *.cql;
           do
@@ -87,6 +86,7 @@ jobs:
             /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug;
             /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), 'accounts/1000_schema', dateof(now()))" --debug;
           done;
+          echo "domain: $ASTRA_DB_DOMAIN"
 
   uat:
     name: "uat"
