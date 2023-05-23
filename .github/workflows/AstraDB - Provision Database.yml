@@ -69,7 +69,7 @@ jobs:
           echo $ASTRA_ORG_ID
           echo $ASTRA_DB_ID
           echo $payload
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$payload"
+          curl -i POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$payload"
 
       - name: Create Api Write Role
         if: always()
@@ -83,7 +83,7 @@ jobs:
           echo $ASTRA_ORG_ID
           echo $ASTRA_DB_ID
           echo $payload
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$payload"
+          curl -i POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$payload"
 
       - name: Create ApiTeam Dev Sandbox Role
         if: always()
@@ -96,7 +96,7 @@ jobs:
           echo $ASTRA_ORG_ID
           echo $ASTRA_DB_SANDBOX_ID
           echo $payload
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$payload"
+          curl -i POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$payload"
 
       - name: Create ApiTeam Dev Role
         if: always()
@@ -110,4 +110,4 @@ jobs:
           echo $ASTRA_ORG_ID
           echo $ASTRA_DB_ID
           echo $payload
-          curl -v POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$payload"
+          curl -i POST https://api.astra.datastax.com/v2/organizations/roles -H "Authorization: Bearer $ASTRA_ORG_API_TOKEN" -d "$payload"
