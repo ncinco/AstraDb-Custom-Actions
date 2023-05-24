@@ -3,3 +3,4 @@ CREATE TYPE IF NOT EXISTS kiwisaver.relationship_info (
     cif_number text,
     link_type text
 );
+
