@@ -81,7 +81,7 @@ jobs:
           for f in *.cql; do
             echo "executing : ${f}"
             /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug
-            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), 'accounts/1000_schema', dateof(now()))" --debug
+            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), 'accounts/2000_data', dateof(now()))" --debug
           done;
 
   uat:
