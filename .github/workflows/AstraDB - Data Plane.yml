@@ -2,6 +2,8 @@ name: AstraDB - Data Plane
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'servicedomains/**'
 
