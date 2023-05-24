@@ -59,15 +59,14 @@ jobs:
             currentdirectory=${currentdirectory/"/2000_data"/""}
             echo "ASTRA_DB_DOMAIN=$currentdirectory" >> "$GITHUB_ENV"
             echo "domain: $currentdirectory"
-            echo "domain: $ASTRA_DB_DOMAIN"
             exit
           done
           
       - name: Run Schema Scripts
         if: always()
-        run: >
+        run: |
           echo "domain: $ASTRA_DB_DOMAIN"
-          cd "accounts/1000_schema"
+          cd "$ASTRA_DB_DOMAIN/1000_schema"
           for f in *.cql; do
             echo "executing : ${f}"
             /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug
@@ -76,9 +75,9 @@ jobs:
           
       - name: Run Data Scripts
         if: always()
-        run: >
+        run: |
           echo "domain: $ASTRA_DB_DOMAIN"
-          cd "accounts/2000_data"
+          cd "$ASTRA_DB_DOMAIN/2000_data"
           for f in *.cql; do
             echo "executing : ${f}"
             /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug
