@@ -3,8 +3,6 @@
     "policy": {
         "description": "AppTeam Dev role for read and write operations to tables.",
         "resources": [
-            "drn:astra:org:__ASTRA_ORG_ID__",
-            "drn:astra:org:__ASTRA_ORG_ID__:db:__ASTRA_DB_ID__",
             "drn:astra:org:__ASTRA_ORG_ID__:db:__ASTRA_DB_ID__:keyspace:*"
         ],
         "actions": [
