@@ -58,7 +58,6 @@ jobs:
             currentdirectory=${currentdirectory/"/1000_schema"/""}
             currentdirectory=${currentdirectory/"/2000_data"/""}
             echo "ASTRA_DB_DOMAIN=$currentdirectory" >> "$GITHUB_ENV"
-            echo "ASTRA_DB_ID=$currentdirectory" >> "$GITHUB_ENV"
             echo "domain: $currentdirectory"
             echo "domain: $ASTRA_DB_DOMAIN"
             exit
