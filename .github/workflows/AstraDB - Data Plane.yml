@@ -1,16 +1,6 @@
 name: AstraDB - Data Plane
 
 on:
-  workflow_dispatch:
-    inputs:
-      domain:
-        description: "Domain you're targeting for deployment."
-        type: choice
-        required: true
-        options:
-        - accounts
-        - kiwisaver
-        - loans
   push:
     paths:
       - 'servicedomains/**'
