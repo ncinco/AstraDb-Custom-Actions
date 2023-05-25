@@ -58,7 +58,7 @@ jobs:
       if: always()
       run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_API_TOKEN
 
-    - name: Create Database
+    - name: Get Database Id
       if: always()
       run: |
         db_id=$(/home/runner/.astra/cli/astra db get ${{ github.event.inputs.domain }} --key id)
