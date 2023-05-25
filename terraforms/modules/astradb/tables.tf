@@ -1,6 +1,6 @@
 resource "astra_table" "executed_scripts" {
   table               = "executed_scripts"
-  keyspace            = var.database
+  keyspace            = "utilities"
   database_id         = astra_database.astradb.id
   region              = "australiaeast"
   partition_keys      = "execution_id:script_name"
