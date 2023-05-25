@@ -1,5 +1,5 @@
 resource "astra_role" "api_read_account" {
-  role_name   = "api_read_account"
+  role_name   = "API Read {var.database}"
   description = "Role for read and write operations to tables."
   effect      = "allow"
   resources = [
