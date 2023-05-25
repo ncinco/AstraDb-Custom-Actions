@@ -1,4 +1,4 @@
-name: 'AstraDB - Provision Database'
+name: 'AstraDB - Provision Database (deprecated)'
  
 on:
   workflow_dispatch:
