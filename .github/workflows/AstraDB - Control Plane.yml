@@ -46,17 +46,15 @@ jobs:
       id: validate
       run: terraform validate
 
-    - name: 'Terraform Get'
-      id: get
-      run: terraform get
-
     - name: Astra CLI - Install
       continue-on-error: true
       run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
         
     - name: Astra CLI - Setup
       if: always()
-      run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_API_TOKEN
+      run: |
+        echo "Current Directory: $PWD"
+        /home/runner/.astra/cli/astra setup --token $ASTRA_DB_API_TOKEN
 
     - name: Get Database Id
       if: always()
