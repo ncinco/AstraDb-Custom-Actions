@@ -63,6 +63,7 @@ jobs:
       if: always()
       run: |
         db_id=$(/home/runner/.astra/cli/astra db get ${{ github.event.inputs.domain }} --key id)
+        echo "AstraDb Id: $db_id"
         echo "ASTRA_DB_ID=$db_id" >> "$GITHUB_ENV"
 
     - name: 'Terraform Plan'
