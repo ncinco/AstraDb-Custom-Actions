@@ -1,4 +1,4 @@
-name: 'AstraDB - Organisations'
+name: 'AstraDB - Roles'
  
 on:
   workflow_dispatch:
