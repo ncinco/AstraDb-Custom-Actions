@@ -10,7 +10,6 @@ on:
         options:
         - accounts
         - kiwisaver
-        - loans
  
 jobs:
   dev:
@@ -41,7 +40,7 @@ jobs:
     - name: 'Terraform Init'
       id: init
       run: >
-       terraform init -backend-config=backend.conf
+       terraform init -backend-config=backend_dev.conf
  
     - name: 'Terraform Validate'
       id: validate
