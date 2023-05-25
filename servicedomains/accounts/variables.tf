@@ -6,6 +6,6 @@ variable "database" {
   default = "accounts"
 }
 
-variable "organisataionid" {}
+variable "organisationid" {}
 
 variable "astradbid" {}
