@@ -17,7 +17,7 @@ resource "astra_role" "api_read_account" {
 
 resource "astra_role" "api_write_account" {
   role_name   = "API Write [Account]"
-  description = "Role for read and write operations to tables.",
+  description = "Role for read and write operations to tables."
   effect      = "allow"
   resources = [
     "drn:astra:org:${var.organisationid}",
@@ -35,7 +35,7 @@ resource "astra_role" "api_write_account" {
 
 resource "astra_role" "api_dev_account" {
   role_name   = "ApiTeam Dev [Account]"
-  description = "AppTeam Dev role for read and write operations to tables.",
+  description = "AppTeam Dev role for read and write operations to tables."
   effect      = "allow"
   resources = [
     "drn:astra:org:${var.organisationid}",
@@ -59,7 +59,7 @@ resource "astra_role" "api_dev_account" {
 
 resource "astra_role" "api_uat_account" {
   role_name   = "ApiTeam UAT [Account]"
-  description = "ApiTeam UAT role for read operations to tables.",
+  description = "ApiTeam UAT role for read operations to tables."
   effect      = "allow"
   resources = [
     "drn:astra:org:${var.organisationid}",
@@ -76,7 +76,7 @@ resource "astra_role" "api_uat_account" {
 
 resource "astra_role" "api_prod_account" {
   role_name   = "ApiTeam Prod [Account]"
-  description = "ApiTeam Prod role for read operations to tables.",
+  description = "ApiTeam Prod role for read operations to tables."
   effect      = "allow"
   resources = [
     "drn:astra:org:${var.organisationid}",
