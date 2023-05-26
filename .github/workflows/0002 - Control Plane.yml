@@ -41,11 +41,9 @@ jobs:
       run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
         
     - name: Astra CLI - Setup
-      if: always()
       run: /home/runner/.astra/cli/astra setup --token $ASTRA_ORG_API_TOKEN
 
     - name: Get Database Id
-      if: always()
       run: |
         db_id=$(/home/runner/.astra/cli/astra db get ${{ github.event.inputs.domain }} --key id)
         echo "ASTRA_DB_ID=$db_id" >> "$GITHUB_ENV"
