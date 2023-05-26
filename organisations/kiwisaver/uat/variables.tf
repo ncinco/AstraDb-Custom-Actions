@@ -7,3 +7,5 @@ variable "database" {
 }
 
 variable "organisationid" {}
+
+variable "astradbid" {}
