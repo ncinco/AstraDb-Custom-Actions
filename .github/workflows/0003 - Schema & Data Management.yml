@@ -46,7 +46,7 @@ jobs:
           for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "file: ${file}"
             currentdirectory=$"$(dirname ${file})";
-            currentdirectory=${currentdirectory/"servicedomains/"/""}
+            currentdirectory=${currentdirectory/"dataplane/"/""}
             currentdirectory=${currentdirectory/"/1000_schema"/""}
             currentdirectory=${currentdirectory/"/2000_data"/""}
             echo "ASTRA_DB_DOMAIN=$currentdirectory" >> "$GITHUB_ENV"
