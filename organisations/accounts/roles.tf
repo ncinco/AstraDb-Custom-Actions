@@ -1,5 +1,5 @@
 resource "astra_role" "api_read_accounts" {
-  role_name   = "API Read [Accounts]"
+  role_name   = "API Read - Accounts"
   description = "Role for read and write operations to tables."
   effect      = "allow"
   resources = [
@@ -16,7 +16,7 @@ resource "astra_role" "api_read_accounts" {
 }
 
 resource "astra_role" "api_write_accounts" {
-  role_name   = "API Write [Accounts]"
+  role_name   = "API Write - Accounts"
   description = "Role for read and write operations to tables."
   effect      = "allow"
   resources = [
@@ -34,7 +34,7 @@ resource "astra_role" "api_write_accounts" {
 }
 
 resource "astra_role" "api_dev_accounts" {
-  role_name   = "ApiTeam Dev [Accounts]"
+  role_name   = "ApiTeam Dev - Accounts"
   description = "AppTeam Dev role for read and write operations to tables."
   effect      = "allow"
   resources = [
@@ -58,7 +58,7 @@ resource "astra_role" "api_dev_accounts" {
 }
 
 resource "astra_role" "api_uat_accounts" {
-  role_name   = "ApiTeam UAT [Accounts]"
+  role_name   = "ApiTeam UAT - Accounts"
   description = "ApiTeam UAT role for read operations to tables."
   effect      = "allow"
   resources = [
@@ -75,7 +75,7 @@ resource "astra_role" "api_uat_accounts" {
 }
 
 resource "astra_role" "api_prod_accounts" {
-  role_name   = "ApiTeam Prod [Accounts]"
+  role_name   = "ApiTeam Prod - Accounts"
   description = "ApiTeam Prod role for read operations to tables."
   effect      = "allow"
   resources = [
