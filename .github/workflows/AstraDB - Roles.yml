@@ -42,7 +42,7 @@ jobs:
         
     - name: Astra CLI - Setup
       if: always()
-      run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_API_TOKEN
+      run: /home/runner/.astra/cli/astra setup --token $ASTRA_ORG_API_TOKEN
 
     - name: Get Database Id
       if: always()
