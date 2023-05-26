@@ -5,9 +5,6 @@ resource "astra_role" "api_read_accounts" {
   resources = [
     "drn:astra:org:${var.organisationid}",
     "drn:astra:org:${var.organisationid}:db:${var.astradbid}",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:system_schema:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:system:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:system_virtual_schema:table:*",
     "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:accounts",
     "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:accounts:table:*",
     "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:deposit",
@@ -33,9 +30,6 @@ resource "astra_role" "api_write_accounts" {
   resources = [
     "drn:astra:org:${var.organisationid}",
     "drn:astra:org:${var.organisationid}:db:${var.astradbid}",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:system_schema:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:system:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:system_virtual_schema:table:*",
     "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:accounts",
     "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:accounts:table:*",
     "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:deposit",
@@ -62,9 +56,6 @@ resource "astra_role" "api_dev_accounts" {
   resources = [
     "drn:astra:org:${var.organisationid}",
     "drn:astra:org:${var.organisationid}:db:${var.astradbid}",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:system_schema:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:system:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:system_virtual_schema:table:*",
     "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:accounts",
     "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:accounts:table:*",
     "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:deposit",
