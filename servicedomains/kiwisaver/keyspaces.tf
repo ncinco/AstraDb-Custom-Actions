@@ -3,8 +3,8 @@ resource "astra_keyspace" "conservative" {
   database_id = astra_database.astradb.id
 }
 
-resource "astra_keyspace" "moderage" {
-  name        = "moderage"
+resource "astra_keyspace" "moderate" {
+  name        = "moderate"
   database_id = astra_database.astradb.id
 }
 
