@@ -22,3 +22,8 @@ resource "astra_keyspace" "deposit" {
   name        = "deposit"
   database_id = astra_database.astradb.id
 }
+
+resource "astra_keyspace" "nino" {
+  name        = "nino"
+  database_id = astra_database.astradb.id
+}
