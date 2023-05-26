@@ -1,4 +1,4 @@
-name: '0001 - Database Provision'
+name: '0001 - Database Plane'
  
 on:
   workflow_dispatch:
