@@ -1,4 +1,4 @@
-name: 'AstraDB - Database Provision'
+name: '0001 - Database Provision'
  
 on:
   workflow_dispatch:
@@ -26,7 +26,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: servicedomains/${{ github.event.inputs.domain }}
+        working-directory: dataplane/${{ github.event.inputs.domain }}
  
     steps:
     - uses: hashicorp/setup-terraform@v2
