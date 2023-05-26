@@ -64,6 +64,7 @@ jobs:
         if: github.event.inputs.data_type == 'csv'
         run: |
           file_name= ${{ github.event.inputs.file_name }}
+          echo "Filename: ${file_name}"
           file_name=${file_name/".csv/"/""}
           echo "Filename: ${file_name}"
           /home/runner/.astra/cli/astra db load ${{ github.event.inputs.domain }} -url ${{ github.event.inputs.file_name }} -k ${{ github.event.inputs.key_space }} -t $file_name -header true --schema.allowMissingFields true
