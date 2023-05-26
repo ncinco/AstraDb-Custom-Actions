@@ -1,4 +1,4 @@
-name: 0004 - Sensitive Data
+name: '0004 - Sensitive Data'
 
 on:
   workflow_dispatch:
