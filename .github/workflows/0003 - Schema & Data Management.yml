@@ -58,7 +58,7 @@ jobs:
         if: always()
         run: |
           echo "domain: $ASTRA_DB_DOMAIN"
-          cd "$ASTRA_DB_DOMAIN/1000_schema"
+          cd dataplane/"$ASTRA_DB_DOMAIN/1000_schema"
           for f in *.cql; do
             echo "executing : ${f}"
             /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug
@@ -69,7 +69,7 @@ jobs:
         if: always()
         run: |
           echo "domain: $ASTRA_DB_DOMAIN"
-          cd "$ASTRA_DB_DOMAIN/2000_data"
+          cd dataplane/"$ASTRA_DB_DOMAIN/2000_data"
           for f in *.cql; do
             echo "executing : ${f}"
             /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug
