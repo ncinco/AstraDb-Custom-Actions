@@ -55,9 +55,10 @@ jobs:
 
       - name: Install Astra CLI
         continue-on-error: true
-        run: |
-          curl -Ls "https://dtsx.io/get-astra-cli" | bash
-          /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
+        run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
+
+      - name: Setup Astra CLI
+        run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
 
       - name: Run DSBulk (csv)
         if: github.event.inputs.data_type == 'csv'
