@@ -16,7 +16,6 @@ jobs:
     name: 'dev'
     env:
       ARM_ACCESS_KEY: ${{ secrets.AZURE_BLOB_STORAGE_ACCESS_KEY }}
-      ASTRA_DB_API_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
       ASTRA_ORG_API_TOKEN: ${{secrets.ASTRA_ORG_API_TOKEN}}
       ASTRA_ORG_ID: ${{vars.ASTRA_ORG_ID}}
       TERM: linux
@@ -37,6 +36,20 @@ jobs:
       id: checkout
       uses: actions/checkout@v3
  
+    - name: Astra CLI - Install
+      continue-on-error: true
+      run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
+        
+    - name: Astra CLI - Setup
+      if: always()
+      run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_API_TOKEN
+
+    - name: Get Database Id
+      if: always()
+      run: |
+        db_id=$(/home/runner/.astra/cli/astra db get ${{ github.event.inputs.domain }} --key id)
+        echo "ASTRA_DB_ID=$db_id" >> "$GITHUB_ENV"
+ 
     - name: 'Terraform Format'
       id: format
       run: terraform fmt
@@ -49,23 +62,6 @@ jobs:
     - name: 'Terraform Validate'
       id: validate
       run: terraform validate
-
-    - name: Astra CLI - Install
-      continue-on-error: true
-      run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
-        
-    - name: Astra CLI - Setup
-      if: always()
-      run: |
-        echo "Current Directory: $PWD"
-        /home/runner/.astra/cli/astra setup --token $ASTRA_DB_API_TOKEN
-
-    - name: Get Database Id
-      if: always()
-      run: |
-        db_id=$(/home/runner/.astra/cli/astra db get ${{ github.event.inputs.domain }} --key id)
-        echo "AstraDb Id: $db_id"
-        echo "ASTRA_DB_ID=$db_id" >> "$GITHUB_ENV"
 
     - name: 'Terraform Plan'
       id: plan
