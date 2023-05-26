@@ -68,7 +68,7 @@ jobs:
           file_name=${file_name/".csv/"/""}
           echo "Filename: ${file_name}"
           /home/runner/.astra/cli/astra db load ${{ github.event.inputs.domain }} -url ${{ github.event.inputs.file_name }} -k ${{ github.event.inputs.key_space }} -t $file_name -header true --schema.allowMissingFields true
-          #/home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${{ github.event.inputs.file_name }}', '${{github.triggering_actor}}', uuid(), 'AZ Blob - $AZURE_STORAGE_NAME \ $AZURE_STORAGE_CONTAINER', dateof(now()))" --debug;
+          /home/runner/.astra/cli/astra db cqlsh ${{ github.event.inputs.domain }} -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${{ github.event.inputs.file_name }}', '${{github.triggering_actor}}', uuid(), 'AZ Blob - $AZURE_STORAGE_NAME \ $AZURE_STORAGE_CONTAINER', dateof(now()))" --debug;
         
       - name: Run cql script
         if: github.event.inputs.data_type == 'cql'
