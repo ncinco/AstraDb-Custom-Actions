@@ -1,4 +1,4 @@
-name: 'AstraDB - Database'
+name: 'AstraDB - Database Provision'
  
 on:
   workflow_dispatch:
