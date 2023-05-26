@@ -42,7 +42,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: servicedomains/${{ github.event.inputs.domain }}
+        working-directory: dataplane/${{ github.event.inputs.domain }}
 
     steps:
       - name: Checkout
