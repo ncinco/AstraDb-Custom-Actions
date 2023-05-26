@@ -3,4 +3,3 @@ CREATE TYPE IF NOT EXISTS accounts.relationship_info (
     cif_number text,
     link_type text
 );
-
