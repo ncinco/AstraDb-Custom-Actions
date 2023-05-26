@@ -17,10 +17,3 @@ provider "astra" {
   // This can also be set via ASTRA_API_TOKEN environment variable.
   token = var.token
 }
-
-#module "astradb" {
-#  source         = "../../terraforms/modules/astradb"
-#  token          = var.token
-#  environment    = var.environment
-#  database       = var.database
-#}
