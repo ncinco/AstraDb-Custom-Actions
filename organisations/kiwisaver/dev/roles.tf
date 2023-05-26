@@ -5,16 +5,16 @@ resource "astra_role" "api_read_kiwisaver" {
   resources = [
     "drn:astra:org:${var.organisationid}",
     "drn:astra:org:${var.organisationid}:db:${var.astradbid}",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:accounts",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:accounts:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:deposit",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:deposit:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:checkings",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:checkings:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:moneymarket",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:moneymarket:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:savings",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:savings:table:*"
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:kiwisaver",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:kiwisaver:table:*",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:conservative",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:conservative:table:*",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:moderate",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:moderate:table:*",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:balanced",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:balanced:table:*",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:growth",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:growth:table:*"
   ]
   policy = [
     "db-table-select",
@@ -30,16 +30,16 @@ resource "astra_role" "api_write_kiwisaver" {
   resources = [
     "drn:astra:org:${var.organisationid}",
     "drn:astra:org:${var.organisationid}:db:${var.astradbid}",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:accounts",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:accounts:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:deposit",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:deposit:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:checkings",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:checkings:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:moneymarket",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:moneymarket:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:savings",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:savings:table:*"
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:kiwisaver",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:kiwisaver:table:*",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:conservative",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:conservative:table:*",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:moderate",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:moderate:table:*",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:balanced",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:balanced:table:*",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:growth",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:growth:table:*"
   ]
   policy = [
     "db-table-select",
@@ -56,16 +56,16 @@ resource "astra_role" "api_dev_kiwisaver" {
   resources = [
     "drn:astra:org:${var.organisationid}",
     "drn:astra:org:${var.organisationid}:db:${var.astradbid}",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:accounts",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:accounts:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:deposit",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:deposit:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:checkings",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:checkings:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:moneymarket",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:moneymarket:table:*",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:savings",
-    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:savings:table:*"
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:kiwisaver",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:kiwisaver:table:*",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:conservative",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:conservative:table:*",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:moderate",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:moderate:table:*",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:balanced",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:balanced:table:*",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:growth",
+    "drn:astra:org:${var.organisationid}:db:${var.astradbid}:keyspace:growth:table:*"
   ]
   policy = [
     "db-table-select",
