@@ -1,4 +1,4 @@
-name: '0002 - Roles'
+name: '0002 - Control Plane'
  
 on:
   workflow_dispatch:
@@ -26,7 +26,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: roles/${{ github.event.inputs.domain }}/dev
+        working-directory: controlplane/${{ github.event.inputs.domain }}/dev
  
     steps:
     - uses: hashicorp/setup-terraform@v2
@@ -42,6 +42,11 @@ jobs:
         
     - name: Astra CLI - Setup
       run: /home/runner/.astra/cli/astra setup --token $ASTRA_ORG_API_TOKEN
+    
+    - name: Get Database Id
+      run: |
+        db_id=$(/home/runner/.astra/cli/astra db get ${{ github.event.inputs.domain }} --key id)
+        echo "ASTRA_DB_ID=$db_id" >> "$GITHUB_ENV"
 
     - name: 'Terraform Format'
       id: format
