@@ -4,3 +4,4 @@ CREATE TABLE IF NOT EXISTS accounts.ninotable
   last_name TEXT,
   first_name TEXT
 );
+
