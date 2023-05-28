@@ -26,4 +26,4 @@ resource "astra_table" "executed_scripts" {
       Name: "execution_timestamp"
       TypeDefinition: "timestamp"
     }
-}
+]
