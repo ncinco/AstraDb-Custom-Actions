@@ -14,7 +14,7 @@ terraform {
     resource_group_name  = "Terraform_State"
     storage_account_name = "astradbstate"
     container_name       = "uat"
-    key                  = "kiwisaver_controlplane.tfstate"
+    key                  = "kiwisaver_roles.tfstate"
   }
 }
 
