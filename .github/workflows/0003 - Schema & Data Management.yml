@@ -5,7 +5,8 @@ on:
     branches:
       - main
     paths:
-      - 'dataplane/*/*/.*cql'
+      - 'dataplane/*/1000_schema/.*cql'
+      - 'dataplane/*/2000_data/.*cql'
 
 jobs:
   dev:
