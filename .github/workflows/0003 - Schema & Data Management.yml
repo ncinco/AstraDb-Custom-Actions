@@ -38,7 +38,6 @@ jobs:
         run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
         
       - name: Setup
-        if: always()
         run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
         
       - name: Get directory of changed file(s)
@@ -55,7 +54,6 @@ jobs:
           done
           
       - name: Run Schema Scripts
-        if: always()
         run: |
           echo "domain: $ASTRA_DB_DOMAIN"
           cd dataplane/"$ASTRA_DB_DOMAIN/1000_schema"
