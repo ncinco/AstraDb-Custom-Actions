@@ -1,0 +1,75 @@
+name: 'xxxx - test'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "dataplane/**.cql"
+
+jobs:
+  dev:
+    name: "dev"
+    env:
+      ASTRA_DB_APPLICATION_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
+      TERM: linux
+    runs-on: ubuntu-latest
+    environment: dev
+    
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
+      
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v35
+    
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Astra CLI
+        continue-on-error: true
+        run: curl -Ls "https://dtsx.io/get-astra-cli" | bash
+        
+      - name: Setup
+        run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
+        
+      - name: Get directory of changed file(s)
+        run: |
+          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
+            echo "file: ${file}"
+            currentdirectory=$"$(dirname ${file})";
+            currentdirectory=${currentdirectory/"dataplane/"/""}
+            currentdirectory=${currentdirectory/"/1000_schema"/""}
+            currentdirectory=${currentdirectory/"/2000_data"/""}
+            echo "ASTRA_DB_DOMAIN=$currentdirectory" >> "$GITHUB_ENV"
+            echo "domain: $currentdirectory"
+            exit
+          done
+          
+      - name: Run Schema Scripts
+        run: |
+          echo "domain: $ASTRA_DB_DOMAIN"
+          cd dataplane/"$ASTRA_DB_DOMAIN/1000_schema"
+          for f in *.cql; do
+            echo "executing : ${f}"
+            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug
+            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), 'accounts/1000_schema', dateof(now()))" --debug
+          done;
+          
+      - name: Run Data Scripts
+        if: always()
+        run: |
+          echo "domain: $ASTRA_DB_DOMAIN"
+          cd dataplane/"$ASTRA_DB_DOMAIN/2000_data"
+          for f in *.cql; do
+            echo "executing : ${f}"
+            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug
+            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), 'accounts/2000_data', dateof(now()))" --debug
+          done;
