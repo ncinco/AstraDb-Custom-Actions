@@ -86,7 +86,7 @@ jobs:
       AZURE_STORAGE_ACCESS_KEY: ${{ secrets.AZURE_BLOB_STORAGE_SENSITIVE_DATA_ACCESS_KEY }}
       TERM: linux
     runs-on: ubuntu-latest
-    environment: dev
+    environment: uat
     
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -128,7 +128,7 @@ jobs:
 
   prod:
     name: 'prod'
-    needs: uat
+    needs: prod
     env:
       ASTRA_DB_APPLICATION_TOKEN: ${{ secrets.ASTRA_API_TOKEN }}
       AZURE_STORAGE_NAME: astradbdata
