@@ -128,7 +128,7 @@ jobs:
 
   prod:
     name: 'prod'
-    needs: prod
+    needs: uat
     env:
       ASTRA_DB_APPLICATION_TOKEN: ${{ secrets.ASTRA_API_TOKEN }}
       AZURE_STORAGE_NAME: astradbdata
