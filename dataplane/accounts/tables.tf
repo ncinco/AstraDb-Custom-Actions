@@ -1,6 +1,6 @@
 resource "astra_table" "executed_scripts" {
   table                = "executed_scripts"
-  keyspace             = "utilities"
+  keyspace             = var.database
   database_id          = astra_database.astradb.id
   region               = var.environment == "dev" ? "australiaeast" : "us-east1"
   clustering_columns   = "execution_id:execution_timestamp"
