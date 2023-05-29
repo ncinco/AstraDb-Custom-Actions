@@ -67,7 +67,7 @@ jobs:
       ASTRA_ORG_ID: ${{vars.ASTRA_ORG_ID}}
       TERM: linux
     runs-on: ubuntu-latest
-    environment: dev
+    environment: uat
  
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -114,7 +114,7 @@ jobs:
       ASTRA_ORG_ID: ${{vars.ASTRA_ORG_ID}}
       TERM: linux
     runs-on: ubuntu-latest
-    environment: dev
+    environment: prod
  
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
