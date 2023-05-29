@@ -4,3 +4,4 @@ CREATE TABLE IF NOT EXISTS kiwisaver.ninotable
   last_name TEXT,
   first_name TEXT
 );
+
