@@ -27,14 +27,6 @@ jobs:
         working-directory: dataplane/${{ github.event.inputs.domain }}/1000_schema
 
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # OR "2" -> To retrieve the preceding commit.
-      
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v35
-    
       - name: Checkout
         uses: actions/checkout@v2
 
