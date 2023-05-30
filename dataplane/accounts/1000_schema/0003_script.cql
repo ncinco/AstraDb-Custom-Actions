@@ -29,4 +29,3 @@ CREATE TABLE IF NOT EXISTS accounts.bank_accounts_by_cif_with_relationship_map (
     AND min_index_interval = 128
     AND read_repair = 'BLOCKING'
     AND speculative_retry = '99PERCENTILE';
-    
