@@ -24,7 +24,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: dataplane/${{ github.event.inputs.domain }}/1000_schema
+        working-directory: dataplane/${{ github.event.inputs.domain }}
 
     steps:
       - name: Checkout
