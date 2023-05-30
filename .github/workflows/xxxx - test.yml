@@ -39,7 +39,6 @@ jobs:
         
       - name: Run Schema Scripts
         run: |
-          cd dataplane/"accounts/1000_schema"
           for f in *.cql; do
             echo "checking if file '${f}' was executed before...."
             
