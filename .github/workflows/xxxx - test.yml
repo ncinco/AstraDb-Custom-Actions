@@ -43,10 +43,4 @@ jobs:
             echo "checking if file '${f}' was executed before...."
             
             /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "SELECT * FROM kiwisaver.executed_scripts"
-            #was_executed=$(/home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "SELECT count(*) FROM $ASTRA_DB_DOMAIN.executed_scripts WHERE script_name = '${f}' AND folder = 'kiwisaver/$ASTRA_DB_DOMAIN'")
-            
-            #echo "has ${f} files executed before: ${was_executed}"
-            
-            #/home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug
-            #/home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), 'accounts/1000_schema', dateof(now()))" --debug
           done;
