@@ -42,5 +42,5 @@ jobs:
           for f in *.cql; do
             echo "checking if file '${f}' was executed before...."
             
-            /home/runner/.astra/cli/astra db cqlsh kiwisaver -e "SELECT * FROM kiwisaver.executed_scripts"
+            /home/runner/.astra/cli/astra db cqlsh kiwisaver -e "SELECT * FROM kiwisaver.executed_scripts WHERE folder='${{ github.event.inputs.domain }}/1000_schema' AND script_name='${f}'"
           done;
