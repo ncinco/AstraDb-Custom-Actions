@@ -136,7 +136,7 @@ jobs:
       AZURE_STORAGE_ACCESS_KEY: ${{ secrets.AZURE_BLOB_STORAGE_SENSITIVE_DATA_ACCESS_KEY }}
       TERM: linux
     runs-on: ubuntu-latest
-    environment: dev
+    environment: prod
     
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
