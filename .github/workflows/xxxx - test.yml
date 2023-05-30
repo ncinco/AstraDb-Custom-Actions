@@ -42,7 +42,7 @@ jobs:
           for f in *.cql; do
             echo "checking if file '${f}' was executed before...."
             
-            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "SELECT count(*) FROM $ASTRA_DB_DOMAIN.executed_scripts WHERE script_name = '${f}' AND folder = 'kiwisaver/$ASTRA_DB_DOMAIN'"
+            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "SELECT count(*) FROM kiwisaver.executed_scripts WHERE script_name = '${f}' AND folder = 'kiwisaver/${f}'"
             #was_executed=$(/home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "SELECT count(*) FROM $ASTRA_DB_DOMAIN.executed_scripts WHERE script_name = '${f}' AND folder = 'kiwisaver/$ASTRA_DB_DOMAIN'")
             
             #echo "has ${f} files executed before: ${was_executed}"
