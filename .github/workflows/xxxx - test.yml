@@ -24,7 +24,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: controlplane/${{ github.event.inputs.domain }}/1000_schema
+        working-directory: dataplane/${{ github.event.inputs.domain }}/1000_schema
 
     steps:
       - uses: actions/checkout@v3
