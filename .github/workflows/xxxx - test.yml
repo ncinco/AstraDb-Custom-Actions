@@ -1,11 +1,15 @@
 name: 'xxxx - test'
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "dataplane/**.cql"
+  workflow_dispatch:
+    inputs:
+      domain:
+        description: "Domain you're targeting for deployment."
+        type: choice
+        required: true
+        options:
+        - accounts
+        - kiwisaver
 
 jobs:
   dev:
@@ -20,6 +24,7 @@ jobs:
     defaults:
       run:
         shell: bash
+        working-directory: controlplane/${{ github.event.inputs.domain }}/1000_schema
 
     steps:
       - uses: actions/checkout@v3
@@ -55,21 +60,14 @@ jobs:
           
       - name: Run Schema Scripts
         run: |
-          echo "domain: $ASTRA_DB_DOMAIN"
-          cd dataplane/"$ASTRA_DB_DOMAIN/1000_schema"
+          cd dataplane/"accounts/1000_schema"
           for f in *.cql; do
-            echo "executing : ${f}"
-            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug
-            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), 'accounts/1000_schema', dateof(now()))" --debug
-          done;
-          
-      - name: Run Data Scripts
-        if: always()
-        run: |
-          echo "domain: $ASTRA_DB_DOMAIN"
-          cd dataplane/"$ASTRA_DB_DOMAIN/2000_data"
-          for f in *.cql; do
-            echo "executing : ${f}"
-            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug
-            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), 'accounts/2000_data', dateof(now()))" --debug
+            echo "checking if file '${f}' was executed before...."
+            
+            was_executed=$(/home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "SELECT (*) FROM $ASTRA_DB_DOMAIN.executed_scripts WHERE script_name = '${f}' AND folder = 'accounts/1000_schema'")
+            
+            echo "has ${f} files executed before: ${was_executed}"
+            
+            #/home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug
+            #/home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "INSERT INTO utilities.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), 'accounts/1000_schema', dateof(now()))" --debug
           done;
