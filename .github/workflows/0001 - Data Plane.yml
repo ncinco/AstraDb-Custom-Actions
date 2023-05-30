@@ -90,7 +90,7 @@ jobs:
     - name: 'Terraform Init'
       id: init
       run: >
-       terraform init -backend-config=backend_dev.conf
+       terraform init -backend-config=backend_uat.conf
  
     - name: 'Terraform Validate'
       id: validate
@@ -137,7 +137,7 @@ jobs:
     - name: 'Terraform Init'
       id: init
       run: >
-       terraform init -backend-config=backend_dev.conf
+       terraform init -backend-config=backend_prod.conf
  
     - name: 'Terraform Validate'
       id: validate
