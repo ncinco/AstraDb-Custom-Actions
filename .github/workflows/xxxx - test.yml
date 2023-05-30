@@ -37,19 +37,6 @@ jobs:
       - name: Setup
         run: /home/runner/.astra/cli/astra setup --token $ASTRA_DB_APPLICATION_TOKEN
         
-      - name: Get directory of changed file(s)
-        run: |
-          for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-            echo "file: ${file}"
-            currentdirectory=$"$(dirname ${file})";
-            currentdirectory=${currentdirectory/"dataplane/"/""}
-            currentdirectory=${currentdirectory/"/1000_schema"/""}
-            currentdirectory=${currentdirectory/"/2000_data"/""}
-            echo "ASTRA_DB_DOMAIN=$currentdirectory" >> "$GITHUB_ENV"
-            echo "domain: $currentdirectory"
-            exit
-          done
-          
       - name: Run Schema Scripts
         run: |
           cd dataplane/"accounts/1000_schema"
