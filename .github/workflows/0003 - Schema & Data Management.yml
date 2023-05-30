@@ -108,25 +108,13 @@ jobs:
             exit
           done
           
-      - name: Run Schema Scripts
+      - name: Run Scripts
         run: |
           echo "domain: $ASTRA_DB_DOMAIN"
-          cd dataplane/"$ASTRA_DB_DOMAIN/1000_schema"
-          for f in *.cql; do
+          for f in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "executing : ${f}"
             /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug
-            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "INSERT INTO $ASTRA_DB_DOMAIN.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), '$ASTRA_DB_DOMAIN/1000_schema', dateof(now()))" --debug
-          done;
-          
-      - name: Run Data Scripts
-        if: always()
-        run: |
-          echo "domain: $ASTRA_DB_DOMAIN"
-          cd dataplane/"$ASTRA_DB_DOMAIN/2000_data"
-          for f in *.cql; do
-            echo "executing : ${f}"
-            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug
-            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "INSERT INTO $ASTRA_DB_DOMAIN.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), '$ASTRA_DB_DOMAIN/2000_data', dateof(now()))" --debug
+            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "INSERT INTO $ASTRA_DB_DOMAIN.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), '$ASTRA_DB_DOMAIN', dateof(now()))" --debug
           done;
 
   prod:
@@ -175,23 +163,11 @@ jobs:
             exit
           done
           
-      - name: Run Schema Scripts
+      - name: Run Scripts
         run: |
           echo "domain: $ASTRA_DB_DOMAIN"
-          cd dataplane/"$ASTRA_DB_DOMAIN/1000_schema"
-          for f in *.cql; do
+          for f in ${{ steps.changed-files.outputs.all_changed_files }}; do
             echo "executing : ${f}"
             /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug
-            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "INSERT INTO $ASTRA_DB_DOMAIN.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), '$ASTRA_DB_DOMAIN/1000_schema', dateof(now()))" --debug
-          done;
-          
-      - name: Run Data Scripts
-        if: always()
-        run: |
-          echo "domain: $ASTRA_DB_DOMAIN"
-          cd dataplane/"$ASTRA_DB_DOMAIN/2000_data"
-          for f in *.cql; do
-            echo "executing : ${f}"
-            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -f ${f} --debug
-            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "INSERT INTO $ASTRA_DB_DOMAIN.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), '$ASTRA_DB_DOMAIN/2000_data', dateof(now()))" --debug
+            /home/runner/.astra/cli/astra db cqlsh $ASTRA_DB_DOMAIN -e "INSERT INTO $ASTRA_DB_DOMAIN.executed_scripts (script_name, triggered_by, execution_id, folder, execution_timestamp) VALUES ('${f}', '${{github.triggering_actor}}', uuid(), '$ASTRA_DB_DOMAIN', dateof(now()))" --debug
           done;
