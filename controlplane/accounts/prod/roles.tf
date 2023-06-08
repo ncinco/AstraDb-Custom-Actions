@@ -49,9 +49,9 @@ resource "astra_role" "api_write_accounts" {
   ]
 }
 
-resource "astra_role" "api_prod_accounts" {
-  role_name   = "ApiTeam Prod - Accounts"
-  description = "ApiTeam Prod role for read operations to tables."
+resource "astra_role" "apiteam_accounts" {
+  role_name   = "ApiTeam - Accounts"
+  description = "ApiTeam role for read operations to tables."
   effect      = "allow"
   resources = [
     "drn:astra:org:${var.organisationid}",
