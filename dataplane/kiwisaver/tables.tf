@@ -3,11 +3,11 @@ resource "astra_table" "executed_scripts" {
   keyspace             = var.database
   database_id          = astra_database.astradb.id
   region               = var.environment == "dev" ? "australiaeast" : "us-east1"
-  clustering_columns   = "execution_id:execution_timestamp"
-  partition_keys       = "folder:script_name"
+  clustering_columns   = "execution_id"
+  partition_keys       = "domain:script_name"
   column_definitions   = [
     {
-      Name: "folder"
+      Name: "domain"
       TypeDefinition: "text"
     },
     {
