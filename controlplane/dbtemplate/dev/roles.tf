@@ -33,9 +33,9 @@ resource "astra_role" "api_write_[dbtemplate]" {
   ]
 }
 
-resource "astra_role" "api_dev_[dbtemplate]" {
-  role_name   = "ApiTeam Dev - [dbtemplate]"
-  description = "AppTeam Dev role for read and write operations to tables."
+resource "astra_role" "api_[dbtemplate]" {
+  role_name   = "ApiTeam - [dbtemplate]"
+  description = "AppTeam role for read and write operations to tables."
   effect      = "allow"
   resources = [
     "drn:astra:org:${var.organisationid}",
