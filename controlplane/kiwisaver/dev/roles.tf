@@ -49,9 +49,9 @@ resource "astra_role" "api_write_kiwisaver" {
   ]
 }
 
-resource "astra_role" "api_dev_kiwisaver" {
-  role_name   = "ApiTeam Dev - Kiwisaver"
-  description = "AppTeam Dev role for read and write operations to tables."
+resource "astra_role" "api_kiwisaver" {
+  role_name   = "ApiTeam - Kiwisaver"
+  description = "AppTeam role for read and write operations to tables."
   effect      = "allow"
   resources = [
     "drn:astra:org:${var.organisationid}",
