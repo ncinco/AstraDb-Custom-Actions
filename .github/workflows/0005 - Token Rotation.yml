@@ -45,4 +45,4 @@ jobs:
 
       - name: 'Terraform Plan'
         id: plan
-        run: terraform plan
+        run: terraform plan -var token=$ASTRA_DB_API_TOKEN
