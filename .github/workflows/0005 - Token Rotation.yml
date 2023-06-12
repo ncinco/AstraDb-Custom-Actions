@@ -1,8 +1,9 @@
 name: 0005 - Token Rotation
 
 on:
-  schedule:
-    - cron: '* * * * *' # Every Minute
+  workflow_dispatch:
+  #schedule:
+    #- cron: '* * * * *' # Every Minute
 
 jobs:
   build:
