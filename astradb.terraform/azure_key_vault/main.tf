@@ -49,15 +49,12 @@ resource "azurerm_key_vault" "astraDBMainKeyVault" {
       "Purge",
       "Recover"
     ]
-
   }
 
-  network_acls {
-    default_action = "Deny"
-    bypass         = "None"
+  # network_acls {
+    # default_action = "Deny"
+    # bypass         = "None"
     # we need zScaler IP anchoring IP addresses for MMD local development, GitHub Action and all application workloads IPs.
-    ip_rules = ["140.168.254.122/32", "140.168.254.123/32", "140.168.254.36/32", "140.168.254.136/32", "124.248.141.139/32", "124.248.141.144/32", "124.248.141.62"]
-  }
-
-
+    # ip_rules = ["140.168.254.122/32", "140.168.254.123/32", "140.168.254.36/32", "140.168.254.136/32", "124.248.141.139/32", "124.248.141.144/32", "124.248.141.62"]
+  # }
 }
