@@ -32,8 +32,7 @@ jobs:
          
       - name: 'Terraform Init'
         id: init
-        run: >
-         terraform init -backend-config=backend_dev.conf
+        run: terraform init
  
       - name: 'Terraform Validate'
         id: validate
