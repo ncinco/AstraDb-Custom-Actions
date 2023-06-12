@@ -1,4 +1,0 @@
-azure-identity
-requests
-pytz
-azure-keyvault-secrets
