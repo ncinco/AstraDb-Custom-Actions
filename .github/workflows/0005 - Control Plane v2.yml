@@ -17,6 +17,7 @@ jobs:
       ARM_SKIP_PROVIDER_REGISTRATION: true
       TERM: linux
     runs-on: ubuntu-latest
+    environment: dev
     defaults:
       run:
         shell: bash
