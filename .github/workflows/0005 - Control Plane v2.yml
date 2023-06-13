@@ -55,4 +55,4 @@ jobs:
         
       - name: 'Terraform Apply'
         id: apply
-        run: terraform apply -var token=$ASTRA_DB_API_TOKEN
+        run: terraform apply -auto-approve -var token=$ASTRA_DB_API_TOKEN
