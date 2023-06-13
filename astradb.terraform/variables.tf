@@ -24,7 +24,7 @@ variable "azure_rg_name" {
 variable "azure_key_vault_name" {
   type        = string
   description = "The main Azure Key Vault for DataStax client secret and access token."
-  default     = "kv-astradb-test"
+  default     = "kv-astradb-astra"
 }
 
 variable "datastax_org_id" {
