@@ -5,6 +5,8 @@ terraform {
       version = "2.1.15"
     }
   }
+  
+  backend "azurerm" {}
 }
 
 provider "astra" {
