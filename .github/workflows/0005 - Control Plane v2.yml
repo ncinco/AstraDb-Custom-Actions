@@ -1,4 +1,4 @@
-name: 0005 - Token Rotation
+name: 0005 - Control Plane v2
 
 on:
   workflow_dispatch:
