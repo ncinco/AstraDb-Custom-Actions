@@ -55,4 +55,5 @@ jobs:
         
       - name: 'Terraform Apply'
         id: apply
+        if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve -var token=$ASTRA_DB_API_TOKEN
