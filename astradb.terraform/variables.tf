@@ -12,7 +12,7 @@ variable "token" {
 variable "azure_subscription_id" {
   type        = string
   description = "The Azure subscription ID for all resources to be created in. Command line argument passing to Terraform."
-  default     = "f895364c-4d3c-448d-8144-d25616d4a5b5"
+  default     = "a5e8ce79-b0ec-41a2-a51c-aee927f1d808"
 }
 
 variable "azure_rg_name" {
