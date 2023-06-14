@@ -50,7 +50,7 @@ resource "terraform_data" "astra_access_token_exec" {
       azure_resource_group_name = var.azure_rg_name
 
       // make sure we do not print the token in terraform command prompt output
-      quiet = true
+      quiet = false
     }
   }
 }
