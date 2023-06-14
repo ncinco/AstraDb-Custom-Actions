@@ -47,4 +47,9 @@ module "datastax_tokens" {
   azure_subscription_id        = var.azure_subscription_id
   astradb_azure_key_vault_name = module.main_azure_key_vault.astraDBMainKeyVault_name_out
   azure_rg_name                = module.resouce_group_astradb.rg_name_out
+    
+  // Service Principal Variables
+  azure_client_id              = var.azure_client_id
+  azure_tenant_id              = var.azure_tenant_id
+  azure_client_secret          = var.azure_client_secret
 }
