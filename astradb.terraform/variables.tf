@@ -40,3 +40,19 @@ variable "azure_key_vault_sku" {
 }
 
 # We need to review if we need AZURE_USERNAME in env variable if pipeline is run by Service Principal
+
+# Service Principal Variables
+variable "azure_client_id" {
+  type        = string
+  description = "Service Principal Client ID"
+}
+
+variable "azure_tenant_id" {
+  type        = string
+  description = "Service Principal Tenant ID"
+}
+
+variable "azure_client_secret" {
+  type        = string
+  description = "Service Principal Secret"
+}
