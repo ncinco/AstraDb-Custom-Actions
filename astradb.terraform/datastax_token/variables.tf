@@ -18,7 +18,7 @@ variable "azure_rg_name" {
   description = "The resource group name of where the Azure Key Vault is in."
 }
 
-
+# Service Principal Variables
 variable "azure_client_id" {
   type        = string
   description = "Service Principal Client ID"
