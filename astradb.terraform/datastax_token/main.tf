@@ -48,6 +48,10 @@ resource "terraform_data" "astra_access_token_exec" {
       azure_key_vault_name      = var.astradb_azure_key_vault_name
       azure_subscription_id     = var.azure_subscription_id
       azure_resource_group_name = var.azure_rg_name
+      
+      AZURE_CLIENT_ID           = var.azure_client_id
+      AZURE_TENANT_ID           = var.azure_tenant_id
+      AZURE_CLIENT_SECRET       = var.azure_client_secret
 
       // make sure we do not print the token in terraform command prompt output
       quiet = false
