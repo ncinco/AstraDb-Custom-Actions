@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     env:
-      ASTRA_DB_API_TOKEN: ${{secrets.ASTRA_API_TOKEN}}
+      ASTRA_ORG_API_TOKEN: ${{secrets.ASTRA_ORG_API_TOKEN}}
       ARM_ACCESS_KEY: ${{ secrets.AZURE_BLOB_STORAGE_ACCESS_KEY }}
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
@@ -52,9 +52,9 @@ jobs:
 
       - name: 'Terraform Plan'
         id: plan
-        run: terraform plan -var token=$ASTRA_DB_API_TOKEN
+        run: terraform plan -var token=$ASTRA_ORG_API_TOKEN
         
       - name: 'Terraform Apply'
         id: apply
         if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve -var token=$ASTRA_DB_API_TOKEN
+        run: terraform apply -auto-approve -var token=$ASTRA_ORG_API_TOKEN
