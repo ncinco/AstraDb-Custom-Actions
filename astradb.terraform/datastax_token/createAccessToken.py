@@ -31,7 +31,7 @@ headers = {
 
 # Get role ID based on role name
 try: 
-  rolesResponse = requests.get(datastaxControlPlaneRolesUrl, headers=headers)
+  rolesResponse = requests.get(datastaxControlPlaneRolesUrl, headers=headers, timeout=30)
 
 except requests.exceptions.HTTPError as error:
   print(error)
@@ -55,7 +55,7 @@ payload = {
 
 try:
   response = requests.post(
-    datastaxControlPlaneTokenUrl, data=json.dumps(payload), headers=headers
+    datastaxControlPlaneTokenUrl, data=json.dumps(payload), headers=headers, timeout=30
   )
   response.raise_for_status()
 except requests.exceptions.HTTPError as error:
