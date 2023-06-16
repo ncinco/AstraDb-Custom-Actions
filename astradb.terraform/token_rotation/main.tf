@@ -26,7 +26,7 @@ provider "azurerm" {
   }
 }
 
-resource "terraform_data" "astra_access_token_exec" {
+resource "terraform_data" "astra_rotate_access_token_exec" {
   provisioner "local-exec" {
 
     working_dir = path.module
