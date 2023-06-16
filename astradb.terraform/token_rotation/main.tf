@@ -27,9 +27,6 @@ provider "azurerm" {
 }
 
 resource "terraform_data" "astra_access_token_exec" {
-  // we need to expect a unique input e.g. request_id so that Terraform can identify particular request
-  for_each = { for request in local.token_requests.token_requests : request.request_id => request }
-
   provisioner "local-exec" {
 
     working_dir = path.module
