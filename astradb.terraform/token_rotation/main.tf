@@ -26,11 +26,6 @@ provider "azurerm" {
   }
 }
 
-locals {
-  token_requests = jsondecode(templatefile("./${path.module}/token_requests.tpl", {
-  }))
-}
-
 resource "terraform_data" "astra_access_token_exec" {
   // we need to expect a unique input e.g. request_id so that Terraform can identify particular request
   for_each = { for request in local.token_requests.token_requests : request.request_id => request }
@@ -38,13 +33,9 @@ resource "terraform_data" "astra_access_token_exec" {
   provisioner "local-exec" {
 
     working_dir = path.module
-    command     = "python3 ./createAccessToken.py"
+    command     = "python3 ./rotateAccessToken.py"
     environment = {
       access_token              = var.token
-      role_name                 = each.value.role_name
-      requestor_email           = each.value.requestor_email
-      requestor_squad           = each.value.requestor_squad
-      azure_principal           = each.value.azure_principal
       azure_key_vault_name      = var.astradb_azure_key_vault_name
       azure_subscription_id     = var.azure_subscription_id
       azure_resource_group_name = var.azure_rg_name
