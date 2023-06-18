@@ -9,10 +9,6 @@ from datetime import datetime, timedelta
 
 # Set variables passed from Terraform and other variables.
 access_token = os.environ["access_token"]
-role_name = os.environ["role_name"]
-requestor_email = os.environ["requestor_email"]
-requestor_squad = os.environ["requestor_squad"]
-azure_principal = os.environ["azure_principal"]
 azure_key_vault_name = os.environ["azure_key_vault_name"]
 azure_subscription_id = os.environ["azure_subscription_id"]
 azure_resource_group_name = os.environ["azure_resource_group_name"]
