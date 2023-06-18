@@ -37,23 +37,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 'Terraform Format'
-        id: format
-        run: terraform fmt
-         
-      - name: 'Terraform Init'
-        id: init
-        run: terraform init
- 
-      - name: 'Terraform Validate'
-        id: validate
-        run: terraform validate
-
-      - name: 'Terraform Plan'
-        id: plan
-        run: terraform plan -var token=$ASTRA_ORG_API_TOKEN -var azure_client_id=$ARM_CLIENT_ID -var azure_tenant_id=$ARM_TENANT_ID -var azure_client_secret=$ARM_CLIENT_SECRET
-        
-      - name: 'Terraform Apply'
-        id: apply
-        if: github.ref == 'refs/heads/main'
-        run: terraform apply -auto-approve -var token=$ASTRA_ORG_API_TOKEN -var azure_client_id=$ARM_CLIENT_ID -var azure_tenant_id=$ARM_TENANT_ID -var azure_client_secret=$ARM_CLIENT_SECRET
+      - name: 'Rotate Token'
+        run: python rotateAccessToken.py
+        shell: sh
