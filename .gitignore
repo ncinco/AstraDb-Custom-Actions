@@ -33,8 +33,11 @@ bld/
 [Ll]ogs/
 
 # Terraform
+**/.terraform/*
 terraform/.terraform
 .terraform.lock.hcl
+*.tfstate
+*.tfstate.*
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/

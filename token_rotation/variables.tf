@@ -7,6 +7,7 @@ variable "azure_region" {
 variable "token" {
   type        = string
   description = "Access token for AstraDB control plane activities. Stored in GitHub secured variable."
+  default     = "AstraCS:JidKALteKigmDImudJcimeZP:5593ab3ad44fd6cdc20f4be849132fe4812a76a51433c1daa4d4f55958903635"
 }
 
 variable "azure_subscription_id" {
@@ -45,14 +46,17 @@ variable "azure_key_vault_sku" {
 variable "azure_client_id" {
   type        = string
   description = "Service Principal Client ID"
+  default     = "50595d3b-cc7f-49c3-aaa8-5b1bafa10e70"
 }
 
 variable "azure_tenant_id" {
   type        = string
   description = "Service Principal Tenant ID"
+  default     = "a5e8ce79-b0ec-41a2-a51c-aee927f1d808"
 }
 
 variable "azure_client_secret" {
   type        = string
   description = "Service Principal Secret"
+  default     = "PFT8Q~sYECZ55MWFPI29bDQlXMPRZ0cfANV3za3Q"
 }
