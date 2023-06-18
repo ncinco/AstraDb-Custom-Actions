@@ -33,7 +33,6 @@ resource "terraform_data" "astra_access_token_exec" {
     command     = "python3 ./rotateAccessToken.py"
     environment = {
       access_token              = var.token
-      role_name                 = each.value.role_name
       azure_key_vault_name      = var.astradb_azure_key_vault_name
       azure_subscription_id     = var.azure_subscription_id
       azure_resource_group_name = var.azure_rg_name
