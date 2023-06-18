@@ -22,5 +22,10 @@ secretExpiryHours = 24
 credential = DefaultAzureCredential()
 secretClient = SecretClient(vault_url=azure_key_vault_uri, credential=credential)
 
-print("Token provisioning completed and secrets stored to Azure Key Vault.")
+secretProperties = secretClient.list_properties_of_secrets()
+
+for secretProperty in secretProperties
+  print(secretProperty.name)
+
+print("Token rotation completed and secrets stored to Azure Key Vault.")
 exit(0)
