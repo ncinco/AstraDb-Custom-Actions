@@ -44,12 +44,13 @@ for secretProperty in secretProperties:
       matchedObjects = list(filter(lambda x:x['clientId']==f'adwRCrHRSHomWABIMmULjPRb', tokensResponse.json()['clients']))
       
       print(f'id : {secretProperty.id} has expired')
+      print(f'JSON: {tokensResponse.json()}')
 
       # set client_id for further use in the process
       client_id = matchedObjects[0]['clientId']
       roles = matchedObjects[0]['roles']
       generatedOn = matchedObjects[0]['generatedOn']
-      print(f'AstraDB Client ID retrieved: {client_id} {roles} {generatedOn}')
+      #print(f'AstraDB Client ID retrieved: {client_id} {roles} {generatedOn}')
       
     except requests.exceptions.HTTPError as error:
       print(error)
