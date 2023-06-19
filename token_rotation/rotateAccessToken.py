@@ -40,7 +40,7 @@ for secretProperty in secretProperties:
 
     # Get all tokens
     try:
-      clientId = matchedObjects[0]['clientId'].split('-')[0]
+      clientId = secretProperty.id.split('-')[0]
       
       tokensResponse = requests.get(datastaxControlPlaneTokenUrl, headers=headers, timeout=30)
       matchedObjects = list(filter(lambda x:x['clientId']==clientId, tokensResponse.json()['clients']))
