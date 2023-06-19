@@ -6,6 +6,7 @@ import pytz
 from azure.keyvault.secrets import SecretClient
 from azure.identity import DefaultAzureCredential
 from datetime import datetime, timedelta
+from dateutil import parser
 
 # Set variables passed from Terraform and other variables.
 access_token = os.environ["access_token"]
@@ -27,11 +28,11 @@ secretProperties = secretClient.list_properties_of_secrets()
 for secretProperty in secretProperties:
   print(f"id : {secretProperty.id}  name: {secretProperty.name} generatedOn: {secretProperty.tags['generatedOn']} status: {secretProperty.tags['status']}")
   
-  time_diff = datetime.strptime(secretProperty.tags['generatedOn'], '%m/%d/%y %H:%M:%S') - datetime.now().strftime('%m/%d/%y %H:%M:%S')
-  time_diff_in_hours = time_diff.total_seconds() / 3600
+  generatedOn = parser.parse(secretProperty.tags['generatedOn']).replace(tzinfo=None)
+  time_diff_in_hours = (datetime.now() - generatedOn).total_seconds() / 3600
   
   if secretProperty.tags['status'] == 'active' and time_diff_in_hours > 4.0:
-    print(f"id : {secretProperty.id} has not expired")
+    print(f"id : {secretProperty.id} has expired")
   
 print("Token rotation completed and secrets stored to Azure Key Vault.")
 exit(0)
