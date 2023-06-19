@@ -2,4 +2,4 @@ azure-identity
 requests
 pytz
 azure-keyvault-secrets
-dateutil
+python-dateutil
