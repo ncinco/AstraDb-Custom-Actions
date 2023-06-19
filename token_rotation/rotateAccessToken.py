@@ -54,8 +54,6 @@ for secretProperty in secretProperties:
    except requests.exceptions.HTTPError as error:
      print(error)
      exit(1)
-    
-    
   
 print("Token rotation completed and secrets stored to Azure Key Vault.")
 exit(0)
