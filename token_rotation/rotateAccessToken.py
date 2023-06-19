@@ -43,7 +43,7 @@ for secretProperty in secretProperties:
       tokensResponse = requests.get(datastaxControlPlaneTokenUrl, headers=headers, timeout=30)
       matchedObjects = list(filter(lambda x:x['clientId']==f'adwRCrHRSHomWABIMmULjPRb', tokensResponse.json()))
       
-      print(f'json response: {tokensResponse.json()')
+      print(f'json response: {tokensResponse.json()}')
       print(f'id : {secretProperty.id} has expired')
 
       # set client_id for further use in the process
