@@ -46,7 +46,7 @@ for secretProperty in secretProperties:
       print(f'id : {secretProperty.id} has expired')
 
       # set client_id for further use in the process
-      client_id = matchedObjects[0]['id']
+      client_id = matchedObjects[0]['client_id']
       roles = matchedObjects[0]['roles']
       generatedOn = matchedObjects[0]['generatedOn']
       print(f'AstraDB Client ID retrieved: {client_id} {roles} {generatedOn}')
