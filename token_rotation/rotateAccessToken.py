@@ -30,7 +30,7 @@ for secretProperty in secretProperties:
   time_diff = datetime.strptime(secretProperty.tags['generatedOn'], '%m/%d/%y %H:%M:%S') - datetime.now().strftime('%m/%d/%y %H:%M:%S')
   time_diff_in_hours = time_diff.total_seconds() / 3600
   
-  if secretProperty.tags['status'] == 'active' and time_diff_in_hours > 4.0
+  if secretProperty.tags['status'] == 'active' and time_diff_in_hours > 4.0:
     print(f"id : {secretProperty.id} has not expired")
   
 print("Token rotation completed and secrets stored to Azure Key Vault.")
