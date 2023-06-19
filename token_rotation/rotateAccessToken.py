@@ -41,15 +41,14 @@ for secretProperty in secretProperties:
     # Get all tokens
     try: 
       tokensResponse = requests.get(datastaxControlPlaneTokenUrl, headers=headers, timeout=30)
-      # matchedObjects = list(filter(lambda x:x['clientId']==f'adwRCrHRSHomWABIMmULjPRb', tokensResponse.json()))
+      matchedObjects = list(filter(lambda x:x['clientId']==f'adwRCrHRSHomWABIMmULjPRb', tokensResponse.json()['clients']))
       
-      print(f'json response: {tokensResponse.json()}')
       print(f'id : {secretProperty.id} has expired')
 
       # set client_id for further use in the process
-      # client_id = matchedObjects[0]['id']
-      # roles = matchedObjects[0]['roles']
-      # print(f'AstraDB Role ID retrieved: {client_id} {roles}')
+      client_id = matchedObjects[0]['id']
+      roles = matchedObjects[0]['roles']
+      print(f'AstraDB Role ID retrieved: {client_id} {roles}')
       
     except requests.exceptions.HTTPError as error:
       print(error)
