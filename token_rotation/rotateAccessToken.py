@@ -32,7 +32,30 @@ for secretProperty in secretProperties:
   time_diff_in_hours = (datetime.now() - generatedOn).total_seconds() / 3600
   
   if secretProperty.tags['status'] == 'active' and time_diff_in_hours > 4.0:
-    print(f"id : {secretProperty.id} has expired")
+    # Common http headers
+    headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + access_token,
+   }
+
+   # Get all tokens
+   try: 
+     tokensResponse = requests.get(datastaxControlPlaneTokenUrl, headers=headers, timeout=30)
+     matchedObjects = list(filter(lambda x:x['clientId']==f'adwRCrHRSHomWABIMmULjPRb', tokensResponse.json()))
+      
+     print(f'json response: {tokensResponse.json()')
+     print(f'id : {secretProperty.id} has expired'})
+
+     # set client_id for further use in the process
+     client_id = matchedObjects[0]['id']
+     roles = matchedObjects[0]['roles']
+     print(f'AstraDB Role ID retrieved: {client_id} {roles}')
+      
+   except requests.exceptions.HTTPError as error:
+     print(error)
+     exit(1)
+    
+    
   
 print("Token rotation completed and secrets stored to Azure Key Vault.")
 exit(0)
