@@ -48,7 +48,8 @@ for secretProperty in secretProperties:
       # set client_id for further use in the process
       client_id = matchedObjects[0]['id']
       roles = matchedObjects[0]['roles']
-      print(f'AstraDB Role ID retrieved: {client_id} {roles}')
+      generatedOn = matchedObjects[0]['generatedOn']
+      print(f'AstraDB Client ID retrieved: {client_id} {roles} {generatedOn}')
       
     except requests.exceptions.HTTPError as error:
       print(error)
