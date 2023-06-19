@@ -40,17 +40,17 @@ for secretProperty in secretProperties:
 
     # Get all tokens
     try:
-      clientId = secretProperty.id.split('-')[0]
-      
-      tokensResponse = requests.get(datastaxControlPlaneTokenUrl, headers=headers, timeout=30)
-      matchedObjects = list(filter(lambda x:x['clientId']==clientId, tokensResponse.json()['clients']))
+      print(f'id: {secretProperty.id}')
+
+      #tokensResponse = requests.get(datastaxControlPlaneTokenUrl, headers=headers, timeout=30)
+      #matchedObjects = list(filter(lambda x:x['clientId']==clientId, tokensResponse.json()['clients']))
       
       print(f'id : {secretProperty.id} has expired')
 
       # set client_id for further use in the process
-      client_id = matchedObjects[0]['clientId']
-      roles = matchedObjects[0]['roles']
-      generatedOn = matchedObjects[0]['generatedOn']
+      #client_id = matchedObjects[0]['clientId']
+      #roles = matchedObjects[0]['roles']
+      #generatedOn = matchedObjects[0]['generatedOn']
       #print(f'AstraDB Client ID retrieved: {client_id} {roles} {generatedOn}')
       
     except requests.exceptions.HTTPError as error:
