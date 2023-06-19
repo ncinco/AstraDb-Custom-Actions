@@ -27,6 +27,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Approval
+        uses: trstringer/manual-approval@v1
+        with:
+          approvers: ninocinco, ncinco
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
