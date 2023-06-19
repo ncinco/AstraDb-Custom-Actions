@@ -39,12 +39,13 @@ for secretProperty in secretProperties:
     }
 
     # Get all tokens
-    try: 
+    try:
+      clientId = matchedObjects[0]['clientId'].split('-')[0]
+      
       tokensResponse = requests.get(datastaxControlPlaneTokenUrl, headers=headers, timeout=30)
-      matchedObjects = list(filter(lambda x:x['clientId']==f'adwRCrHRSHomWABIMmULjPRb', tokensResponse.json()['clients']))
+      matchedObjects = list(filter(lambda x:x['clientId']==clientId, tokensResponse.json()['clients']))
       
       print(f'id : {secretProperty.id} has expired')
-      print(f'JSON: {tokensResponse.json()}')
 
       # set client_id for further use in the process
       client_id = matchedObjects[0]['clientId']
