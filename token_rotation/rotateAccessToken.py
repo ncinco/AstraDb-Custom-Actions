@@ -25,7 +25,10 @@ secretClient = SecretClient(vault_url=azure_key_vault_uri, credential=credential
 secretProperties = secretClient.list_properties_of_secrets()
 
 for secretProperty in secretProperties:
-  print(secretProperty.name)
+  print("id : {secretProperty.id}  name: {secretProperty.name} generatedOn: {secretProperty.tags['generatedOn']} status: {secretProperty.tags['status']}")
 
+await credential.close()
+await secretClient.close()
+  
 print("Token rotation completed and secrets stored to Azure Key Vault.")
 exit(0)
