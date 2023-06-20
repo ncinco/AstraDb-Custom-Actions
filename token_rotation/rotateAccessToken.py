@@ -59,7 +59,7 @@ for secretProperty in secretProperties:
     
     # create new token first before deleting the old one
     try:
-      tokensResponse = requests.post(datastaxControlPlaneTokenUrl, data=json.dumps(roles), headers=headers, imeout=30)
+      tokensResponse = requests.post(datastaxControlPlaneTokenUrl, data=json.dumps(roles), headers=headers, timeout=30)
     except requests.exceptions.HTTPError as error:
       print(error)
       exit(1)
