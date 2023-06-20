@@ -20,6 +20,12 @@ rbacKeyVaultReader = 'Key Vault Reader'
 rbackKeyVaultSecretsUser = 'Key Vault Secrets User'
 secretExpiryHours = 24
 
+# Common http headers
+headers = {
+  'Content-Type': 'application/json',
+  'Authorization': 'Bearer ' + access_token,
+}
+
 credential = DefaultAzureCredential()
 secretClient = SecretClient(vault_url=azure_key_vault_uri, credential=credential)
 
@@ -32,12 +38,6 @@ for secretProperty in secretProperties:
   time_diff_in_hours = (datetime.now() - generatedOn).total_seconds() / 3600
   
   if secretProperty.tags['status'] == 'active' and time_diff_in_hours > 4.0:
-    # Common http headers
-    headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + access_token,
-    }
-
     clientId = secretProperty.name.split('-')[0]
 
     try:
@@ -55,7 +55,7 @@ for secretProperty in secretProperties:
     client_id = matchedObjects[0]['clientId']
     roles = matchedObjects[0]['roles']
     generatedOn = matchedObjects[0]['generatedOn']
-    print(f'AstraDB Client ID retrieved: {client_id} {roles} {generatedOn}')
+    print(f'Found matching token: Client Id: {client_id} Roles: {roles} Generated On: {generatedOn}')
     
     # create new token first before deleting the old one
     try:
@@ -66,6 +66,8 @@ for secretProperty in secretProperties:
       exit(1)
 
     tokensResponseJson = tokensResponse.json()
+
+    print(f'Token created: {tokensResponseJson}')
     
     # update the secret
     credential = DefaultAzureCredential()
@@ -74,9 +76,13 @@ for secretProperty in secretProperties:
     secretName = secretProperty.name
     secretValue = tokensResponseJson.get('secret')
 
+    print(f'Old tags: {old_secret.tags}')
+
     tags = old_secret.tags
-    tag["status"] = 'rotating'
-    tag["clientId"] = tokensResponseJson.get('clientId')
+    tags["status"] = 'rotating'
+    tags["clientId"] = tokensResponseJson.get('clientId')
+
+    print(f'New tags: {old_secret.tags}')
     
     print('Setting secret to Azure Key Vault..')
     secretClient.set_secret(secretName, secretValue)
@@ -86,9 +92,12 @@ for secretProperty in secretProperties:
     # revoke old token
     try:
       tokensResponse = requests.delete(f'{datastaxControlPlaneTokenUrl}/{client_id}', headers=headers, imeout=30)
+      tokensResponse.raise_for_status()
     except requests.exceptions.HTTPError as error:
       print(error)
       exit(1)
+
+    print(f'Old token revoked.')
 
 print("Token rotation completed and secrets stored to Azure Key Vault.")
 exit(0)
