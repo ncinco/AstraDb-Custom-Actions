@@ -50,6 +50,8 @@ for secretProperty in secretProperties:
     # print details
     print(f"Secret details to be rotated name: {secretProperty.name} generatedOn: {secretProperty.tags['generatedOn']} status: {secretProperty.tags['status']} time diff: {time_diff_in_hours}")
 
+    print(f'tokensResponse: {tokensResponse.json()}')
+
     # find matching token
     matchedObjects = list(filter(lambda x:x['clientId']==clientId, tokensResponse.json()['clients']))
     
