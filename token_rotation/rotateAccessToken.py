@@ -57,12 +57,10 @@ for secretProperty in secretProperties:
     generatedOn = matchedObjects[0]['generatedOn']
     print(f'Found matching token: Client Id: {client_id} Roles: {roles} Generated On: {generatedOn}')
     
-    print(f'json payload: {json.dumps(roles)}')
-
     # create new token first before deleting the old one
     try:
       payload = {'roles' : roles}
-      print(payload)
+      print(f'Json Payload: {payload}')
       tokensResponse = requests.post(datastaxControlPlaneTokenUrl, data=json.dumps(roles), headers=headers, timeout=30)
       tokensResponse.raise_for_status()
     except requests.exceptions.HTTPError as error:
