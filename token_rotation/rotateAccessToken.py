@@ -72,7 +72,8 @@ for secretProperty in secretProperties:
     secretValue = tokensResponse.get('secret')
 
     tags = old_secret.tags
-    tag["status"] = rotating
+    tag["status"] = 'rotating'
+    tag["clientId"] = tokensResponse.get('clientId')
     
     print('Setting secret to Azure Key Vault..')
     secretClient.set_secret(secretName, secretValue)
@@ -81,6 +82,7 @@ for secretProperty in secretProperties:
 
     # revoke old token
     try:
+      tokensResponse = requests.delete(f'{datastaxControlPlaneTokenUrl}/{client_id}', headers=headers, imeout=30)
     except requests.exceptions.HTTPError as error:
       print(error)
       exit(1)
