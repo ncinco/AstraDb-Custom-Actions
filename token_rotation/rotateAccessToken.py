@@ -88,7 +88,7 @@ for secretProperty in secretProperties:
 
     tags = old_secret.properties.tags
     tags["status"] = 'rotating'
-    tags["clientId"] = tokensResponseJson.get('clientId')
+    tags["clientId"] = newTokenReponseJson.get('clientId')
 
     print(f'New tags: {old_secret.properties.tags}')
     
