@@ -38,24 +38,52 @@ for secretProperty in secretProperties:
       'Authorization': 'Bearer ' + access_token,
     }
 
-    # Get all tokens
+    clientId = secretProperty.name.split('-')[0]
+
     try:
-      clientId = secretProperty.name.split('-')[0]
-
       tokensResponse = requests.get(datastaxControlPlaneTokenUrl, headers=headers, timeout=30)
-      matchedObjects = list(filter(lambda x:x['clientId']==clientId, tokensResponse.json()['clients']))
-      
-      print(f'id : {secretProperty.id} has expired')
-
-      # set client_id for further use in the process
-      client_id = matchedObjects[0]['clientId']
-      roles = matchedObjects[0]['roles']
-      generatedOn = matchedObjects[0]['generatedOn']
-      print(f'AstraDB Client ID retrieved: {client_id} {roles} {generatedOn}')
-      
+      tokensResponse.raise_for_status()
     except requests.exceptions.HTTPError as error:
       print(error)
       exit(1)
-  
+
+    matchedObjects = list(filter(lambda x:x['clientId']==clientId, tokensResponse.json()['clients']))
+    
+    print(f'id : {secretProperty.id} has expired')
+
+    # set client_id for further use in the process
+    client_id = matchedObjects[0]['clientId']
+    roles = matchedObjects[0]['roles']
+    generatedOn = matchedObjects[0]['generatedOn']
+    print(f'AstraDB Client ID retrieved: {client_id} {roles} {generatedOn}')
+    
+    # create new token first before deleting the old one
+    try:
+      tokensResponse = requests.post(datastaxControlPlaneTokenUrl, data=json.dumps(roles), headers=headers, imeout=30)
+    except requests.exceptions.HTTPError as error:
+      print(error)
+      exit(1)
+
+    # update the secret
+    credential = DefaultAzureCredential()
+    secretClient = SecretClient(vault_url=azure_key_vault_uri, credential=credential)
+    old_secret = secretClient.get_secret(secretProperty.name);
+    secretName = secretProperty.name
+    secretValue = tokensResponse.get('secret')
+
+    tags = old_secret.tags
+    tag["status"] = rotating
+    
+    print('Setting secret to Azure Key Vault..')
+    secretClient.set_secret(secretName, secretValue)
+    secretClient.update_secret_properties(secretName, content_type="text/plain", tags=tags, not_before=datetime.now(pytz.timezone("Etc/GMT+12")), expires_on=datetime.now(pytz.timezone("Etc/GMT+12")) + timedelta(hours=secretExpiryHours))
+    print('ClientSecret put to Azure Key Vault with secret name: %s' % secretClient.get_secret(secretName))
+
+    # revoke old token
+    try:
+    except requests.exceptions.HTTPError as error:
+      print(error)
+      exit(1)
+
 print("Token rotation completed and secrets stored to Azure Key Vault.")
 exit(0)
