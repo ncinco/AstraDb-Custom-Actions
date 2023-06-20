@@ -71,14 +71,14 @@ for secretProperty in secretProperties:
 
     print(f'Token created: {tokensResponseJson}')
     
-    # update the secret
+    # get the secret
     credential = DefaultAzureCredential()
     secretClient = SecretClient(vault_url=azure_key_vault_uri, credential=credential)
     old_secret = secretClient.get_secret(secretProperty.name);
     secretName = secretProperty.name
     secretValue = tokensResponseJson.get('secret')
 
-    print(f'Old tags: {old_secret.tags}')
+    print(f'the secret: {old_secret}')
 
     tags = old_secret.tags
     tags["status"] = 'rotating'
