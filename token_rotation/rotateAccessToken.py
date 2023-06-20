@@ -61,7 +61,7 @@ for secretProperty in secretProperties:
 
     # create new token first before deleting the old one
     try:
-      payload = = {'roles' : [roles]}
+      payload = {'roles' : [roles]}
       print(payload)
       tokensResponse = requests.post(datastaxControlPlaneTokenUrl, data=json.dumps(roles), headers=headers, timeout=30)
       tokensResponse.raise_for_status()
