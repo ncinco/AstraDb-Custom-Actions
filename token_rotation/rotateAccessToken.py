@@ -31,22 +31,26 @@ secretClient = SecretClient(vault_url=azure_key_vault_uri, credential=credential
 
 secretProperties = secretClient.list_properties_of_secrets()
 
+# get all tokens
+try:
+  tokensResponse = requests.get(datastaxControlPlaneTokenUrl, headers=headers, timeout=30)
+  tokensResponse.raise_for_status()
+except requests.exceptions.HTTPError as error:
+  print(error)
+  exit(1)
+
 for secretProperty in secretProperties:
-  print(f"id : {secretProperty.id}  name: {secretProperty.name} generatedOn: {secretProperty.tags['generatedOn']} status: {secretProperty.tags['status']}")
-  
   generatedOn = parser.parse(secretProperty.tags['generatedOn']).replace(tzinfo=None)
   time_diff_in_hours = (datetime.now() - generatedOn).total_seconds() / 3600
-  
+
+  # check expiration
   if secretProperty.tags['status'] == 'active' and time_diff_in_hours > 4.0:
     clientId = secretProperty.name.split('-')[0]
 
-    try:
-      tokensResponse = requests.get(datastaxControlPlaneTokenUrl, headers=headers, timeout=30)
-      tokensResponse.raise_for_status()
-    except requests.exceptions.HTTPError as error:
-      print(error)
-      exit(1)
+    # print details
+    print(f"Secret details to be rotated name: {secretProperty.name} generatedOn: {secretProperty.tags['generatedOn']} status: {secretProperty.tags['status']} time diff: {time_diff_in_hours}")
 
+    # find matching token
     matchedObjects = list(filter(lambda x:x['clientId']==clientId, tokensResponse.json()['clients']))
     
     print(f'id : {secretProperty.id} has expired')
@@ -60,25 +64,27 @@ for secretProperty in secretProperties:
     # create new token first before deleting the old one
     try:
       payload = {'roles' : roles}
-      print(f'Json Payload: {json.dumps(payload)}')
-      tokensResponse = requests.post(datastaxControlPlaneTokenUrl, data=json.dumps(payload), headers=headers, timeout=30)
-      tokensResponse.raise_for_status()
+      payloadJson = json.dumps(payload)
+      print(f'Json Payload: {payloadJson}')
+      newTokenReponse = requests.post(datastaxControlPlaneTokenUrl, data=payloadJson, headers=headers, timeout=30)
+      newTokenReponse.raise_for_status()
     except requests.exceptions.HTTPError as error:
       print(error)
       exit(1)
 
-    tokensResponseJson = tokensResponse.json()
+    newTokenReponseJson = newTokenReponse.json()
 
-    print(f'Token created: {tokensResponseJson}')
+    print(f'Token created: {newTokenReponseJson}')
     
     # get the secret
     credential = DefaultAzureCredential()
     secretClient = SecretClient(vault_url=azure_key_vault_uri, credential=credential)
     old_secret = secretClient.get_secret(secretProperty.name);
     secretName = secretProperty.name
-    secretValue = tokensResponseJson.get('secret')
+    secretValue = newTokenReponseJson.get('secret')
 
-    print(f'secret tags: {old_secret.properties.tags}')
+    print(f'get the secret detauls: {secretProperty.name}')
+    print(f'Old tags: {old_secret.properties.tags}')
 
     tags = old_secret.properties.tags
     tags["status"] = 'rotating'
@@ -98,6 +104,14 @@ for secretProperty in secretProperties:
     except requests.exceptions.HTTPError as error:
       print(error)
       exit(1)
+
+    # update secret tag to active
+    print('Setting secret to Azure Key Vault..')
+    old_secret = secretClient.get_secret(secretProperty.name);
+    tags = old_secret.properties.tags
+    tags["status"] = 'active'
+    secretClient.update_secret_properties(secretName, content_type="text/plain", tags=tags, not_before=datetime.now(pytz.timezone("Etc/GMT+12")), expires_on=datetime.now(pytz.timezone("Etc/GMT+12")) + timedelta(hours=secretExpiryHours))
+    print('ClientSecret put to Azure Key Vault with secret name: %s' % secretClient.get_secret(secretName))
 
     print(f'Old token revoked.')
 
