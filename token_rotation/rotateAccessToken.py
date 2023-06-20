@@ -60,20 +60,23 @@ for secretProperty in secretProperties:
     # create new token first before deleting the old one
     try:
       tokensResponse = requests.post(datastaxControlPlaneTokenUrl, data=json.dumps(roles), headers=headers, timeout=30)
+      tokensResponse.raise_for_status()
     except requests.exceptions.HTTPError as error:
       print(error)
       exit(1)
 
+    tokensResponseJson = tokensResponse.json()
+    
     # update the secret
     credential = DefaultAzureCredential()
     secretClient = SecretClient(vault_url=azure_key_vault_uri, credential=credential)
     old_secret = secretClient.get_secret(secretProperty.name);
     secretName = secretProperty.name
-    secretValue = tokensResponse.get('secret')
+    secretValue = tokensResponseJson.get('secret')
 
     tags = old_secret.tags
     tag["status"] = 'rotating'
-    tag["clientId"] = tokensResponse.get('clientId')
+    tag["clientId"] = tokensResponseJson.get('clientId')
     
     print('Setting secret to Azure Key Vault..')
     secretClient.set_secret(secretName, secretValue)
