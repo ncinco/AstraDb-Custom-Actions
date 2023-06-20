@@ -43,7 +43,7 @@ for secretProperty in secretProperties:
   generatedOn = parser.parse(secretProperty.tags['generatedOn']).replace(tzinfo=None)
   time_diff_in_hours = (datetime.now() - generatedOn).total_seconds() / 3600
 
-  # check expiration
+  # check expiration, has to be active and more than 4 hours age
   if secretProperty.tags['status'] == 'active' and time_diff_in_hours > 4.0:
     clientId = secretProperty.name.split('-')[0]
 
@@ -53,7 +53,7 @@ for secretProperty in secretProperties:
     # find matching token
     matchedObjects = list(filter(lambda x:x['clientId']==clientId, tokensResponse.json()['clients']))
     
-    print(f'id : {secretProperty.id} has expired')
+    print(f'id : {secretProperty.id} has expired, renewing...')
 
     # set client_id for further use in the process
     client_id = matchedObjects[0]['clientId']
@@ -83,7 +83,7 @@ for secretProperty in secretProperties:
     secretName = secretProperty.name
     secretValue = newTokenReponseJson.get('secret')
 
-    print(f'get the secret detauls: {secretProperty.name}')
+    print(f'get the secret details: {secretProperty.name}')
     print(f'Old tags: {old_secret.properties.tags}')
 
     tags = old_secret.properties.tags
