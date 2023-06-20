@@ -99,8 +99,8 @@ for secretProperty in secretProperties:
 
     # revoke old token
     try:
-      tokensResponse = requests.delete(f'{datastaxControlPlaneTokenUrl}/{client_id}', headers=headers, timeout=30)
-      tokensResponse.raise_for_status()
+      deleteTokenResponse = requests.delete(f'{datastaxControlPlaneTokenUrl}/{client_id}', headers=headers, timeout=30)
+      deleteTokenResponse.raise_for_status()
     except requests.exceptions.HTTPError as error:
       print(error)
       exit(1)
