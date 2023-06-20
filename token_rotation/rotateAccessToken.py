@@ -1,4 +1,4 @@
-import requests
+etimport requests
 import json
 import subprocess
 import os
@@ -78,13 +78,13 @@ for secretProperty in secretProperties:
     secretName = secretProperty.name
     secretValue = tokensResponseJson.get('secret')
 
-    print(f'the secret: {old_secret}')
+    print(f'secret tags: {old_secret.properties.tags}')
 
-    tags = old_secret.tags
+    tags = old_secret.properties.tags
     tags["status"] = 'rotating'
     tags["clientId"] = tokensResponseJson.get('clientId')
 
-    print(f'New tags: {old_secret.tags}')
+    print(f'New tags: {old_secret.properties.tags}')
     
     print('Setting secret to Azure Key Vault..')
     secretClient.set_secret(secretName, secretValue)
