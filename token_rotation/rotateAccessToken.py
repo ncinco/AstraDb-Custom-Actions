@@ -96,6 +96,7 @@ for secretProperty in secretProperties:
       payload = {'roles' : roles}
       payloadJson = json.dumps(payload)
       print(f'Json Payload: {payloadJson}')
+      print(f'headers: {headers}')
       newTokenReponse = requests.post(datastaxControlPlaneTokenUrl, data=payloadJson, headers=headers, timeout=30)
       newTokenReponse.raise_for_status()
     except requests.exceptions.HTTPError as error:
