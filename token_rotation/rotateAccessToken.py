@@ -20,6 +20,8 @@ rbacKeyVaultReader = 'Key Vault Reader'
 rbackKeyVaultSecretsUser = 'Key Vault Secrets User'
 secretExpiryHours = 0.10
 secretPreExpiryHours = 0.05
+credential = DefaultAzureCredential()
+secretClient = SecretClient(vault_url=azure_key_vault_uri, credential=credential)
 
 # Common http headers
 headers = {
@@ -28,8 +30,6 @@ headers = {
 }
 
 def updateSecretStatus(secretName, secretStatus, secretValue=''):
-  credential = DefaultAzureCredential()
-  secretClient = SecretClient(vault_url=azure_key_vault_uri, credential=credential)
   theSecret = secretClient.get_secret(secretName)
 
   print(f'get the secret details: {secretName}')
@@ -47,11 +47,6 @@ def updateSecretStatus(secretName, secretStatus, secretValue=''):
   return
 
 # get all tokens
-credential = DefaultAzureCredential()
-secretClient = SecretClient(vault_url=azure_key_vault_uri, credential=credential)
-secretProperties = secretClient.list_properties_of_secrets()
-
-# get all tokens
 try:
   tokensResponse = requests.get(datastaxControlPlaneTokenUrl, headers=headers, timeout=30)
   tokensResponse.raise_for_status()
@@ -59,6 +54,9 @@ try:
 except requests.exceptions.HTTPError as error:
   print(error)
   exit(1)
+
+# get all secrets
+secretProperties = secretClient.list_properties_of_secrets()
 
 for secretProperty in secretProperties:
   generatedOn = parser.parse(secretProperty.tags['generatedOn']).replace(tzinfo=None)
