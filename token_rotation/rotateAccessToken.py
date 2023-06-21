@@ -38,7 +38,7 @@ def updateSecretStatus(secretName, secretStatus, clientId, secretValue=''):
 
   print(f'get the secret details: {theSecret.name} theSecret.properties.tags')
 
-  tags = theSecret.properties.tags
+  tags = theSecret.tags
   tags["clientId"] = clientId
   tags["status"] = secretStatus
   tags["clientId"] = newTokenReponseJson.get('clientId')
