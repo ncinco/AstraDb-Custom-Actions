@@ -56,6 +56,7 @@ for secretProperty in secretProperties:
     matchedObjects = list(filter(lambda x:x['clientId']==clientId, tokensResponse.json()['clients']))
     
     print(f'id : {secretProperty.id} has expired, renewing...')
+    print(f'matchedObjects details: {matchedObjects }')
 
     # set client_id for further use in the process
     client_id = matchedObjects[0]['clientId']
