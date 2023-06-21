@@ -34,8 +34,8 @@ secretProperties = secretClient.list_properties_of_secrets()
 # get all tokens
 try:
   tokensResponse = requests.get(datastaxControlPlaneTokenUrl, headers=headers, timeout=30)
-  print(f'tokensResponse: {tokensResponse.json()}')
   tokensResponse.raise_for_status()
+  print(f'tokensResponse: {tokensResponse.json()}')
 except requests.exceptions.HTTPError as error:
   print(error)
   exit(1)
@@ -54,13 +54,12 @@ for secretProperty in secretProperties:
     # find matching token
     matchedObjects = list(filter(lambda x:x['clientId']==clientId, tokensResponse.json()['clients']))
     
-    print(f'id : {secretProperty.id} has expired, renewing...')
-    print(f'matchedObjects details: {matchedObjects }')
-
     # can't find any token, continue to next item
     if not matchedObjects:
       print(f'No matching token found, continue to next item.')
       continue
+
+    print(f'id : {secretProperty.id} has expired, renewing...')
 
     # set client_id for further use in the process
     client_id = matchedObjects[0]['clientId']
