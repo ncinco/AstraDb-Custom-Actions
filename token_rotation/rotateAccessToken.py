@@ -32,7 +32,7 @@ headers = {
 def updateSecretStatus(secretName, secretStatus, secretValue=''):
   theSecret = secretClient.get_secret(secretName)
 
-  print(f'get the secret details: {secretName}')
+  print(f'get the secret details: {theSecret.name} theSecret.properties.tags')
 
   tags = theSecret.properties.tags
   tags["status"] = secretStatus
@@ -50,7 +50,6 @@ def updateSecretStatus(secretName, secretStatus, secretValue=''):
 try:
   tokensResponse = requests.get(datastaxControlPlaneTokenUrl, headers=headers, timeout=30)
   tokensResponse.raise_for_status()
-  print(f'tokensResponse: {tokensResponse.json()}')
 except requests.exceptions.HTTPError as error:
   print(error)
   exit(1)
@@ -102,7 +101,7 @@ for secretProperty in secretProperties:
     print(f'Token created: {newTokenReponseJson}')
     
     # update secret and status
-    updateSecretStatus(f'{clientId}-AccessToken', 'rotating', newTokenReponseJson.get('secret'))
+    updateSecretStatus(f'{clientId}-AccessToken', 'rotating', newTokenReponseJson.get('token'))
     updateSecretStatus(f'{clientId}-ClientSecret', 'rotating', newTokenReponseJson.get('secret'))
 
     # revoke old token
