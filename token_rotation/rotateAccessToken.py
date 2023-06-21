@@ -58,6 +58,10 @@ for secretProperty in secretProperties:
     print(f'id : {secretProperty.id} has expired, renewing...')
     print(f'matchedObjects details: {matchedObjects }')
 
+    # can't find any token, continue to next item
+    if not matchedObjects:
+      continue
+
     # set client_id for further use in the process
     client_id = matchedObjects[0]['clientId']
     roles = matchedObjects[0]['roles']
