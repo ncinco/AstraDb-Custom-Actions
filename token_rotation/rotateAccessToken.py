@@ -56,7 +56,7 @@ try:
   tokensResponse = requests.get(datastaxControlPlaneTokenUrl, headers=headers, timeout=30)
   tokensResponse.raise_for_status()
 
-  print(f'tokensResponse: {tokensResponse}')
+  print(f'tokensResponse: {tokensResponse.json()}')
 except requests.exceptions.HTTPError as error:
   print(error)
   exit(1)
