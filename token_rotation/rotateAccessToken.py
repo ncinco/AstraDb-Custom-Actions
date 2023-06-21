@@ -18,7 +18,8 @@ datastaxControlPlaneTokenUrl = 'https://api.astra.datastax.com/v2/clientIdSecret
 azure_key_vault_uri = f'https://{azure_key_vault_name}.vault.azure.net'
 rbacKeyVaultReader = 'Key Vault Reader'
 rbackKeyVaultSecretsUser = 'Key Vault Secrets User'
-secretExpiryHours = 24
+secretExpiryHours = 0.10
+secretPreExpiryHours = 0.05
 
 # Common http headers
 headers = {
@@ -45,7 +46,7 @@ for secretProperty in secretProperties:
   time_diff_in_hours = (datetime.now() - generatedOn).total_seconds() / 3600
 
   # check expiration, has to be active and more than 4 hours age
-  if secretProperty.tags['status'] == 'active' and time_diff_in_hours > 4.0:
+  if secretProperty.tags['status'] == 'active' and time_diff_in_hours > secretPreExpiryHours:
     clientId = secretProperty.name.split('-')[0]
 
     # print details
