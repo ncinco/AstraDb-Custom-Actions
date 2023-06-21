@@ -70,8 +70,8 @@ for secretProperty in secretProperties:
   # and age is more than {secretPreExpiryHours}
   # AccessToken on name, both ClientSecret and AccessToken to be processed together
   if secretProperty.tags['status'] == 'active' and time_diff_in_hours > secretPreExpiryHours and 'AccessToken' in secretProperty.name:
-    seedClientId = secretProperty.properties.tags["seed_clientId"]
-    clientId = secretProperty.properties.tags["clientId"]
+    seedClientId = secretProperty.tags["seed_clientId"]
+    clientId = secretProperty.tags["clientId"]
 
     # print details
     print(f"Secret details to be rotated name: {secretProperty.name} generatedOn: {secretProperty.tags['generatedOn']} status: {secretProperty.tags['status']} time diff: {time_diff_in_hours}")
