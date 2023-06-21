@@ -97,7 +97,7 @@ subscriptionRbacCommand = f'az role assignment create --role "{rbacKeyVaultReade
 print('clientSecretRbacCommand: ' + subscriptionRbacCommand )
 
 try:
-  result = subprocess.run(subscriptionRbacCommand, capture_output=True, text=True, shell=True, check=True)
+  print('result = subprocess.run(subscriptionRbacCommand, capture_output=True, text=True, shell=True, check=True)')
 except subprocess.CalledProcessError as error:
   print(error)
   exit(1)
@@ -107,7 +107,7 @@ clientSecretRbacCommand = f'az role assignment create --role "{rbackKeyVaultSecr
 print('clientSecretRbacCommand: ' + clientSecretRbacCommand )
 
 try:
-  result = subprocess.run(clientSecretRbacCommand, capture_output=True, text=True, shell=True, check=True)
+  print('result = subprocess.run(clientSecretRbacCommand, capture_output=True, text=True, shell=True, check=True)')
 except subprocess.CalledProcessError as error:
   print(error)
   exit(1)
@@ -127,7 +127,7 @@ tokenRbacCommand = f'az role assignment create --role "{rbackKeyVaultSecretsUser
 print('tokenRbacCommand: ' + tokenRbacCommand )
 
 try:
-  result = subprocess.run(tokenRbacCommand, capture_output=True, text=True, shell=True, check=True)
+  print('result = subprocess.run(tokenRbacCommand, capture_output=True, text=True, shell=True, check=True)')
 except subprocess.CalledProcessError as error:
   print(error)
   exit(1)
