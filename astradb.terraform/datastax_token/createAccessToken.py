@@ -21,7 +21,11 @@ datastaxControlPlaneTokenUrl = 'https://api.astra.datastax.com/v2/clientIdSecret
 azure_key_vault_uri = f'https://{azure_key_vault_name}.vault.azure.net'
 rbacKeyVaultReader = 'Key Vault Reader'
 rbackKeyVaultSecretsUser = 'Key Vault Secrets User'
+<<<<<<< HEAD
 secretExpiryHours = 0.10
+=======
+secretExpiryHours = 0.1
+>>>>>>> ee3c5daeb45e4689a049971a487c4b98c9596f39
 
 # Common http headers
 headers = {
