@@ -27,9 +27,28 @@ headers = {
   'Authorization': 'Bearer ' + access_token,
 }
 
+def updateSecretStatus(secretName, secretStatus, secretValue=''):
+  credential = DefaultAzureCredential()
+  secretClient = SecretClient(vault_url=azure_key_vault_uri, credential=credential)
+  theSecret = secretClient.get_secret(secretName)
+
+  print(f'get the secret details: {secretName}')
+
+  tags = theSecret.properties.tags
+  tags["status"] = secretStatus
+  tags["clientId"] = newTokenReponseJson.get('clientId')
+
+  print('Setting secret to Azure Key Vault..')
+  secretClient.update_secret_properties(secretName, content_type="text/plain", tags=tags, not_before=datetime.now(pytz.timezone("Etc/GMT+12")), expires_on=datetime.now(pytz.timezone("Etc/GMT+12")) + timedelta(hours=secretExpiryHours))
+
+  if secretValue != '':
+    secretClient.set_secret(secretName, secretValue)
+
+  return
+
+# get all tokens
 credential = DefaultAzureCredential()
 secretClient = SecretClient(vault_url=azure_key_vault_uri, credential=credential)
-
 secretProperties = secretClient.list_properties_of_secrets()
 
 # get all tokens
@@ -45,8 +64,10 @@ for secretProperty in secretProperties:
   generatedOn = parser.parse(secretProperty.tags['generatedOn']).replace(tzinfo=None)
   time_diff_in_hours = (datetime.now() - generatedOn).total_seconds() / 3600
 
-  # check expiration, has to be active and more than 4 hours age
-  if secretProperty.tags['status'] == 'active' and time_diff_in_hours > secretPreExpiryHours:
+  # check expiration, has to be active
+  # and age is more than {secretPreExpiryHours}
+  # AccessToken on name, both ClientSecret and AccessToken to be processed together
+  if secretProperty.tags['status'] == 'active' and time_diff_in_hours > secretPreExpiryHours and 'AccessToken' in secretProperty.name:
     clientId = secretProperty.name.split('-')[0]
 
     # print details
@@ -63,10 +84,9 @@ for secretProperty in secretProperties:
     print(f'id : {secretProperty.id} has expired, renewing...')
 
     # set client_id for further use in the process
-    client_id = matchedObjects[0]['clientId']
     roles = matchedObjects[0]['roles']
     generatedOn = matchedObjects[0]['generatedOn']
-    print(f'Found matching token: Client Id: {client_id} Roles: {roles} Generated On: {generatedOn}')
+    print(f'Found matching token: Client Id: {clientId} Roles: {roles} Generated On: {generatedOn}')
     
     # create new token first before deleting the old one
     try:
@@ -83,44 +103,22 @@ for secretProperty in secretProperties:
 
     print(f'Token created: {newTokenReponseJson}')
     
-    # get the secret
-    credential = DefaultAzureCredential()
-    secretClient = SecretClient(vault_url=azure_key_vault_uri, credential=credential)
-    old_secret = secretClient.get_secret(secretProperty.name);
-    secretName = secretProperty.name
-    secretValue = newTokenReponseJson.get('secret')
-
-    print(f'get the secret details: {secretProperty.name}')
-    print(f'Old tags: {old_secret.properties.tags}')
-
-    tags = old_secret.properties.tags
-    tags["status"] = 'rotating'
-    tags["clientId"] = newTokenReponseJson.get('clientId')
-
-    print(f'New tags: {old_secret.properties.tags}')
-    
-    print('Setting secret to Azure Key Vault..')
-    secretClient.set_secret(secretName, secretValue)
-    secretClient.update_secret_properties(secretName, content_type="text/plain", tags=tags, not_before=datetime.now(pytz.timezone("Etc/GMT+12")), expires_on=datetime.now(pytz.timezone("Etc/GMT+12")) + timedelta(hours=secretExpiryHours))
-    print('ClientSecret put to Azure Key Vault with secret name: %s' % secretClient.get_secret(secretName))
+    # update secret and status
+    updateSecretStatus(f'{clientId}-AccessToken', 'rotating', newTokenReponseJson.get('secret'))
+    updateSecretStatus(f'{clientId}-ClientSecret', 'rotating', newTokenReponseJson.get('secret'))
 
     # revoke old token
     try:
-      deleteTokenResponse = requests.delete(f'{datastaxControlPlaneTokenUrl}/{client_id}', headers=headers, timeout=30)
+      deleteTokenResponse = requests.delete(f'{datastaxControlPlaneTokenUrl}/{clientId}', headers=headers, timeout=30)
       deleteTokenResponse.raise_for_status()
+      print(f'Old token revoked.')
     except requests.exceptions.HTTPError as error:
       print(error)
       exit(1)
 
     # update secret tag to active
-    print('Setting secret to Azure Key Vault..')
-    old_secret = secretClient.get_secret(secretProperty.name);
-    tags = old_secret.properties.tags
-    tags["status"] = 'active'
-    secretClient.update_secret_properties(secretName, content_type="text/plain", tags=tags, not_before=datetime.now(pytz.timezone("Etc/GMT+12")), expires_on=datetime.now(pytz.timezone("Etc/GMT+12")) + timedelta(hours=secretExpiryHours))
-    print('ClientSecret put to Azure Key Vault with secret name: %s' % secretClient.get_secret(secretName))
-
-    print(f'Old token revoked.')
+    updateSecretStatus(f'{clientId}-AccessToken', 'active')
+    updateSecretStatus(f'{clientId}-ClientSecret', 'active')
 
 print("Token rotation completed and secrets stored to Azure Key Vault.")
 exit(0)
