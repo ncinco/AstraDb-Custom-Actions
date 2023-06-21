@@ -32,6 +32,10 @@ headers = {
 def updateSecretStatus(secretName, secretStatus, clientId, secretValue=''):
   theSecret = secretClient.get_secret(secretName)
 
+  if theSecret is None:
+    print(f'Can''t find secret named {secretName}. Potential bug.')
+    return
+
   print(f'get the secret details: {theSecret.name} theSecret.properties.tags')
 
   tags = theSecret.properties.tags
@@ -66,6 +70,7 @@ for secretProperty in secretProperties:
   # and age is more than {secretPreExpiryHours}
   # AccessToken on name, both ClientSecret and AccessToken to be processed together
   if secretProperty.tags['status'] == 'active' and time_diff_in_hours > secretPreExpiryHours and 'AccessToken' in secretProperty.name:
+    seedClientId = secretProperty.properties.tags["seed_clientId"]
     clientId = secretProperty.properties.tags["clientId"]
 
     # print details
@@ -102,8 +107,8 @@ for secretProperty in secretProperties:
     print(f'Token created: {newTokenReponseJson}')
     
     # update secret and status
-    updateSecretStatus(f'{clientId}-AccessToken', 'rotating', newTokenReponseJson.get('clientId'), newTokenReponseJson.get('token'))
-    updateSecretStatus(f'{clientId}-ClientSecret', 'rotating', newTokenReponseJson.get('clientId'), newTokenReponseJson.get('secret'))
+    updateSecretStatus(f'{seedClientId}-AccessToken', 'rotating', newTokenReponseJson.get('clientId'), newTokenReponseJson.get('token'))
+    updateSecretStatus(f'{seedClientId}-ClientSecret', 'rotating', newTokenReponseJson.get('clientId'), newTokenReponseJson.get('secret'))
 
     # revoke old token
     try:
@@ -115,8 +120,8 @@ for secretProperty in secretProperties:
       exit(1)
 
     # update secret tag to active
-    updateSecretStatus(f'{clientId}-AccessToken', 'active', newTokenReponseJson.get('clientId'))
-    updateSecretStatus(f'{clientId}-ClientSecret', 'active', newTokenReponseJson.get('clientId'))
+    updateSecretStatus(f'{seedClientId}-AccessToken', 'active', newTokenReponseJson.get('clientId'))
+    updateSecretStatus(f'{seedClientId}-ClientSecret', 'active', newTokenReponseJson.get('clientId'))
 
 print("Token rotation completed and secrets stored to Azure Key Vault.")
 exit(0)
