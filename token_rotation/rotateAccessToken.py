@@ -55,6 +55,8 @@ def updateSecretStatus(secretName, secretStatus, clientId, secretValue=''):
 try:
   tokensResponse = requests.get(datastaxControlPlaneTokenUrl, headers=headers, timeout=30)
   tokensResponse.raise_for_status()
+
+  print(f'tokensResponse: {tokensResponse}')
 except requests.exceptions.HTTPError as error:
   print(error)
   exit(1)
@@ -96,7 +98,6 @@ for secretProperty in secretProperties:
       payload = {'roles' : roles}
       payloadJson = json.dumps(payload)
       print(f'Json Payload: {payloadJson}')
-      print(f'headers: {headers}')
       newTokenReponse = requests.post(datastaxControlPlaneTokenUrl, data=payloadJson, headers=headers, timeout=30)
       newTokenReponse.raise_for_status()
     except requests.exceptions.HTTPError as error:
