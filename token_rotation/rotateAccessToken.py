@@ -29,12 +29,13 @@ headers = {
   'Authorization': 'Bearer ' + access_token,
 }
 
-def updateSecretStatus(secretName, secretStatus, secretValue=''):
+def updateSecretStatus(secretName, secretStatus, clientId, secretValue=''):
   theSecret = secretClient.get_secret(secretName)
 
   print(f'get the secret details: {theSecret.name} theSecret.properties.tags')
 
   tags = theSecret.properties.tags
+  tags["clientId"] = clientId
   tags["status"] = secretStatus
   tags["clientId"] = newTokenReponseJson.get('clientId')
 
@@ -65,7 +66,7 @@ for secretProperty in secretProperties:
   # and age is more than {secretPreExpiryHours}
   # AccessToken on name, both ClientSecret and AccessToken to be processed together
   if secretProperty.tags['status'] == 'active' and time_diff_in_hours > secretPreExpiryHours and 'AccessToken' in secretProperty.name:
-    clientId = secretProperty.name.split('-')[0]
+    clientId = secretProperty.properties.tags["clientId"]
 
     # print details
     print(f"Secret details to be rotated name: {secretProperty.name} generatedOn: {secretProperty.tags['generatedOn']} status: {secretProperty.tags['status']} time diff: {time_diff_in_hours}")
@@ -78,7 +79,7 @@ for secretProperty in secretProperties:
       print(f'No matching token found, continue to next item.')
       continue
 
-    print(f'id : {secretProperty.id} has expired, renewing...')
+    print(f'id : {secretProperty.name} has expired, renewing...')
 
     # set client_id for further use in the process
     roles = matchedObjects[0]['roles']
@@ -101,8 +102,8 @@ for secretProperty in secretProperties:
     print(f'Token created: {newTokenReponseJson}')
     
     # update secret and status
-    updateSecretStatus(f'{clientId}-AccessToken', 'rotating', newTokenReponseJson.get('token'))
-    updateSecretStatus(f'{clientId}-ClientSecret', 'rotating', newTokenReponseJson.get('secret'))
+    updateSecretStatus(f'{clientId}-AccessToken', 'rotating', newTokenReponseJson.get('clientId'), newTokenReponseJson.get('token'))
+    updateSecretStatus(f'{clientId}-ClientSecret', 'rotating', newTokenReponseJson.get('clientId'), newTokenReponseJson.get('secret'))
 
     # revoke old token
     try:
@@ -114,8 +115,8 @@ for secretProperty in secretProperties:
       exit(1)
 
     # update secret tag to active
-    updateSecretStatus(f'{clientId}-AccessToken', 'active')
-    updateSecretStatus(f'{clientId}-ClientSecret', 'active')
+    updateSecretStatus(f'{clientId}-AccessToken', 'active', newTokenReponseJson.get('clientId'))
+    updateSecretStatus(f'{clientId}-ClientSecret', 'active', newTokenReponseJson.get('clientId'))
 
 print("Token rotation completed and secrets stored to Azure Key Vault.")
 exit(0)
