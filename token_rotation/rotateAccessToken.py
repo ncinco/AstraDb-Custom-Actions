@@ -46,7 +46,7 @@ def updateSecretStatus(secretName, secretStatus, clientId, generatedOn, secretVa
     # get the latest version
     theSecret = secretClient.get_secret(secretName)
 
-  print(f'Updating secret tags: {theSecret.name} {theSecret.properties.tags}')
+  print(f'Updating secret tags: {theSecret.name} {tags}')
   tags["clientId"] = clientId
   tags["status"] = secretStatus
   tags["generatedOn"] = generatedOn
@@ -69,12 +69,12 @@ for secretProperty in secretProperties:
   generatedOn = parser.parse(secretProperty.tags['generatedOn']).replace(tzinfo=None)
   time_diff_in_hours = (datetime.now() - generatedOn).total_seconds() / 3600
 
-  print(f'Found secret from key vault: {secretProperty.name}')
-
   # check expiration, has to be active
   # and age is more than {secretPreExpiryHours}
   # AccessToken on name, both ClientSecret and AccessToken to be processed together
   if secretProperty.tags['status'] == 'active' and time_diff_in_hours > secretPreExpiryHours and 'AccessToken' in secretProperty.name:
+    print(f'Found secret from key vault due for rotation: {secretProperty.name}')
+
     seedClientId = secretProperty.tags["seed_clientId"]
     clientId = secretProperty.tags["clientId"]
 
