@@ -36,18 +36,19 @@ def updateSecretStatus(secretName, secretStatus, clientId, secretValue=''):
     print(f'Can''t find secret named {secretName}. Potential bug.')
     return
 
-  print(f'get the secret details: {theSecret.name} theSecret.properties.tags')
+  print(f'get the secret details: {theSecret.name} {theSecret.properties.tags}')
+
+  if secretValue != '':
+    # update the secret, this will create new version
+    secretClient.set_secret(secretName, secretValue)
+    # get the latest version
+    theSecret = secretClient.get_secret(secretName)
 
   tags = theSecret.properties.tags
   tags["clientId"] = clientId
   tags["status"] = secretStatus
   tags["clientId"] = newTokenReponseJson.get('clientId')
-
-  print('Setting secret to Azure Key Vault..')
   secretClient.update_secret_properties(secretName, content_type="text/plain", tags=tags, not_before=datetime.now(pytz.timezone("Etc/GMT+12")), expires_on=datetime.now(pytz.timezone("Etc/GMT+12")) + timedelta(hours=secretExpiryHours))
-
-  if secretValue != '':
-    secretClient.set_secret(secretName, secretValue)
 
   return
 
