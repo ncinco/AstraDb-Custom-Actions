@@ -38,15 +38,15 @@ def updateSecretStatus(secretName, secretStatus, clientId, secretValue=''):
 
   print(f'get the secret details: {theSecret.name} {theSecret.properties.tags}')
 
+  # cache the tags
+  tags = theSecret.properties.tags
+
   if secretValue != '':
-    # update the secret, this will create new version
+    # update the secret, this will create new version WITHOUT the tags
     secretClient.set_secret(secretName, secretValue)
     # get the latest version
     theSecret = secretClient.get_secret(secretName)
 
-  print(f'tags: {tags}')
-
-  tags = theSecret.properties.tags
   tags["clientId"] = clientId
   tags["status"] = secretStatus
   tags["clientId"] = newTokenReponseJson.get('clientId')
