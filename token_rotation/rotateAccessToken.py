@@ -44,6 +44,8 @@ def updateSecretStatus(secretName, secretStatus, clientId, secretValue=''):
     # get the latest version
     theSecret = secretClient.get_secret(secretName)
 
+  print(f'tags: {tags}')
+
   tags = theSecret.properties.tags
   tags["clientId"] = clientId
   tags["status"] = secretStatus
