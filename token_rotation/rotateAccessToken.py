@@ -29,27 +29,27 @@ headers = {
   'Authorization': 'Bearer ' + access_token,
 }
 
-def updateSecretStatus(secretName, secretStatus, clientId, secretValue=''):
+def updateSecretStatus(secretName, secretStatus, clientId, generatedOn, secretValue=''):
   theSecret = secretClient.get_secret(secretName)
 
   if theSecret is None:
     print(f'Can''t find secret named {secretName}. Potential bug.')
     return
 
-  print(f'get the secret details: {theSecret.name} {theSecret.properties.tags}')
-
   # cache the tags
   tags = theSecret.properties.tags
 
   if secretValue != '':
+    print(f'Creating new secret version: {theSecret.name} {theSecret.properties.tags}')
     # update the secret, this will create new version WITHOUT the tags
     secretClient.set_secret(secretName, secretValue)
     # get the latest version
     theSecret = secretClient.get_secret(secretName)
 
+  print(f'Updating secret tags: {theSecret.name} {theSecret.properties.tags}')
   tags["clientId"] = clientId
   tags["status"] = secretStatus
-  tags["clientId"] = newTokenReponseJson.get('clientId')
+  tags["generatedOn"] = generatedOn
   secretClient.update_secret_properties(secretName, content_type="text/plain", tags=tags, not_before=datetime.now(pytz.timezone("Etc/GMT+12")), expires_on=datetime.now(pytz.timezone("Etc/GMT+12")) + timedelta(hours=secretExpiryHours))
 
   return
@@ -112,8 +112,8 @@ for secretProperty in secretProperties:
     print(f'Token created: {newTokenReponseJson}')
     
     # update secret and status
-    updateSecretStatus(f'{seedClientId}-AccessToken', 'rotating', newTokenReponseJson.get('clientId'), newTokenReponseJson.get('token'))
-    updateSecretStatus(f'{seedClientId}-ClientSecret', 'rotating', newTokenReponseJson.get('clientId'), newTokenReponseJson.get('secret'))
+    updateSecretStatus(f'{seedClientId}-AccessToken', 'rotating', newTokenReponseJson.get('clientId'), newTokenReponseJson.get('generatedOn'), newTokenReponseJson.get('token'))
+    updateSecretStatus(f'{seedClientId}-ClientSecret', 'rotating', newTokenReponseJson.get('clientId'), newTokenReponseJson.get('generatedOn'), newTokenReponseJson.get('secret'))
 
     # revoke old token
     try:
@@ -125,8 +125,8 @@ for secretProperty in secretProperties:
       exit(1)
 
     # update secret tag to active
-    updateSecretStatus(f'{seedClientId}-AccessToken', 'active', newTokenReponseJson.get('clientId'))
-    updateSecretStatus(f'{seedClientId}-ClientSecret', 'active', newTokenReponseJson.get('clientId'))
+    updateSecretStatus(f'{seedClientId}-AccessToken', 'active', newTokenReponseJson.get('clientId'), newTokenReponseJson.get('generatedOn'))
+    updateSecretStatus(f'{seedClientId}-ClientSecret', 'active', newTokenReponseJson.get('clientId'), newTokenReponseJson.get('generatedOn'))
 
 print("Token rotation completed and secrets stored to Azure Key Vault.")
 exit(0)
