@@ -55,8 +55,6 @@ def updateSecretStatus(secretName, secretStatus, clientId, secretValue=''):
 try:
   tokensResponse = requests.get(datastaxControlPlaneTokenUrl, headers=headers, timeout=30)
   tokensResponse.raise_for_status()
-
-  print(f'tokensResponse: {tokensResponse.json()}')
 except requests.exceptions.HTTPError as error:
   print(error)
   exit(1)
@@ -83,10 +81,10 @@ for secretProperty in secretProperties:
     
     # can't find any token, continue to next item
     if not matchedObjects:
-      print(f'No matching token found, continue to next item.')
+      print(f'No matching token found, potentially orphaned token. Continue to next item.')
       continue
 
-    print(f'id : {secretProperty.name} has expired, renewing...')
+    print(f'id : {secretProperty.name} has expired, rotating...')
 
     # set client_id for further use in the process
     roles = matchedObjects[0]['roles']
