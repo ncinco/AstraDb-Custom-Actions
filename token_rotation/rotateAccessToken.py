@@ -66,6 +66,8 @@ for secretProperty in secretProperties:
   generatedOn = parser.parse(secretProperty.tags['generatedOn']).replace(tzinfo=None)
   time_diff_in_hours = (datetime.now() - generatedOn).total_seconds() / 3600
 
+  print(f'Found secret from key vault: {secretProperty.name}')
+
   # check expiration, has to be active
   # and age is more than {secretPreExpiryHours}
   # AccessToken on name, both ClientSecret and AccessToken to be processed together
